@@ -1,10 +1,4 @@
-import { BlogTagEntity, BlogTagFactory } from '@backend/blog-tag';
-import {
-  Entity,
-  Post,
-  PostExtraProperty,
-  StorableEntity,
-} from '@backend/shared/core';
+import { Entity, Post, StorableEntity } from '@backend/shared/core';
 import { PostState, PostType } from '@prisma/client';
 
 export class BlogPostEntity extends Entity implements StorableEntity<Post> {
@@ -13,13 +7,9 @@ export class BlogPostEntity extends Entity implements StorableEntity<Post> {
   public isRepost!: boolean;
   public originUserId?: string;
   public originPostId?: string;
-  public tags!: BlogTagEntity[];
   public state!: PostState;
   public createdAt!: Date;
   public publicDate!: Date;
-  public likesCount!: number;
-  public commentsCount!: number;
-  public extraProperty?: PostExtraProperty;
 
   constructor(post?: Post) {
     super();
@@ -36,13 +26,9 @@ export class BlogPostEntity extends Entity implements StorableEntity<Post> {
       isRepost,
       originUserId,
       originPostId,
-      tags,
       state,
       createdAt,
       publicDate,
-      likesCount,
-      commentsCount,
-      extraProperty,
     } = post;
 
     this.id = id ?? undefined;
@@ -51,19 +37,9 @@ export class BlogPostEntity extends Entity implements StorableEntity<Post> {
     this.isRepost = isRepost;
     this.originUserId = originUserId ?? undefined;
     this.originPostId = originPostId ?? undefined;
-    this.tags = [];
     this.state = state;
     this.createdAt = createdAt;
     this.publicDate = publicDate;
-    this.likesCount = likesCount;
-    this.commentsCount = commentsCount;
-    this.extraProperty = extraProperty ?? undefined;
-
-    const blogTagFactory = new BlogTagFactory();
-    for (const tag of tags) {
-      const blogTagEntity = blogTagFactory.create(tag);
-      this.tags.push(blogTagEntity);
-    }
   }
 
   toPOJO(): Post {
@@ -77,21 +53,6 @@ export class BlogPostEntity extends Entity implements StorableEntity<Post> {
       state: this.state,
       createdAt: this.createdAt,
       publicDate: this.publicDate,
-      likesCount: this.likesCount,
-      commentsCount: this.commentsCount,
-      extraProperty: this.extraProperty
-        ? {
-            url: this.extraProperty.url,
-            describe: this.extraProperty.describe,
-            photo: this.extraProperty.photo,
-            text: this.extraProperty.text,
-            announce: this.extraProperty.announce,
-            name: this.extraProperty.name,
-            quoteText: this.extraProperty.quoteText,
-            quoteAuthor: this.extraProperty.quoteAuthor,
-          }
-        : null,
-      tags: this.tags.map((tagEntity) => tagEntity.toPOJO()),
     };
   }
 }

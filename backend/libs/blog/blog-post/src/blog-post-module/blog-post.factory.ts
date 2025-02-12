@@ -1,4 +1,3 @@
-import { BlogTagEntity } from '@backend/blog-tag';
 import { EntityFactory, Post } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
 import { PostState } from '@prisma/client';
@@ -12,10 +11,7 @@ export class BlogPostFactory implements EntityFactory<BlogPostEntity> {
     return new BlogPostEntity(entityPlainData);
   }
 
-  public static createFromCreatePostDto(
-    dto: CreatePostDto,
-    tags: BlogTagEntity[]
-  ): BlogPostEntity {
+  public static createFromCreatePostDto(dto: CreatePostDto): BlogPostEntity {
     const newPost = new BlogPostEntity();
     newPost.id = undefined;
     newPost.postType = dto.postType;
@@ -24,31 +20,8 @@ export class BlogPostFactory implements EntityFactory<BlogPostEntity> {
     newPost.state = PostState.Published;
     newPost.createdAt = dayjs().toDate();
     newPost.publicDate = dayjs().toDate();
-    newPost.likesCount = 0;
-    newPost.commentsCount = 0;
-    newPost.extraProperty = dto.extraProperty;
     newPost.originUserId = null;
     newPost.originPostId = null;
-    newPost.tags = tags;
-
-    return newPost;
-  }
-
-  public static createRepost(
-    originalPost: Post,
-    userId: string
-  ): BlogPostEntity {
-    const newPost = new BlogPostEntity(originalPost);
-
-    newPost.id = undefined;
-    newPost.isRepost = true;
-    newPost.userId = userId;
-    newPost.originPostId = originalPost.id;
-    newPost.originUserId = originalPost.userId;
-    newPost.createdAt = dayjs().toDate();
-    newPost.publicDate = dayjs().toDate();
-    newPost.likesCount = 0;
-    newPost.commentsCount = 0;
 
     return newPost;
   }

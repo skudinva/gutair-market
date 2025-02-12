@@ -1,4 +1,3 @@
-import { BlogLikeService } from '@backend/blog-like';
 import { BlogNotifyService } from '@backend/blog-notify';
 import { fillDto } from '@backend/helpers';
 import { SortDirection, SortType } from '@backend/shared/core';
@@ -28,7 +27,6 @@ import { BlogPostRdo } from './rdo/blog-post.rdo';
 export class BlogPostController {
   constructor(
     private readonly blogPostService: BlogPostService,
-    private readonly blogLikeService: BlogLikeService,
     private readonly notifyService: BlogNotifyService
   ) {}
 
@@ -73,22 +71,6 @@ export class BlogPostController {
   @ApiTags('blog post')
   public async create(@Body() dto: CreatePostDto) {
     const newPost = await this.blogPostService.createPost(dto);
-    return fillDto(BlogPostRdo, newPost.toPOJO());
-  }
-
-  @ApiResponse({
-    type: BlogPostRdo,
-    status: HttpStatus.CREATED,
-    description: BlogPostResponse.PostCreated,
-  })
-  @Post('/repost/:postId')
-  @ApiTags('blog post')
-  public async createRepost(
-    @Param('postId') postId: string,
-    @Body() { userId }: UserIdDto
-  ) {
-    const newPost = await this.blogPostService.createRepost(postId, userId);
-
     return fillDto(BlogPostRdo, newPost.toPOJO());
   }
 
@@ -140,52 +122,6 @@ export class BlogPostController {
   public async update(@Param('id') id: string, @Body() dto: UpdatePostDto) {
     const updatedPost = await this.blogPostService.updatePost(id, dto);
     return fillDto(BlogPostRdo, updatedPost.toPOJO());
-  }
-
-  @ApiResponse({
-    status: HttpStatus.NO_CONTENT,
-    description: BlogPostResponse.Like,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: BlogPostResponse.Unauthorized,
-  })
-  @ApiResponse({
-    status: HttpStatus.CONFLICT,
-    description: BlogPostResponse.LikeAlreadyExists,
-  })
-  @Post('like/:postId')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiTags('blog like')
-  public async addLike(
-    @Param('postId') postId: string,
-    @Body() { userId }: UserIdDto
-  ) {
-    await this.blogLikeService.like({ postId, userId });
-    await this.blogPostService.updateCommentCount(postId, 1);
-  }
-
-  @ApiResponse({
-    status: HttpStatus.NO_CONTENT,
-    description: BlogPostResponse.UnLike,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: BlogPostResponse.Unauthorized,
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: BlogPostResponse.LikeNotExists,
-  })
-  @Post('unlike/:postId')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiTags('blog like')
-  public async deleteLike(
-    @Param('postId') postId: string,
-    @Body() { userId }: UserIdDto
-  ) {
-    await this.blogLikeService.unlike({ postId, userId });
-    await this.blogPostService.updateCommentCount(postId, -1);
   }
 
   @Post('sendNewPostNotify')

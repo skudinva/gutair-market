@@ -18,13 +18,10 @@
     "paths": {
       "@backend/account-notify": ["libs/account/notify/src/index.ts"],
       "@backend/authentication": ["libs/account/authentication/src/index.ts"],
-      "@backend/blog-comment": ["libs/blog/blog-comment/src/index.ts"],
       "@backend/blog-config": ["libs/blog/blog-config/src/index.ts"],
-      "@backend/blog-like": ["libs/blog/blog-like/src/index.ts"],
       "@backend/blog-models": ["libs/blog/models/src/index.ts"],
       "@backend/blog-notify": ["libs/blog/blog-notify/src/index.ts"],
       "@backend/blog-post": ["libs/blog/blog-post/src/index.ts"],
-      "@backend/blog-tag": ["libs/blog/blog-tag/src/index.ts"],
       "@backend/blog-user": ["libs/account/blog-user/src/index.ts"],
       "@backend/config": ["libs/account/config/src/index.ts"],
       "@backend/data-access": ["libs/shared/data-access/src/index.ts"],

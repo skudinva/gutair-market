@@ -1,4 +1,3 @@
-import { BlogTagService } from '@backend/blog-tag';
 import { PaginationResult } from '@backend/shared/core';
 import {
   ConflictException,
@@ -16,17 +15,10 @@ import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class BlogPostService {
-  constructor(
-    private readonly blogPostRepository: BlogPostRepository,
-    private readonly blogTagService: BlogTagService
-  ) {}
+  constructor(private readonly blogPostRepository: BlogPostRepository) {}
 
   public async createPost(dto: CreatePostDto): Promise<BlogPostEntity> {
-    const tags = dto.tags
-      ? await this.blogTagService.findOrCreate(dto.tags)
-      : [];
-
-    const newPost = BlogPostFactory.createFromCreatePostDto(dto, tags);
+    const newPost = BlogPostFactory.createFromCreatePostDto(dto);
     await this.blogPostRepository.save(newPost);
 
     return newPost;
@@ -38,24 +30,9 @@ export class BlogPostService {
   ): Promise<BlogPostEntity> {
     const existPost = await this.getPost(id, dto.userId);
 
-    for (const [key] of Object.entries(existPost.extraProperty)) {
-      existPost.extraProperty[key] =
-        key === 'id' || key === 'postId'
-          ? existPost[key]
-          : dto.extraProperty[key] ?? null;
-    }
-
     for (const [key, value] of Object.entries(dto)) {
-      if (
-        value !== undefined &&
-        key !== 'extraProperty' &&
-        key !== 'tags' &&
-        existPost[key] !== value
-      ) {
+      if (value !== undefined && existPost[key] !== value) {
         existPost[key] = value;
-      }
-      if (key === 'tags' && value) {
-        existPost.tags = await this.blogTagService.findOrCreate(dto.tags);
       }
     }
 
@@ -100,46 +77,5 @@ export class BlogPostService {
     query?: BlogPostQuery
   ): Promise<PaginationResult<BlogPostEntity | null>> {
     return this.blogPostRepository.find(query);
-  }
-
-  public async createRepost(
-    postId: string,
-    userId: string
-  ): Promise<BlogPostEntity> {
-    const existsPost = await this.getPost(postId, userId);
-
-    const existRepost = await this.blogPostRepository.findRepost(
-      postId,
-      userId
-    );
-
-    if (existRepost) {
-      throw new ConflictException(
-        `You already make repost of postId ${postId}`
-      );
-    }
-
-    const newPost = BlogPostFactory.createRepost(existsPost.toPOJO(), userId);
-    await this.blogPostRepository.save(newPost);
-
-    return newPost;
-  }
-
-  public async updateCommentCount(
-    postId: string,
-    diffValue: number
-  ): Promise<void> {
-    const existPost = await this.getPost(postId, null);
-    existPost.commentsCount += diffValue;
-    await this.blogPostRepository.update(existPost);
-  }
-
-  public async updateLikeCount(
-    postId: string,
-    diffValue: number
-  ): Promise<void> {
-    const existPost = await this.getPost(postId, null);
-    existPost.likesCount += diffValue;
-    await this.blogPostRepository.update(existPost);
   }
 }

@@ -2,12 +2,7 @@ import {
   RequestWithTokenPayload,
   RequestWithTokenPayloadUrl,
 } from '@backend/authentication';
-import {
-  BlogCommentRdo,
-  BlogCommentResponse,
-  BlogCommentWithPaginationRdo,
-  CreateCommentDto,
-} from '@backend/blog-comment';
+
 import {
   BlogPostRdo,
   BlogPostResponse,
@@ -106,43 +101,12 @@ export class BlogController {
     );
 
     if (file) {
-      postDto.extraProperty.photo = await this.appService.uploadFile(file);
+      //postDto.extraProperty.photo = await this.appService.uploadFile(file);
     }
 
     const { data } = await this.httpService.axiosRef.post(
       `${ApplicationServiceURL.Blog}/`,
       postDto
-    );
-
-    await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Users}/incPostsCount`,
-      { userId: postDto.userId }
-    );
-    return data;
-  }
-
-  @Post('/repost/:postId')
-  @UseGuards(CheckAuthGuard)
-  @ApiBearerAuth('accessToken')
-  @UseInterceptors(InjectUserIdInterceptor)
-  @ApiResponse({
-    type: BlogPostRdo,
-    status: HttpStatus.CREATED,
-    description: BlogPostResponse.PostCreated,
-  })
-  @ApiTags(ApiSection.Post)
-  public async createRepost(
-    @Param('postId') postId: string,
-    @Body() dto: UserIdDto
-  ) {
-    const { data } = await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Blog}/repost/${postId}`,
-      dto
-    );
-
-    await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Users}/incPostsCount`,
-      { userId: dto.userId }
     );
 
     return data;
@@ -197,7 +161,7 @@ export class BlogController {
     );
 
     if (file) {
-      postDto.extraProperty.photo = await this.appService.uploadFile(file);
+      // postDto.extraProperty.photo = await this.appService.uploadFile(file);
     }
 
     const { data } = await this.httpService.axiosRef.patch(
@@ -333,153 +297,6 @@ export class BlogController {
       `${ApplicationServiceURL.Blog}/${id}/${userId}`
     );
     await this.appService.appendUserInfo([data]);
-
-    return data;
-  }
-
-  @Post('/like/:postId')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(CheckAuthGuard)
-  @ApiBearerAuth('accessToken')
-  @UseInterceptors(InjectUserIdInterceptor)
-  @ApiResponse({
-    status: HttpStatus.NO_CONTENT,
-    description: BlogPostResponse.Like,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: BlogPostResponse.Unauthorized,
-  })
-  @ApiResponse({
-    status: HttpStatus.CONFLICT,
-    description: BlogPostResponse.LikeAlreadyExists,
-  })
-  @ApiTags(ApiSection.Like)
-  public async addLike(
-    @Param('postId') postId: string,
-    @Body() dto: UserIdDto
-  ) {
-    const { data } = await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Blog}/like/${postId}`,
-      dto
-    );
-
-    return data;
-  }
-
-  @Post('/unlike/:postId')
-  @UseGuards(CheckAuthGuard)
-  @ApiBearerAuth('accessToken')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @UseInterceptors(InjectUserIdInterceptor)
-  @ApiResponse({
-    status: HttpStatus.NO_CONTENT,
-    description: BlogPostResponse.UnLike,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: BlogPostResponse.Unauthorized,
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: BlogPostResponse.LikeNotExists,
-  })
-  @ApiTags(ApiSection.Like)
-  public async deleteLike(
-    @Param('postId') postId: string,
-    @Body() dto: UserIdDto
-  ) {
-    const { data } = await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Blog}/unlike/${postId}`,
-      dto
-    );
-
-    return data;
-  }
-
-  @ApiResponse({
-    type: BlogCommentWithPaginationRdo,
-    status: HttpStatus.OK,
-    description: BlogCommentResponse.CommentsFound,
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: BlogCommentResponse.PostNotFound,
-  })
-  @ApiQuery({
-    name: 'sortDirection',
-    required: true,
-    enum: SortDirection,
-    description: 'Sort direction',
-  })
-  @ApiQuery({
-    name: 'page',
-    required: true,
-    type: Number,
-    description: 'Page number',
-    example: 1,
-  })
-  @Get('/comments/:postId')
-  @ApiTags(ApiSection.Comment)
-  public async show(@Param('postId') postId: string, @Req() req: Request) {
-    const { data } = await this.httpService.axiosRef.get(
-      `${ApplicationServiceURL.Comments}/${postId}?${url.parse(req.url).query}`
-    );
-
-    return data;
-  }
-
-  @Post('/comments/:postId')
-  @UseGuards(CheckAuthGuard)
-  @ApiBearerAuth('accessToken')
-  @UseInterceptors(InjectUserIdInterceptor)
-  @ApiResponse({
-    type: BlogCommentRdo,
-    status: HttpStatus.CREATED,
-    description: BlogCommentResponse.CommentCreated,
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: BlogCommentResponse.PostNotFound,
-  })
-  @ApiTags(ApiSection.Comment)
-  public async create(
-    @Param('postId') postId: string,
-    @Body() dto: CreateCommentDto
-  ) {
-    const { data } = await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Comments}/${postId}`,
-      dto
-    );
-
-    return data;
-  }
-
-  @Delete('/comments/:commentId')
-  @UseGuards(CheckAuthGuard)
-  @ApiBearerAuth('accessToken')
-  @UseInterceptors(InjectUserIdInterceptor)
-  @ApiResponse({
-    status: HttpStatus.NO_CONTENT,
-    description: BlogCommentResponse.CommentDeleted,
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: BlogCommentResponse.CommentNotFound,
-  })
-  @ApiResponse({
-    status: HttpStatus.CONFLICT,
-    description: BlogCommentResponse.NotAllowed,
-  })
-  @ApiTags(ApiSection.Comment)
-  public async delete(
-    @Param('commentId') commentId: string,
-    @Req() req: RequestWithTokenPayload
-  ) {
-    const userId = req.user.sub;
-    const { data } = await this.httpService.axiosRef.delete(
-      `${ApplicationServiceURL.Comments}/${commentId}/${userId}`
-    );
 
     return data;
   }

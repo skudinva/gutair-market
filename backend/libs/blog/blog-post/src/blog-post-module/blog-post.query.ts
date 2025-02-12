@@ -2,13 +2,7 @@ import { SortDirection, SortType } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { PostType } from '@prisma/client';
 import { Transform } from 'class-transformer';
-import {
-  IsArray,
-  IsIn,
-  IsMongoId,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsIn, IsMongoId, IsOptional, IsString } from 'class-validator';
 import {
   DEFAULT_PAGE_COUNT,
   DEFAULT_POST_COUNT_LIMIT,
@@ -18,14 +12,6 @@ import {
 
 export class BlogPostQuery {
   public limit: number = DEFAULT_POST_COUNT_LIMIT;
-
-  @IsArray()
-  @IsOptional()
-  @ApiProperty({
-    description: 'Tags',
-    required: false,
-  })
-  public tags?: string[];
 
   @IsIn(Object.values(SortDirection))
   @IsOptional()

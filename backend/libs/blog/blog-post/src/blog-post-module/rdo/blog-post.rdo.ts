@@ -1,7 +1,5 @@
-import { TagRdo } from '@backend/blog-tag';
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose, Type } from 'class-transformer';
-import { PostExtraPropertyRdo } from './post-extra-property.rdo';
+import { Expose } from 'class-transformer';
 
 export class BlogPostRdo {
   @Expose()
@@ -47,16 +45,6 @@ export class BlogPostRdo {
   originPostId?: string;
 
   @Expose()
-  @Type(() => TagRdo)
-  @ApiProperty({
-    description: 'List of tags',
-    example: [
-      { title: '#sometag', id: '863f37cc-b7c6-581c-ba07-f0ec0607dc4a' },
-    ],
-  })
-  tags!: TagRdo[];
-
-  @Expose()
   @ApiProperty({
     description: 'Post state',
     example: 'Published',
@@ -76,25 +64,4 @@ export class BlogPostRdo {
     example: '2024-11-24T10:42:10+07:00',
   })
   publicDate!: string;
-
-  @Expose()
-  @ApiProperty({
-    description: 'Likes count',
-    example: 8,
-  })
-  likesCount!: number;
-
-  @Expose()
-  @ApiProperty({
-    description: 'Comments count',
-    example: 10,
-  })
-  commentsCount!: number;
-
-  @Expose()
-  @Type(() => PostExtraPropertyRdo)
-  extraProperty?: PostExtraPropertyRdo;
-
-  @Expose()
-  comments!: Comment[];
 }

@@ -32,13 +32,6 @@ export class BlogPostRepository extends BasePostgresRepository<
     const record = await this.client.post.create({
       data: {
         ...pojoPost,
-        tags: {
-          connect: pojoPost.tags.map(({ id }) => ({ id })),
-        },
-        comments: {
-          connect: [],
-        },
-        extraProperty: { create: { ...pojoPost.extraProperty } },
       },
     });
 
@@ -56,23 +49,6 @@ export class BlogPostRepository extends BasePostgresRepository<
         originPostId: pojoPost.originPostId ?? undefined,
         state: pojoPost.state,
         publicDate: pojoPost.publicDate,
-        likesCount: pojoPost.likesCount,
-        commentsCount: pojoPost.commentsCount,
-        tags: {
-          set: pojoPost.tags.map(({ id }) => ({ id })),
-        },
-        extraProperty: {
-          update: {
-            data: { ...pojoPost.extraProperty },
-            where: {
-              postId: post.id,
-            },
-          },
-        },
-      },
-      include: {
-        extraProperty: true,
-        tags: true,
       },
     });
   }
@@ -90,10 +66,6 @@ export class BlogPostRepository extends BasePostgresRepository<
   ): Promise<BlogPostEntity | null> {
     const post = await this.client.post.findUnique({
       where: { id },
-      include: {
-        extraProperty: true,
-        tags: true,
-      },
     });
 
     return this.createEntityFromDocument(post);
@@ -108,15 +80,6 @@ export class BlogPostRepository extends BasePostgresRepository<
     const where: Prisma.PostWhereInput = {};
     const orderBy: Prisma.PostOrderByWithRelationInput = {};
     const userId = query.userId ?? null;
-    if (query?.tags) {
-      where.tags = {
-        some: {
-          id: {
-            in: query.tags,
-          },
-        },
-      };
-    }
 
     if (query?.postType) {
       where.postType = query.postType;
@@ -131,15 +94,6 @@ export class BlogPostRepository extends BasePostgresRepository<
       where.state = PostState.Published;
     }
 
-    if (query?.search) {
-      where.extraProperty = {
-        name: {
-          contains: query.search,
-          mode: 'insensitive',
-        },
-      };
-    }
-
     if (query?.sortBy) {
       orderBy[query.sortBy] = query.sortDirection;
     }
@@ -150,10 +104,6 @@ export class BlogPostRepository extends BasePostgresRepository<
         orderBy,
         skip,
         take,
-        include: {
-          extraProperty: true,
-          tags: true,
-        },
       }),
       this.getPostCount(where),
     ]);
@@ -175,10 +125,6 @@ export class BlogPostRepository extends BasePostgresRepository<
       where: {
         originPostId,
         userId,
-      },
-      include: {
-        extraProperty: true,
-        tags: true,
       },
     });
 

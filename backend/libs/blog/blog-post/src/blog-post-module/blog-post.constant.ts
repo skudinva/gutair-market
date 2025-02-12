@@ -8,10 +8,6 @@ export const DEFAULT_PAGE_COUNT = 1;
 export const BlogPostResponse = {
   PostCreated: 'New post created',
   PostUpdated: 'Post updated',
-  Like: 'Add like',
-  UnLike: 'Remove like',
-  LikeAlreadyExists: 'Like already exist',
-  LikeNotExists: 'Like not exists',
   Unauthorized: 'Need authorization',
   PostsFound: 'Posts found',
   PostFound: 'Post found',

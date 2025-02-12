@@ -1,19 +1,6 @@
-import { FieldValidate } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { PostState, PostType } from '@prisma/client';
-import { Type } from 'class-transformer';
-import {
-  ArrayMaxSize,
-  IsArray,
-  IsIn,
-  IsMongoId,
-  IsOptional,
-  IsString,
-  Length,
-  ValidateNested,
-} from 'class-validator';
-import { PostExtraPropertyDto } from './post-extra-property.dto';
-import { IsValidPostCombination } from './valid-post-property';
+import { IsIn, IsMongoId, IsString } from 'class-validator';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -33,20 +20,6 @@ export class CreatePostDto {
   })
   userId!: string;
 
-  @IsOptional()
-  @IsString({ each: true })
-  @ArrayMaxSize(FieldValidate.MaxTagCount)
-  @IsArray()
-  @Length(FieldValidate.MinTagLength, FieldValidate.MaxTagLength, {
-    each: true,
-  })
-  @ApiProperty({
-    description: 'List of tags',
-    example: ['#sometag1'],
-    required: false,
-  })
-  tags?: string[];
-
   @IsIn(Object.values(PostState))
   @ApiProperty({
     description: 'Post state',
@@ -55,12 +28,4 @@ export class CreatePostDto {
     enumName: 'PostState',
   })
   state!: PostState;
-
-  @ValidateNested()
-  @Type(() => PostExtraPropertyDto)
-  @IsValidPostCombination({
-    message: 'Invalid combination of PostType',
-  })
-  @ApiProperty()
-  extraProperty!: PostExtraPropertyDto;
 }

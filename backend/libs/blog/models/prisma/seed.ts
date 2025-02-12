@@ -90,12 +90,6 @@ async function seedDb(prismaClient: PrismaClient) {
         likesCount: 0,
         commentsCount: post.comments.length,
         publicDate: post.publicDate,
-        tags: post.tags,
-        comments: post.comments.length
-          ? {
-              create: post.comments,
-            }
-          : undefined,
         extraProperty: {
           create: post.extraProperty,
         },

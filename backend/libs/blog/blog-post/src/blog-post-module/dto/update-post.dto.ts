@@ -1,19 +1,6 @@
-import { FieldValidate } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { PostState, PostType } from '@prisma/client';
-import { Type } from 'class-transformer';
-import {
-  ArrayMaxSize,
-  IsArray,
-  IsIn,
-  IsISO8601,
-  IsOptional,
-  IsString,
-  Length,
-  ValidateNested,
-} from 'class-validator';
-import { PostExtraPropertyDto } from './post-extra-property.dto';
-import { IsValidPostCombination } from './valid-post-property';
+import { IsIn, IsISO8601, IsOptional } from 'class-validator';
 
 export class UpdatePostDto {
   @IsIn(Object.values(PostType))
@@ -27,19 +14,6 @@ export class UpdatePostDto {
   postType?: PostType;
 
   userId?: string;
-
-  @IsOptional()
-  @IsString({ each: true })
-  @ArrayMaxSize(FieldValidate.MaxTagCount)
-  @IsArray()
-  @Length(FieldValidate.MinTagLength, FieldValidate.MaxTagLength, {
-    each: true,
-  })
-  @ApiProperty({
-    description: 'List of tags',
-    example: ['#sometag1'],
-  })
-  tags?: string[];
 
   @IsIn(Object.values(PostState))
   @IsOptional()
@@ -55,13 +29,4 @@ export class UpdatePostDto {
   @IsOptional()
   @ApiProperty({ description: 'Date of publication' })
   publicDate?: Date;
-
-  @ValidateNested()
-  @IsOptional()
-  @Type(() => PostExtraPropertyDto)
-  @IsValidPostCombination({
-    message: 'Invalid combination of PostType',
-  })
-  @ApiProperty()
-  extraProperty?: PostExtraPropertyDto;
 }
