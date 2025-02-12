@@ -1,6 +1,6 @@
+import { BaseMongoRepository } from '@backend/data-access';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { BaseMongoRepository } from '@project/data-access';
 import { Model } from 'mongoose';
 import { FileUploaderEntity } from './file-uploader.entity';
 import { FileUploaderFactory } from './file-uploader.factory';

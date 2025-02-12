@@ -1,4 +1,4 @@
-import { Entity, EntityFactory, StorableEntity } from '@project/shared/core';
+import { Entity, EntityFactory, StorableEntity } from '@backend/shared/core';
 import { randomUUID } from 'node:crypto';
 import { Repository } from './repository.interface';
 

@@ -1,8 +1,8 @@
+import { rabbitConfig } from '@backend/config';
+import { Post, RabbitRouting } from '@backend/shared/core';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { rabbitConfig } from '@project/config';
-import { Post, RabbitRouting } from '@project/shared/core';
 import { BlogNotifyDto } from './dto/blog-notify.dto';
 
 @Injectable()

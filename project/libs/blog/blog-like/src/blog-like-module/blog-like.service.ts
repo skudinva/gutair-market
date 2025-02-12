@@ -1,9 +1,9 @@
+import { Like } from '@backend/shared/core';
 import {
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Like } from '@project/shared/core';
 import { BlogLikeEntity } from './blog-like.entity';
 import { BlogLikeRepository } from './blog-like.repository';
 

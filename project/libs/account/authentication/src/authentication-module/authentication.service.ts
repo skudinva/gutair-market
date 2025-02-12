@@ -1,3 +1,8 @@
+import { NotifyService } from '@backend/account-notify';
+import { BlogUserEntity, BlogUserRepository } from '@backend/blog-user';
+import { jwtConfig } from '@backend/config';
+import { createJWTPayload } from '@backend/helpers';
+import { AuthUser, Token, User } from '@backend/shared/core';
 import {
   ConflictException,
   HttpException,
@@ -10,11 +15,6 @@ import {
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { NotifyService } from '@project/account-notify';
-import { BlogUserEntity, BlogUserRepository } from '@project/blog-user';
-import { jwtConfig } from '@project/config';
-import { createJWTPayload } from '@project/helpers';
-import { AuthUser, Token, User } from '@project/shared/core';
 import dayjs from 'dayjs';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';

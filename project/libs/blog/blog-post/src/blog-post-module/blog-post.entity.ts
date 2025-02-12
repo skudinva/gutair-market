@@ -1,11 +1,11 @@
-import { PostState, PostType } from '@prisma/client';
-import { BlogTagEntity, BlogTagFactory } from '@project/blog-tag';
+import { BlogTagEntity, BlogTagFactory } from '@backend/blog-tag';
 import {
   Entity,
   Post,
   PostExtraProperty,
   StorableEntity,
-} from '@project/shared/core';
+} from '@backend/shared/core';
+import { PostState, PostType } from '@prisma/client';
 
 export class BlogPostEntity extends Entity implements StorableEntity<Post> {
   public postType!: PostType;

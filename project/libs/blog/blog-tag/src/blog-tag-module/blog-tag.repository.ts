@@ -1,7 +1,7 @@
+import { PrismaClientService } from '@backend/blog-models';
+import { BasePostgresRepository } from '@backend/data-access';
+import { Tag } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
-import { PrismaClientService } from '@project/blog-models';
-import { BasePostgresRepository } from '@project/data-access';
-import { Tag } from '@project/shared/core';
 import { BlogTagEntity } from './blog-tag.entity';
 import { BlogTagFactory } from './blog-tag.factory';
 

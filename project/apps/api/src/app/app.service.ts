@@ -1,9 +1,9 @@
+import { BlogPostRdo } from '@backend/blog-post';
+import { UserInfoRdo } from '@backend/blog-user';
+import { createUrlForFile } from '@backend/helpers';
+import { File } from '@backend/shared/core';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { BlogPostRdo } from '@project/blog-post';
-import { UserInfoRdo } from '@project/blog-user';
-import { createUrlForFile } from '@project/helpers';
-import { File } from '@project/shared/core';
 import FormData from 'form-data';
 import 'multer';
 import { ApplicationServiceURL } from './app.config';

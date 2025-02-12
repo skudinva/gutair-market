@@ -1,4 +1,4 @@
-import { Entity } from '@project/shared/core';
+import { Entity } from '@backend/shared/core';
 
 export interface Repository<T extends Entity> {
   findById(id: T['id']): Promise<T | null>;

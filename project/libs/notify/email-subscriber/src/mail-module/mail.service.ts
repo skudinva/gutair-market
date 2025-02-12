@@ -1,8 +1,8 @@
+import { NotifyConfig } from '@backend/notify-config';
+import { Post, Subscriber } from '@backend/shared/core';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { NotifyConfig } from '@project/notify-config';
-import { Post, Subscriber } from '@project/shared/core';
 import {
   EMAIL_ADD_SUBSCRIBER_SUBJECT,
   EMAIL_NEW_POSTS_SUBJECT,

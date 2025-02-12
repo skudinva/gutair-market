@@ -1,5 +1,5 @@
+import { File } from '@backend/shared/core';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { File } from '@project/shared/core';
 import { Document } from 'mongoose';
 
 @Schema({

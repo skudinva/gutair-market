@@ -1,3 +1,6 @@
+import { UserIdDto } from '@backend/blog-post';
+import { fillDto } from '@backend/helpers';
+import { MongoIdValidationPipe } from '@backend/pipes';
 import {
   Body,
   Controller,
@@ -8,9 +11,6 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UserIdDto } from '@project/blog-post';
-import { fillDto } from '@project/helpers';
-import { MongoIdValidationPipe } from '@project/pipes';
 import { BlogUserService } from './blog-user.service';
 import { UserInfoRdo } from './rdo/user-info.rdo';
 

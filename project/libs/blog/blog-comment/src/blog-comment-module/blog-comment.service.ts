@@ -1,10 +1,10 @@
+import { BlogPostService } from '@backend/blog-post';
+import { PaginationResult } from '@backend/shared/core';
 import {
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { BlogPostService } from '@project/blog-post';
-import { PaginationResult } from '@project/shared/core';
 import { BlogCommentEntity } from './blog-comment.entity';
 import { BlogCommentFactory } from './blog-comment.factory';
 import { BlogCommentQuery } from './blog-comment.query';

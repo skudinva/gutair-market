@@ -1,4 +1,4 @@
-import { Entity, StorableEntity, Tag } from '@project/shared/core';
+import { Entity, StorableEntity, Tag } from '@backend/shared/core';
 
 export class BlogTagEntity extends Entity implements StorableEntity<Tag> {
   public title!: string;

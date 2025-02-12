@@ -1,5 +1,5 @@
+import { Comment, EntityFactory } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
-import { Comment, EntityFactory } from '@project/shared/core';
 import { BlogCommentEntity } from './blog-comment.entity';
 import { CreateCommentDto } from './dto/create-comment.dto';
 

@@ -1,8 +1,8 @@
+import { PrismaClientService } from '@backend/blog-models';
+import { BasePostgresRepository } from '@backend/data-access';
+import { Comment, PaginationResult } from '@backend/shared/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaClientService } from '@project/blog-models';
-import { BasePostgresRepository } from '@project/data-access';
-import { Comment, PaginationResult } from '@project/shared/core';
 import { BlogCommentEntity } from './blog-comment.entity';
 import { BlogCommentFactory } from './blog-comment.factory';
 import { BlogCommentQuery } from './blog-comment.query';

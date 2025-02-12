@@ -1,5 +1,5 @@
+import { Post, PostExtraProperty } from '@backend/shared/core';
 import { PostType } from '@prisma/client';
-import { Post, PostExtraProperty } from '@project/shared/core';
 import {
   registerDecorator,
   ValidationArguments,

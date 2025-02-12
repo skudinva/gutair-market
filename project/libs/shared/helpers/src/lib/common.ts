@@ -1,4 +1,4 @@
-import { File, SERVE_ROOT } from '@project/shared/core';
+import { File, SERVE_ROOT } from '@backend/shared/core';
 import { ClassTransformOptions, plainToInstance } from 'class-transformer';
 
 export type DateTimeUnit = 's' | 'h' | 'd' | 'm' | 'y';

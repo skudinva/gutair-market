@@ -1,6 +1,6 @@
+import { SortDirection, SortType } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { PostType } from '@prisma/client';
-import { SortDirection, SortType } from '@project/shared/core';
 import { Transform } from 'class-transformer';
 import {
   IsArray,

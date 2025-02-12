@@ -1,8 +1,8 @@
+import { jwtConfig } from '@backend/config';
+import { parseTime } from '@backend/helpers';
+import { RefreshTokenPayload } from '@backend/shared/core';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { jwtConfig } from '@project/config';
-import { parseTime } from '@project/helpers';
-import { RefreshTokenPayload } from '@project/shared/core';
 import dayjs from 'dayjs';
 import { RefreshTokenEntity } from './refresh-token.entity';
 import { RefreshTokenRepository } from './refresh-token.repository';

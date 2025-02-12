@@ -1,5 +1,5 @@
+import { AuthUser } from '@backend/shared/core';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { AuthUser } from '@project/shared/core';
 import { Document } from 'mongoose';
 
 @Schema({

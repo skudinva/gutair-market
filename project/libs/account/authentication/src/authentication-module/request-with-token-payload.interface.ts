@@ -1,4 +1,4 @@
-import { TokenPayload } from '@project/shared/core';
+import { TokenPayload } from '@backend/shared/core';
 
 export interface RequestWithTokenPayload {
   user?: TokenPayload;

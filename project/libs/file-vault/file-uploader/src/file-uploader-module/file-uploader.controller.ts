@@ -1,3 +1,5 @@
+import { fillDto } from '@backend/helpers';
+import { MongoIdValidationPipe } from '@backend/pipes';
 import {
   Controller,
   Get,
@@ -8,8 +10,6 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes } from '@nestjs/swagger';
-import { fillDto } from '@project/helpers';
-import { MongoIdValidationPipe } from '@project/pipes';
 import 'multer';
 import { FileUploaderService } from './file-uploader.service';
 import { UploadedFileRdo } from './rdo/uploaded-file.rdo';

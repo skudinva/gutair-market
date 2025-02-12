@@ -1,5 +1,5 @@
+import { Entity, EntityFactory, StorableEntity } from '@backend/shared/core';
 import { NotFoundException } from '@nestjs/common';
-import { Entity, EntityFactory, StorableEntity } from '@project/shared/core';
 import { Document, Model } from 'mongoose';
 import { Repository } from './repository.interface';
 

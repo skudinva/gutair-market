@@ -1,6 +1,6 @@
+import { RabbitRouting } from '@backend/shared/core';
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Controller } from '@nestjs/common';
-import { RabbitRouting } from '@project/shared/core';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { NotifyDto } from './dto/notify.dto';
 import { EmailSubscriberService } from './email-subscriber.service';

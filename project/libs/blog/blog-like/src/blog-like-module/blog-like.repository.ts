@@ -1,7 +1,7 @@
+import { PrismaClientService } from '@backend/blog-models';
+import { BasePostgresRepository } from '@backend/data-access';
+import { Like } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
-import { PrismaClientService } from '@project/blog-models';
-import { BasePostgresRepository } from '@project/data-access';
-import { Like } from '@project/shared/core';
 import { BlogLikeEntity } from './blog-like.entity';
 import { BlogLikeFactory } from './blog-like.factory';
 

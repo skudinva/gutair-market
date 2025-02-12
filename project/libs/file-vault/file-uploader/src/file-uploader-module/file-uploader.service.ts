@@ -1,7 +1,7 @@
+import { FileVaultConfig } from '@backend/file-vault-config';
+import { StoredFile } from '@backend/shared/core';
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { FileVaultConfig } from '@project/file-vault-config';
-import { StoredFile } from '@project/shared/core';
 import dayjs from 'dayjs';
 import { ensureDir } from 'fs-extra';
 import { extension } from 'mime-types';

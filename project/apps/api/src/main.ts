@@ -1,7 +1,7 @@
+import { RequestIdInterceptor } from '@backend/interceptors';
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { RequestIdInterceptor } from '@project/interceptors';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {

@@ -1,7 +1,7 @@
 # Последовательность запуска проекта
 
 ```
-cd project
+cd backend
 npm install
 cp apps/account/.env-example apps/account/.env
 cp apps/api/.env.example apps/api/.env

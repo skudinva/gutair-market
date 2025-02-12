@@ -1,5 +1,5 @@
-import { PrismaClientService } from '@project/blog-models';
-import { Entity, EntityFactory, StorableEntity } from '@project/shared/core';
+import { PrismaClientService } from '@backend/blog-models';
+import { Entity, EntityFactory, StorableEntity } from '@backend/shared/core';
 import { Repository } from './repository.interface';
 
 export abstract class BasePostgresRepository<

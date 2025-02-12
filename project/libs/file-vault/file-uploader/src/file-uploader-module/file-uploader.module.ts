@@ -1,8 +1,8 @@
+import { SERVE_ROOT } from '@backend/shared/core';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { SERVE_ROOT } from '@project/shared/core';
 import { FileUploaderController } from './file-uploader.controller';
 import { FileUploaderFactory } from './file-uploader.factory';
 import { FileUploaderRepository } from './file-uploader.repository';

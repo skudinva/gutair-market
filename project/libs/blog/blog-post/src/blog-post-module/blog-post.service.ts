@@ -1,11 +1,11 @@
+import { BlogTagService } from '@backend/blog-tag';
+import { PaginationResult } from '@backend/shared/core';
 import {
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { PostState } from '@prisma/client';
-import { BlogTagService } from '@project/blog-tag';
-import { PaginationResult } from '@project/shared/core';
 import { BlogPostResponse } from './blog-post.constant';
 import { BlogPostEntity } from './blog-post.entity';
 import { BlogPostFactory } from './blog-post.factory';

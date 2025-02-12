@@ -1,4 +1,4 @@
-import { Entity, JwtToken, StorableEntity } from '@project/shared/core';
+import { Entity, JwtToken, StorableEntity } from '@backend/shared/core';
 
 export class RefreshTokenEntity
   extends Entity

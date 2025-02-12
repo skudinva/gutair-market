@@ -1,3 +1,13 @@
+import {
+  AuthenticationResponseMessage,
+  CreateUserDto,
+  LoggedUserRdo,
+  LoginUserDto,
+  RegisterUserDto,
+  UpdateUserDto,
+  UserRdo,
+} from '@backend/authentication';
+import { FieldValidate, SERVE_ROOT } from '@backend/shared/core';
 import { HttpService } from '@nestjs/axios';
 import {
   Body,
@@ -23,16 +33,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import {
-  AuthenticationResponseMessage,
-  CreateUserDto,
-  LoggedUserRdo,
-  LoginUserDto,
-  RegisterUserDto,
-  UpdateUserDto,
-  UserRdo,
-} from '@project/authentication';
-import { FieldValidate, SERVE_ROOT } from '@project/shared/core';
 import { plainToInstance } from 'class-transformer';
 import 'multer';
 import { ApiSection, ApplicationServiceURL } from './app.config';

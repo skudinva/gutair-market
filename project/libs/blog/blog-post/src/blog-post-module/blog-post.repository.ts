@@ -1,8 +1,8 @@
+import { PrismaClientService } from '@backend/blog-models';
+import { BasePostgresRepository } from '@backend/data-access';
+import { PaginationResult, Post } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
 import { PostState, Prisma } from '@prisma/client';
-import { PrismaClientService } from '@project/blog-models';
-import { BasePostgresRepository } from '@project/data-access';
-import { PaginationResult, Post } from '@project/shared/core';
 import { BlogPostEntity } from './blog-post.entity';
 import { BlogPostFactory } from './blog-post.factory';
 import { BlogPostQuery } from './blog-post.query';

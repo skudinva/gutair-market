@@ -1,5 +1,5 @@
+import { EntityFactory, File } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
-import { EntityFactory, File } from '@project/shared/core';
 import { FileUploaderEntity } from './file-uploader.entity';
 
 @Injectable()

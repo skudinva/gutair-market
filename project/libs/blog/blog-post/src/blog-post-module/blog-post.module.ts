@@ -1,7 +1,7 @@
+import { BlogLikeModule } from '@backend/blog-like';
+import { BlogNotifyModule } from '@backend/blog-notify';
+import { BlogTagModule } from '@backend/blog-tag';
 import { Module } from '@nestjs/common';
-import { BlogLikeModule } from '@project/blog-like';
-import { BlogNotifyModule } from '@project/blog-notify';
-import { BlogTagModule } from '@project/blog-tag';
 import { BlogPostController } from './blog-post.controller';
 import { BlogPostFactory } from './blog-post.factory';
 import { BlogPostRepository } from './blog-post.repository';

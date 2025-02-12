@@ -1,6 +1,6 @@
+import { FieldValidate } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { PostState, PostType } from '@prisma/client';
-import { FieldValidate } from '@project/shared/core';
 import { Type } from 'class-transformer';
 import {
   ArrayMaxSize,

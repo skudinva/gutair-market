@@ -1,5 +1,5 @@
+import { TagRdo } from '@backend/blog-tag';
 import { ApiProperty } from '@nestjs/swagger';
-import { TagRdo } from '@project/blog-tag';
 import { Expose, Type } from 'class-transformer';
 import { PostExtraPropertyRdo } from './post-extra-property.rdo';
 

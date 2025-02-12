@@ -1,4 +1,4 @@
-import { Entity, File, StorableEntity } from '@project/shared/core';
+import { Entity, File, StorableEntity } from '@backend/shared/core';
 
 export class FileUploaderEntity extends Entity implements StorableEntity<File> {
   public originalName: string;

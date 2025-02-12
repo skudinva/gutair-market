@@ -1,6 +1,6 @@
+import { BaseMongoRepository } from '@backend/data-access';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { BaseMongoRepository } from '@project/data-access';
 import { Model } from 'mongoose';
 import { RefreshTokenEntity } from './refresh-token.entity';
 import { RefreshTokenFactory } from './refresh-token.factory';

@@ -1,4 +1,4 @@
-import { AuthUser, Entity, StorableEntity } from '@project/shared/core';
+import { AuthUser, Entity, StorableEntity } from '@backend/shared/core';
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUNDS } from './blog-user.constant';
 

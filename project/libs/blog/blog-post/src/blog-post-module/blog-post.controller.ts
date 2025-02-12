@@ -1,3 +1,7 @@
+import { BlogLikeService } from '@backend/blog-like';
+import { BlogNotifyService } from '@backend/blog-notify';
+import { fillDto } from '@backend/helpers';
+import { SortDirection, SortType } from '@backend/shared/core';
 import {
   Body,
   Controller,
@@ -11,10 +15,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { BlogLikeService } from '@project/blog-like';
-import { BlogNotifyService } from '@project/blog-notify';
-import { fillDto } from '@project/helpers';
-import { SortDirection, SortType } from '@project/shared/core';
 import { BlogPostResponse } from './blog-post.constant';
 import { BlogPostQuery } from './blog-post.query';
 import { BlogPostService } from './blog-post.service';

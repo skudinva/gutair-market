@@ -1,7 +1,7 @@
+import { BlogTagEntity } from '@backend/blog-tag';
+import { EntityFactory, Post } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
 import { PostState } from '@prisma/client';
-import { BlogTagEntity } from '@project/blog-tag';
-import { EntityFactory, Post } from '@project/shared/core';
 import dayjs from 'dayjs';
 import { BlogPostEntity } from './blog-post.entity';
 import { CreatePostDto } from './dto/create-post.dto';

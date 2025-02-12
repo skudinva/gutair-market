@@ -1,4 +1,4 @@
-import { SortDirection } from '@project/shared/core';
+import { SortDirection } from '@backend/shared/core';
 import { Transform } from 'class-transformer';
 import { IsIn, IsOptional } from 'class-validator';
 

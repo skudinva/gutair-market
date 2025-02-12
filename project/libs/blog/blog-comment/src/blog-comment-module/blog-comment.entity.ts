@@ -1,4 +1,4 @@
-import { Comment, Entity, StorableEntity } from '@project/shared/core';
+import { Comment, Entity, StorableEntity } from '@backend/shared/core';
 
 export class BlogCommentEntity
   extends Entity

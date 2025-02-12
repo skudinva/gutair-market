@@ -1,8 +1,8 @@
+import { jwtConfig } from '@backend/config';
+import { RefreshTokenPayload } from '@backend/shared/core';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { jwtConfig } from '@project/config';
-import { RefreshTokenPayload } from '@project/shared/core';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthenticationService } from '../authentication-module/authentication.service';
 import { TokenNotExistsException } from '../exceptions/token-not-exists.exception';

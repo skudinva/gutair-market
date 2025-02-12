@@ -1,6 +1,6 @@
+import { getRabbitMQOptions } from '@backend/helpers';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
-import { getRabbitMQOptions } from '@project/helpers';
 import { BlogNotifyService } from './blog-notify.service';
 
 @Module({

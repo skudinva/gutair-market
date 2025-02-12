@@ -1,4 +1,4 @@
-import { SortDirection } from '@project/shared/core';
+import { SortDirection } from '@backend/shared/core';
 
 export const MAX_COMMENTS_COUNT = 50;
 export const DEFAULT_SORT_DIRECTION = SortDirection.Desc;

@@ -1,5 +1,5 @@
+import { EntityFactory, Tag } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
-import { EntityFactory, Tag } from '@project/shared/core';
 import { BlogTagEntity } from './blog-tag.entity';
 
 @Injectable()

@@ -1,6 +1,6 @@
+import { PrismaClientModule } from '@backend/blog-models';
+import { BlogPostModule } from '@backend/blog-post';
 import { Module } from '@nestjs/common';
-import { PrismaClientModule } from '@project/blog-models';
-import { BlogPostModule } from '@project/blog-post';
 import { BlogCommentController } from './blog-comment.controller';
 import { BlogCommentFactory } from './blog-comment.factory';
 import { BlogCommentRepository } from './blog-comment.repository';

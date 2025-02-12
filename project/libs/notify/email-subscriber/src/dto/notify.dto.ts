@@ -1,5 +1,5 @@
+import { Post } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
-import { Post } from '@project/shared/core';
 import { IsMongoId } from 'class-validator';
 
 export class NotifyDto {
