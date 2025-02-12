@@ -1,2 +1,0 @@
-# gutair-market
-gutair-market
