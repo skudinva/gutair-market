@@ -5,7 +5,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { ProductEntity } from './product.entity';
 
 @Injectable()
-export class ShopProductFactory implements EntityFactory<ProductEntity> {
+export class ProductFactory implements EntityFactory<ProductEntity> {
   create(entityPlainData: Product): ProductEntity {
     return new ProductEntity(entityPlainData);
   }

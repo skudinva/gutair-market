@@ -9,9 +9,9 @@ import {
   DEFAULT_PRODUCT_COUNT_LIMIT,
   DEFAULT_SORT_DIRECTION,
   DEFAULT_SORT_TYPE,
-} from './shop-product.constant';
+} from './product.constant';
 
-export class ShopProductQuery {
+export class ProductQuery {
   public limit: number = DEFAULT_PRODUCT_COUNT_LIMIT;
 
   @IsIn(Object.values(SortDirection))

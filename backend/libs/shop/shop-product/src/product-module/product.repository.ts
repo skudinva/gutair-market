@@ -4,15 +4,15 @@ import { PrismaClientService } from '@backend/shop-models';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { ProductEntity } from './product.entity';
-import { ShopProductFactory } from './shop-product.factory';
-import { ShopProductQuery } from './shop-product.query';
+import { ProductFactory } from './product.factory';
+import { ProductQuery } from './product.query';
 
 @Injectable()
-export class ShopProductRepository extends BasePostgresRepository<
+export class ProductRepository extends BasePostgresRepository<
   ProductEntity,
   Product
 > {
-  constructor(entityFactory: ShopProductFactory, client: PrismaClientService) {
+  constructor(entityFactory: ProductFactory, client: PrismaClientService) {
     super(entityFactory, client);
   }
 
@@ -30,7 +30,7 @@ export class ShopProductRepository extends BasePostgresRepository<
   }
 
   private async composeWhere(
-    query?: ShopProductQuery
+    query?: ProductQuery
   ): Promise<Prisma.ProductWhereInput> {
     const { productType, cordsCount } = query;
     const where: Prisma.ProductWhereInput = {};
@@ -47,7 +47,7 @@ export class ShopProductRepository extends BasePostgresRepository<
   }
 
   private async composeOrderBy(
-    query?: ShopProductQuery
+    query?: ProductQuery
   ): Promise<Prisma.ProductOrderByWithRelationInput> {
     const { sortBy, sortDirection } = query;
     const orderBy: Prisma.ProductOrderByWithRelationInput = {};
@@ -92,7 +92,7 @@ export class ShopProductRepository extends BasePostgresRepository<
   }
 
   public async find(
-    query?: ShopProductQuery
+    query?: ProductQuery
   ): Promise<PaginationResult<ProductEntity | null>> {
     const skip =
       query?.page && query?.limit ? (query.page - 1) * query.limit : undefined;

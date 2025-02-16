@@ -2,19 +2,19 @@ import { PaginationResult } from '@backend/shared/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductResponse } from './product.constant';
 import { ProductEntity } from './product.entity';
-import { ShopProductResponse } from './shop-product.constant';
-import { ShopProductFactory } from './shop-product.factory';
-import { ShopProductQuery } from './shop-product.query';
-import { ShopProductRepository } from './shop-product.repository';
+import { ProductFactory } from './product.factory';
+import { ProductQuery } from './product.query';
+import { ProductRepository } from './product.repository';
 
 @Injectable()
-export class ShopProductService {
-  constructor(private readonly shopProductRepository: ShopProductRepository) {}
+export class ProductService {
+  constructor(private readonly productRepository: ProductRepository) {}
 
   public async createProduct(dto: CreateProductDto): Promise<ProductEntity> {
-    const newProduct = ShopProductFactory.createFromCreateProductDto(dto);
-    await this.shopProductRepository.save(newProduct);
+    const newProduct = ProductFactory.createFromCreateProductDto(dto);
+    await this.productRepository.save(newProduct);
 
     return newProduct;
   }
@@ -31,7 +31,7 @@ export class ShopProductService {
       }
     }
 
-    await this.shopProductRepository.update(existProduct);
+    await this.productRepository.update(existProduct);
     return existProduct;
   }
 
@@ -41,21 +41,21 @@ export class ShopProductService {
       return;
     }
 
-    await this.shopProductRepository.deleteById(id);
+    await this.productRepository.deleteById(id);
   }
 
   public async getProduct(id: string): Promise<ProductEntity> {
-    const existProduct = await this.shopProductRepository.findById(id);
+    const existProduct = await this.productRepository.findById(id);
     if (!existProduct) {
-      throw new NotFoundException(ShopProductResponse.ProductNotFound);
+      throw new NotFoundException(ProductResponse.ProductNotFound);
     }
 
     return existProduct;
   }
 
   public async getProducts(
-    query?: ShopProductQuery
+    query?: ProductQuery
   ): Promise<PaginationResult<ProductEntity | null>> {
-    return this.shopProductRepository.find(query);
+    return this.productRepository.find(query);
   }
 }

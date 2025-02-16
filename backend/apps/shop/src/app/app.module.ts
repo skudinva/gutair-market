@@ -1,9 +1,9 @@
 import { ShopConfigModule } from '@backend/shop-config';
-import { ShopProductModule } from '@backend/shop-product';
+import { ProductModule } from '@backend/shop-product';
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [ShopProductModule, ShopConfigModule],
+  imports: [ProductModule, ShopConfigModule],
   controllers: [],
   providers: [],
 })

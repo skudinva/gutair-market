@@ -14,8 +14,8 @@ import {
   CreateProductDto,
   CreateProductFileDto,
   ProductRdo,
+  ProductResponse,
   ProductWithPaginationRdo,
-  ShopProductResponse,
   UpdateProductDto,
   UpdateProductFileDto,
 } from '@backend/shop-product';
@@ -73,11 +73,11 @@ export class ShopController {
   @ApiResponse({
     type: ProductRdo,
     status: HttpStatus.CREATED,
-    description: ShopProductResponse.ProductFound,
+    description: ProductResponse.ProductFound,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: ShopProductResponse.ProductNotFound,
+    description: ProductResponse.ProductNotFound,
   })
   @Post('/')
   @ApiTags(ApiSection.Product)
@@ -119,19 +119,19 @@ export class ShopController {
   @ApiResponse({
     type: ProductRdo,
     status: HttpStatus.OK,
-    description: ShopProductResponse.ProductUpdated,
+    description: ProductResponse.ProductUpdated,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: ShopProductResponse.Unauthorized,
+    description: ProductResponse.Unauthorized,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: ShopProductResponse.ProductNotFound,
+    description: ProductResponse.ProductNotFound,
   })
   @ApiResponse({
     status: HttpStatus.CONFLICT,
-    description: ShopProductResponse.AccessDeny,
+    description: ProductResponse.AccessDeny,
   })
   @UseGuards(CheckAuthGuard)
   @ApiBearerAuth('accessToken')
@@ -178,19 +178,19 @@ export class ShopController {
   @Delete('/:id')
   @ApiResponse({
     status: HttpStatus.NO_CONTENT,
-    description: ShopProductResponse.ProductDeleted,
+    description: ProductResponse.ProductDeleted,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: ShopProductResponse.Unauthorized,
+    description: ProductResponse.Unauthorized,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: ShopProductResponse.ProductNotFound,
+    description: ProductResponse.ProductNotFound,
   })
   @ApiResponse({
     status: HttpStatus.CONFLICT,
-    description: ShopProductResponse.AccessDeny,
+    description: ProductResponse.AccessDeny,
   })
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(CheckAuthGuard)
@@ -211,7 +211,7 @@ export class ShopController {
   @ApiResponse({
     type: ProductWithPaginationRdo,
     status: HttpStatus.OK,
-    description: ShopProductResponse.ProductsFound,
+    description: ProductResponse.ProductsFound,
   })
   @ApiQuery({
     name: 'sortDirection',
@@ -263,11 +263,11 @@ export class ShopController {
   @ApiResponse({
     type: ProductRdo,
     status: HttpStatus.OK,
-    description: ShopProductResponse.ProductFound,
+    description: ProductResponse.ProductFound,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: ShopProductResponse.ProductNotFound,
+    description: ProductResponse.ProductNotFound,
   })
   @ApiBearerAuth('accessToken')
   @UseGuards(CheckAuthGuard)

@@ -14,29 +14,29 @@ import {
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductResponse } from './product.constant';
+import { ProductQuery } from './product.query';
+import { ProductService } from './product.service';
 import { ProductWithPaginationRdo } from './rdo/product-with-pagination.rdo';
 import { ProductRdo } from './rdo/product.rdo';
-import { ShopProductResponse } from './shop-product.constant';
-import { ShopProductQuery } from './shop-product.query';
-import { ShopProductService } from './shop-product.service';
 
 @Controller('products')
-export class ShopProductController {
-  constructor(private readonly shopProductService: ShopProductService) {}
+export class ProductController {
+  constructor(private readonly productService: ProductService) {}
 
   @Get('/:id/:userId')
   @ApiResponse({
     type: ProductRdo,
     status: HttpStatus.OK,
-    description: ShopProductResponse.ProductFound,
+    description: ProductResponse.ProductFound,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: ShopProductResponse.ProductNotFound,
+    description: ProductResponse.ProductNotFound,
   })
   @ApiTags('shop product')
   public async show(@Param('id') id: string) {
-    const product = await this.shopProductService.getProduct(id);
+    const product = await this.productService.getProduct(id);
     return fillDto(ProductRdo, product.toPOJO());
   }
 
@@ -44,13 +44,11 @@ export class ShopProductController {
   @ApiResponse({
     type: ProductWithPaginationRdo,
     status: HttpStatus.OK,
-    description: ShopProductResponse.ProductsFound,
+    description: ProductResponse.ProductsFound,
   })
   @ApiTags('shop product')
-  public async index(@Query() query: ShopProductQuery) {
-    const productsWithPagination = await this.shopProductService.getProducts(
-      query
-    );
+  public async index(@Query() query: ProductQuery) {
+    const productsWithPagination = await this.productService.getProducts(query);
     const result = {
       ...productsWithPagination,
       entities: productsWithPagination.entities.map((product) =>
@@ -63,12 +61,12 @@ export class ShopProductController {
   @ApiResponse({
     type: ProductRdo,
     status: HttpStatus.CREATED,
-    description: ShopProductResponse.ProductCreated,
+    description: ProductResponse.ProductCreated,
   })
   @Post('/')
   @ApiTags('shop product')
   public async create(@Body() dto: CreateProductDto) {
-    const newProduct = await this.shopProductService.createProduct(dto);
+    const newProduct = await this.productService.createProduct(dto);
     console.log(newProduct);
 
     return fillDto(ProductRdo, newProduct.toPOJO());
@@ -76,48 +74,48 @@ export class ShopProductController {
 
   @ApiResponse({
     status: HttpStatus.NO_CONTENT,
-    description: ShopProductResponse.ProductDeleted,
+    description: ProductResponse.ProductDeleted,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: ShopProductResponse.Unauthorized,
+    description: ProductResponse.Unauthorized,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: ShopProductResponse.ProductNotFound,
+    description: ProductResponse.ProductNotFound,
   })
   @ApiResponse({
     status: HttpStatus.CONFLICT,
-    description: ShopProductResponse.AccessDeny,
+    description: ProductResponse.AccessDeny,
   })
   @Delete('/:id/:userId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiTags('shop product')
   public async destroy(@Param('id') id: string) {
-    await this.shopProductService.deleteProduct(id);
+    await this.productService.deleteProduct(id);
   }
 
   @ApiResponse({
     type: ProductRdo,
     status: HttpStatus.OK,
-    description: ShopProductResponse.ProductUpdated,
+    description: ProductResponse.ProductUpdated,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: ShopProductResponse.Unauthorized,
+    description: ProductResponse.Unauthorized,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: ShopProductResponse.ProductNotFound,
+    description: ProductResponse.ProductNotFound,
   })
   @ApiResponse({
     status: HttpStatus.CONFLICT,
-    description: ShopProductResponse.AccessDeny,
+    description: ProductResponse.AccessDeny,
   })
   @Put('/:id')
   @ApiTags('shop product')
   public async update(@Param('id') id: string, @Body() dto: UpdateProductDto) {
-    const updatedProduct = await this.shopProductService.updateProduct(id, dto);
+    const updatedProduct = await this.productService.updateProduct(id, dto);
     return fillDto(ProductRdo, updatedProduct.toPOJO());
   }
 }

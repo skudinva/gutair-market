@@ -5,7 +5,7 @@ export const DEFAULT_SORT_DIRECTION = SortDirection.Desc;
 export const DEFAULT_SORT_TYPE = SortType.DATE;
 export const DEFAULT_PAGE_COUNT = 1;
 
-export const ShopProductResponse = {
+export const ProductResponse = {
   ProductCreated: 'New product created',
   ProductUpdated: 'Product updated',
   Unauthorized: 'Need authorization',
