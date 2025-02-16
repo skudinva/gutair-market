@@ -4,7 +4,12 @@ import {
 } from '@backend/authentication';
 
 import { InjectUserIdInterceptor } from '@backend/interceptors';
-import { FieldValidate, SortDirection, SortType } from '@backend/shared/core';
+import {
+  CordsCount,
+  FieldValidate,
+  SortDirection,
+  SortType,
+} from '@backend/shared/core';
 import {
   CreateProductDto,
   CreateProductFileDto,
@@ -210,12 +215,6 @@ export class ShopController {
     description: ShopProductResponse.ProductsFound,
   })
   @ApiQuery({
-    name: 'tags',
-    required: false,
-    type: [String],
-    description: 'Tags',
-  })
-  @ApiQuery({
     name: 'sortDirection',
     required: true,
     enum: SortDirection,
@@ -235,23 +234,16 @@ export class ShopController {
     description: 'Page number',
   })
   @ApiQuery({
-    name: 'search',
-    required: false,
-    type: String,
-    description: 'Search term',
-  })
-  @ApiQuery({
-    name: 'productUserId',
-    required: false,
-    type: String,
-    example: '677cd8d75ff92067f1de5911',
-    description: 'Author id of the product',
-  })
-  @ApiQuery({
     name: 'productType',
     required: false,
     enum: ProductType,
     description: 'Product type',
+  })
+  @ApiQuery({
+    name: 'cordsCount',
+    required: false,
+    enum: Object.values(CordsCount),
+    description: 'Cords counts',
   })
   @Get('/')
   @ApiBearerAuth('accessToken')
