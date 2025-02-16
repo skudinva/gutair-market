@@ -15,11 +15,4 @@ export class CreateUserDto extends LoginUserDto {
     message: AuthenticationValidateMessage.NameNotValid,
   })
   public name: string;
-
-  @ApiProperty({
-    description: 'User avatar path',
-    example: '/images/user.png',
-  })
-  @IsString()
-  public avatar: string;
 }

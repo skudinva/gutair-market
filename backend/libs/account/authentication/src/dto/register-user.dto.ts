@@ -10,13 +10,4 @@ export class RegisterUserDto extends LoginUserDto {
   })
   @IsString()
   public name: string;
-
-  @ApiProperty({
-    description: 'User avatar',
-
-    type: 'string',
-    format: 'binary',
-    required: true,
-  })
-  public avatar?: Express.Multer.File;
 }
