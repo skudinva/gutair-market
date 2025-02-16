@@ -71,6 +71,10 @@ export class UsersController {
     status: HttpStatus.UNAUTHORIZED,
     description: AuthenticationResponseMessage.LoggedError,
   })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: AuthenticationResponseMessage.LoggedError,
+  })
   public async login(@Body() loginUserDto: LoginUserDto) {
     const { data } = await this.httpService.axiosRef.post(
       `${ApplicationServiceURL.Auth}/login`,
