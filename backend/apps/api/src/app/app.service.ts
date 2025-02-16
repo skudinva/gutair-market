@@ -1,7 +1,7 @@
 import { BlogPostRdo } from '@backend/blog-post';
-import { UserInfoRdo } from '@backend/blog-user';
 import { createUrlForFile } from '@backend/helpers';
 import { File } from '@backend/shared/core';
+import { UserInfoRdo } from '@backend/shop-user';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import FormData from 'form-data';

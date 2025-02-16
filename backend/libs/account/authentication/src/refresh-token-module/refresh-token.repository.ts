@@ -13,9 +13,9 @@ export class RefreshTokenRepository extends BaseMongoRepository<
 > {
   constructor(
     entityFactory: RefreshTokenFactory,
-    @InjectModel(RefreshTokenModel.name) blogUserModel: Model<RefreshTokenModel>
+    @InjectModel(RefreshTokenModel.name) shopUserModel: Model<RefreshTokenModel>
   ) {
-    super(entityFactory, blogUserModel);
+    super(entityFactory, shopUserModel);
   }
 
   public async deleteByTokenId(tokenId: string) {

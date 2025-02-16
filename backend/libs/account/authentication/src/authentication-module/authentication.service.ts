@@ -1,8 +1,8 @@
 import { NotifyService } from '@backend/account-notify';
-import { BlogUserEntity, BlogUserRepository } from '@backend/blog-user';
 import { jwtConfig } from '@backend/config';
 import { createJWTPayload } from '@backend/helpers';
 import { AuthUser, Token, User } from '@backend/shared/core';
+import { ShopUserEntity, ShopUserRepository } from '@backend/shop-user';
 import {
   ConflictException,
   HttpException,
@@ -15,7 +15,6 @@ import {
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import dayjs from 'dayjs';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
@@ -31,7 +30,7 @@ import {
 export class AuthenticationService {
   private readonly logger = new Logger(AuthenticationService.name);
   constructor(
-    private readonly blogUserRepository: BlogUserRepository,
+    private readonly shopUserRepository: ShopUserRepository,
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
     private readonly jwtOptions: ConfigType<typeof jwtConfig>,
@@ -39,36 +38,31 @@ export class AuthenticationService {
     private readonly notifyService: NotifyService
   ) {}
 
-  public async register(dto: CreateUserDto): Promise<BlogUserEntity> {
-    const { email, name, avatar, password } = dto;
+  public async register(dto: CreateUserDto): Promise<ShopUserEntity> {
+    const { email, name, password } = dto;
 
-    const blogUser: AuthUser = {
+    const shopUser: AuthUser = {
       email,
       name,
-      avatar,
-      registerDate: dayjs().toDate(),
       passwordHash: '',
-      subscriptions: [],
-      subscribersCount: 0,
-      postsCount: 0,
     };
 
-    const existUser = await this.blogUserRepository.findByEmail(email);
+    const existUser = await this.shopUserRepository.findByEmail(email);
 
     if (existUser) {
       throw new ConflictException(AUTH_USER_EXISTS);
     }
 
-    const userEntity = await new BlogUserEntity(blogUser).setPassword(password);
+    const userEntity = await new ShopUserEntity(shopUser).setPassword(password);
 
-    await this.blogUserRepository.save(userEntity);
+    await this.shopUserRepository.save(userEntity);
     await this.notifyService.registerSubscriber({ email, name });
     return userEntity;
   }
 
   public async verifyUser(dto: LoginUserDto) {
     const { email, password } = dto;
-    const existUser = await this.blogUserRepository.findByEmail(email);
+    const existUser = await this.shopUserRepository.findByEmail(email);
 
     if (!existUser) {
       throw new NotFoundException(AUTH_USER_NOT_FOUND);
@@ -82,7 +76,7 @@ export class AuthenticationService {
   }
 
   public async getUser(id: string) {
-    const user = await this.blogUserRepository.findById(id);
+    const user = await this.shopUserRepository.findById(id);
 
     if (!user) {
       throw new NotFoundException(AUTH_USER_NOT_FOUND);
@@ -120,7 +114,7 @@ export class AuthenticationService {
   }
 
   public async getUserByEmail(email: string) {
-    const existUser = await this.blogUserRepository.findByEmail(email);
+    const existUser = await this.shopUserRepository.findByEmail(email);
 
     if (!existUser) {
       throw new NotFoundException(`User with email ${email} not found`);
@@ -136,13 +130,13 @@ export class AuthenticationService {
       );
     }
 
-    const existUser = await this.blogUserRepository.findById(id);
+    const existUser = await this.shopUserRepository.findById(id);
     if (!existUser) {
       throw new NotFoundException(AUTH_USER_NOT_FOUND);
     }
 
     const userEntity = await existUser.setPassword(dto.password);
-    await this.blogUserRepository.updatePassword(id, userEntity.passwordHash);
+    await this.shopUserRepository.updatePassword(id, userEntity.passwordHash);
     return userEntity;
   }
 }

@@ -1,6 +1,6 @@
 import { NotifyModule } from '@backend/account-notify';
-import { BlogUserModule } from '@backend/blog-user';
 import { getJwtOptions } from '@backend/config';
+import { ShopUserModule } from '@backend/shop-user';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -12,7 +12,7 @@ import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
 @Module({
   imports: [
-    BlogUserModule,
+    ShopUserModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: getJwtOptions,

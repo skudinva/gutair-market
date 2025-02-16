@@ -2,23 +2,23 @@ import { BaseMongoRepository } from '@backend/data-access';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { BlogUserEntity } from './blog-user.entity';
-import { BlogUserFactory } from './blog-user.factory';
-import { BlogUserModel } from './blog-user.model';
+import { ShopUserEntity } from './shop-user.entity';
+import { ShopUserFactory } from './shop-user.factory';
+import { ShopUserModel } from './shop-user.model';
 
 @Injectable()
-export class BlogUserRepository extends BaseMongoRepository<
-  BlogUserEntity,
-  BlogUserModel
+export class ShopUserRepository extends BaseMongoRepository<
+  ShopUserEntity,
+  ShopUserModel
 > {
   constructor(
-    entityFactory: BlogUserFactory,
-    @InjectModel(BlogUserModel.name) blogUserModel: Model<BlogUserModel>
+    entityFactory: ShopUserFactory,
+    @InjectModel(ShopUserModel.name) shopUserModel: Model<ShopUserModel>
   ) {
-    super(entityFactory, blogUserModel);
+    super(entityFactory, shopUserModel);
   }
 
-  public async findByEmail(email: string): Promise<BlogUserEntity | null> {
+  public async findByEmail(email: string): Promise<ShopUserEntity | null> {
     const document = await this.model.findOne({ email }).exec();
     if (!document) {
       return null;
