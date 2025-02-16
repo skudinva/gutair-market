@@ -23,9 +23,7 @@
       "@backend/shop-product": ["libs/shop/shop-product/src/index.ts"],
       "@backend/config": ["libs/account/config/src/index.ts"],
       "@backend/data-access": ["libs/shared/data-access/src/index.ts"],
-      "@backend/email-subscriber": [
-        "libs/notify/email-subscriber/src/index.ts"
-      ],
+      "@backend/email-user": ["libs/notify/email-user/src/index.ts"],
       "@backend/file-uploader": ["libs/file-vault/file-uploader/src/index.ts"],
       "@backend/file-vault-config": ["libs/file-vault/config/src/index.ts"],
       "@backend/helpers": ["libs/shared/helpers/src/index.ts"],

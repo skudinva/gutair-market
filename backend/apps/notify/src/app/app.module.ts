@@ -1,4 +1,4 @@
-import { EmailUserModule } from '@backend/email-subscriber';
+import { EmailUserModule } from '@backend/email-user';
 import { NotifyConfigModule } from '@backend/notify-config';
 import { Module } from '@nestjs/common';
 

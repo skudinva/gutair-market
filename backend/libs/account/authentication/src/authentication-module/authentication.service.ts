@@ -52,7 +52,7 @@ export class AuthenticationService {
     const userEntity = await new ShopUserEntity(shopUser).setPassword(password);
 
     await this.shopUserRepository.save(userEntity);
-    await this.notifyService.registerSubscriber({ email, name });
+    await this.notifyService.registerUser({ email, name, password });
     return userEntity;
   }
 
