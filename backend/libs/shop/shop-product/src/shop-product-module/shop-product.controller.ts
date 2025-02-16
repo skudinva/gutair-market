@@ -1,6 +1,4 @@
 import { fillDto } from '@backend/helpers';
-import { SortDirection, SortType } from '@backend/shared/core';
-import { BlogNotifyService } from '@backend/shop-notify';
 import {
   Body,
   Controller,
@@ -10,13 +8,12 @@ import {
   HttpStatus,
   Param,
   Patch,
-  Product,
+  Post,
   Query,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { UserIdDto } from './dto/user-id.dto';
 import { ShopProductWithPaginationRdo } from './rdo/shop-product-with-pagination.rdo';
 import { ShopProductRdo } from './rdo/shop-product.rdo';
 import { ShopProductResponse } from './shop-product.constant';
@@ -25,10 +22,7 @@ import { ShopProductService } from './shop-product.service';
 
 @Controller('products')
 export class ShopProductController {
-  constructor(
-    private readonly blogProductService: ShopProductService,
-    private readonly notifyService: BlogNotifyService
-  ) {}
+  constructor(private readonly shopProductService: ShopProductService) {}
 
   @Get('/:id/:userId')
   @ApiResponse({
@@ -42,7 +36,7 @@ export class ShopProductController {
   })
   @ApiTags('shop product')
   public async show(@Param('id') id: string, @Param('userId') userId: string) {
-    const product = await this.blogProductService.getProduct(id, userId);
+    const product = await this.shopProductService.getProduct(id, userId);
     return fillDto(ShopProductRdo, product.toPOJO());
   }
 
@@ -54,7 +48,7 @@ export class ShopProductController {
   })
   @ApiTags('shop product')
   public async index(@Query() query: ShopProductQuery) {
-    const productsWithPagination = await this.blogProductService.getProducts(
+    const productsWithPagination = await this.shopProductService.getProducts(
       query
     );
     const result = {
@@ -74,7 +68,7 @@ export class ShopProductController {
   @Post('/')
   @ApiTags('shop product')
   public async create(@Body() dto: CreateProductDto) {
-    const newProduct = await this.blogProductService.createProduct(dto);
+    const newProduct = await this.shopProductService.createProduct(dto);
     return fillDto(ShopProductRdo, newProduct.toPOJO());
   }
 
@@ -101,7 +95,7 @@ export class ShopProductController {
     @Param('productId') productId: string,
     @Param('userId') userId: string
   ) {
-    await this.blogProductService.deleteProduct(productId, userId);
+    await this.shopProductService.deleteProduct(productId, userId);
   }
 
   @ApiResponse({
@@ -124,23 +118,7 @@ export class ShopProductController {
   @Patch('/:id')
   @ApiTags('shop product')
   public async update(@Param('id') id: string, @Body() dto: UpdateProductDto) {
-    const updatedProduct = await this.blogProductService.updateProduct(id, dto);
+    const updatedProduct = await this.shopProductService.updateProduct(id, dto);
     return fillDto(ShopProductRdo, updatedProduct.toPOJO());
-  }
-
-  @Post('sendNewProductNotify')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiTags('shop product')
-  public async sendNewProductNotify(@Body() dto: UserIdDto) {
-    const query = new ShopProductQuery();
-    query.userId = dto.userId;
-    query.sortBy = SortType.DATE;
-    query.sortDirection = SortDirection.Desc;
-    const { entities } = await this.blogProductService.getProducts(query);
-
-    this.notifyService.sendNewProductNotify(
-      entities.map((product) => product.toPOJO()),
-      dto.userId
-    );
   }
 }
