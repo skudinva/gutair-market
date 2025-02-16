@@ -1,6 +1,5 @@
 import { FieldValidate } from '@backend/shared/core';
 import { ProductType } from '@prisma/client';
-import { Type } from 'class-transformer';
 import {
   IsIn,
   IsInt,
@@ -32,7 +31,6 @@ export class BaseProductDto extends ProductApi {
   describe: string;
 
   @IsISO8601()
-  @Type(() => Date)
   createdAt: Date;
 
   @IsString()
