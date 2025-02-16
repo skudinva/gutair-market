@@ -266,7 +266,6 @@ export class ShopController {
       await this.httpService.axiosRef.get<ShopProductWithPaginationRdo>(
         `${ApplicationServiceURL.Shop}?${query}`
       );
-    await this.appService.appendUserInfo(data.entities);
     return data;
   }
 
@@ -291,7 +290,6 @@ export class ShopController {
     const { data } = await this.httpService.axiosRef.get<ShopProductRdo>(
       `${ApplicationServiceURL.Shop}/${id}/${userId}`
     );
-    await this.appService.appendUserInfo([data]);
 
     return data;
   }
