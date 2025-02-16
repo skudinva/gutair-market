@@ -15,7 +15,7 @@ export class ShopProductFactory implements EntityFactory<ShopProductEntity> {
   ): ShopProductEntity {
     const newProduct = new ShopProductEntity();
     newProduct.id = undefined;
-    newProduct.name = dto.
+    newProduct.name = dto
     newProduct.describe: ''
     newProduct.createdAt = dayjs().toDate();
     newProduct.photoPath: ''
