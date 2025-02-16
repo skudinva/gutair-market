@@ -67,14 +67,4 @@ export class ShopProductQuery {
   @IsIn(Object.values(ProductType))
   @IsOptional()
   productType!: ProductType;
-
-  @IsString()
-  @IsMongoId()
-  @IsOptional()
-  @ApiProperty({
-    required: false,
-    description: 'id of login user',
-    example: '677cd8d75ff92067f1de5911',
-  })
-  userId?: string;
 }

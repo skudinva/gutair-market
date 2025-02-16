@@ -1,14 +1,14 @@
-import { BaseProductgresRepository } from '@backend/data-access';
+import { BasePostgresRepository } from '@backend/data-access';
 import { PaginationResult, Product } from '@backend/shared/core';
 import { PrismaClientService } from '@backend/shop-models';
 import { Injectable } from '@nestjs/common';
-import { ProductState, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { ShopProductEntity } from './shop-product.entity';
 import { ShopProductFactory } from './shop-product.factory';
 import { ShopProductQuery } from './shop-product.query';
 
 @Injectable()
-export class ShopProductRepository extends BaseProductgresRepository<
+export class ShopProductRepository extends BasePostgresRepository<
   ShopProductEntity,
   Product
 > {
@@ -45,31 +45,19 @@ export class ShopProductRepository extends BaseProductgresRepository<
     await this.client.product.update({
       where: { id: product.id },
       data: {
-        productType: pojoProduct.productType,
-        isReproduct: pojoProduct.isReproduct,
-        originUserId: pojoProduct.originUserId ?? undefined,
-        originProductId: pojoProduct.originProductId ?? undefined,
-        state: pojoProduct.state,
-        publicDate: pojoProduct.publicDate,
+        ...pojoProduct,
       },
     });
   }
 
   public override async deleteById(id: string): Promise<void> {
-    await this.client.product.delete({
-      where: {
-        id,
-      },
-    });
+    await this.client.product.delete({ where: { id } });
   }
 
   public override async findById(
     id: ShopProductEntity['id']
   ): Promise<ShopProductEntity | null> {
-    const product = await this.client.product.findUnique({
-      where: { id },
-    });
-
+    const product = await this.client.product.findUnique({ where: { id } });
     return this.createEntityFromDocument(product);
   }
 
@@ -81,19 +69,9 @@ export class ShopProductRepository extends BaseProductgresRepository<
     const take = query?.limit;
     const where: Prisma.ProductWhereInput = {};
     const orderBy: Prisma.ProductOrderByWithRelationInput = {};
-    const userId = query.userId ?? null;
 
     if (query?.productType) {
       where.productType = query.productType;
-    }
-
-    if (query?.productUserId) {
-      where.userId = query.productUserId;
-      if (userId !== query.productUserId) {
-        where.state = ProductState.Published;
-      }
-    } else {
-      where.state = ProductState.Published;
     }
 
     if (query?.sortBy) {
@@ -117,19 +95,5 @@ export class ShopProductRepository extends BaseProductgresRepository<
       itemsPerPage: take,
       totalItems: productCount,
     };
-  }
-
-  public async findReproduct(
-    originProductId: string,
-    userId: string
-  ): Promise<ShopProductEntity | null> {
-    const product = await this.client.product.findFirst({
-      where: {
-        originProductId,
-        userId,
-      },
-    });
-
-    return this.createEntityFromDocument(product);
   }
 }
