@@ -2,7 +2,7 @@ import { SortDirection, SortType } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductType } from '@prisma/client';
 import { Transform } from 'class-transformer';
-import { IsIn, IsMongoId, IsOptional, IsString } from 'class-validator';
+import { IsIn, IsOptional, IsString } from 'class-validator';
 import {
   DEFAULT_PAGE_COUNT,
   DEFAULT_PRODUCT_COUNT_LIMIT,
@@ -46,16 +46,6 @@ export class ShopProductQuery {
     required: false,
   })
   public search?: string;
-
-  @IsString()
-  @IsMongoId()
-  @IsOptional()
-  @ApiProperty({
-    required: false,
-    description: 'Author id of the product',
-    example: '677cd8d75ff92067f1de5911',
-  })
-  productUserId: string;
 
   @ApiProperty({
     description: 'Product type',
