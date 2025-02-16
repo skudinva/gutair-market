@@ -1,7 +1,7 @@
-import { ProductType } from './product-type.enum';
+import { ProductType } from '@prisma/client';
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   describe: string;
   createdAt: Date;
@@ -9,4 +9,5 @@ export interface Product {
   productType: ProductType;
   article: string;
   cordsCount: number;
+  price: number;
 }

@@ -25,14 +25,17 @@ export class EmailSubscriberController {
 
   @RabbitSubscribe({
     exchange: 'shop.notify',
-    routingKey: RabbitRouting.SendNewPostNotify,
+    routingKey: RabbitRouting.SendNewProductNotify,
     queue: 'shop.notify.send',
   })
-  public async sendNewPostNotify(dto: NotifyDto) {
-    const { posts } = dto;
+  public async sendNewProductNotify(dto: NotifyDto) {
+    const { products } = dto;
     const subscribers = await this.subscriberService.getAllSubscribers();
     subscribers.map(async (subscriber) => {
-      await this.mailService.sendPostsToSubscriber(posts, subscriber.toPOJO());
+      await this.mailService.sendProductsToSubscriber(
+        products,
+        subscriber.toPOJO()
+      );
     });
   }
 }

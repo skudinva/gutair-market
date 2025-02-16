@@ -4,7 +4,7 @@ import {
   Controller,
   Get,
   Param,
-  Post,
+  Product,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';

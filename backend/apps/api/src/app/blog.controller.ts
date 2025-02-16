@@ -3,18 +3,18 @@ import {
   RequestWithTokenPayloadUrl,
 } from '@backend/authentication';
 
-import {
-  BlogPostRdo,
-  BlogPostResponse,
-  BlogPostWithPaginationRdo,
-  CreatePostDto,
-  CreatePostFileDto,
-  UpdatePostDto,
-  UpdatePostFileDto,
-  UserIdDto,
-} from '@backend/blog-post';
 import { InjectUserIdInterceptor } from '@backend/interceptors';
 import { FieldValidate, SortDirection, SortType } from '@backend/shared/core';
+import {
+  CreateProductDto,
+  CreateProductFileDto,
+  ShopProductRdo,
+  ShopProductResponse,
+  ShopProductWithPaginationRdo,
+  UpdateProductDto,
+  UpdateProductFileDto,
+  UserIdDto,
+} from '@backend/shop-product';
 import { HttpService } from '@nestjs/axios';
 import {
   Body,
@@ -28,7 +28,6 @@ import {
   Param,
   ParseFilePipe,
   Patch,
-  Post,
   Req,
   UploadedFile,
   UseFilters,
@@ -43,7 +42,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { PostType } from '@prisma/client';
+import { ProductType } from '@prisma/client';
 import { plainToInstance } from 'class-transformer';
 import 'multer';
 import * as url from 'node:url';
@@ -53,7 +52,7 @@ import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { CheckAuthForceGuard } from './guards/check-auth-force.guard';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 
-@Controller('blog')
+@Controller('shop')
 @UseFilters(AxiosExceptionFilter)
 export class BlogController {
   constructor(
@@ -68,23 +67,23 @@ export class BlogController {
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiResponse({
-    type: BlogPostRdo,
+    type: ShopProductRdo,
     status: HttpStatus.CREATED,
-    description: BlogPostResponse.PostFound,
+    description: ShopProductResponse.ProductFound,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: BlogPostResponse.PostNotFound,
+    description: ShopProductResponse.ProductNotFound,
   })
   @Post('/')
-  @ApiTags(ApiSection.Post)
-  public async createPost(
-    @Body() dto: CreatePostFileDto,
+  @ApiTags(ApiSection.Product)
+  public async createProduct(
+    @Body() dto: CreateProductFileDto,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({
-            maxSize: FieldValidate.MaxFileSizeForPost,
+            maxSize: FieldValidate.MaxFileSizeForProduct,
           }),
           new FileTypeValidator({
             fileType: FieldValidate.AllowedImageFileType,
@@ -95,18 +94,18 @@ export class BlogController {
     )
     file?: Express.Multer.File
   ) {
-    const postDto = plainToInstance(
-      CreatePostDto,
-      JSON.parse(String(dto.post))
+    const productDto = plainToInstance(
+      CreateProductDto,
+      JSON.parse(String(dto.product))
     );
 
     if (file) {
-      //postDto.extraProperty.photo = await this.appService.uploadFile(file);
+      //productDto.extraProperty.photo = await this.appService.uploadFile(file);
     }
 
-    const { data } = await this.httpService.axiosRef.post(
+    const { data } = await this.httpService.axiosRef.product(
       `${ApplicationServiceURL.Blog}/`,
-      postDto
+      productDto
     );
 
     return data;
@@ -114,21 +113,21 @@ export class BlogController {
 
   @Patch('/:id')
   @ApiResponse({
-    type: BlogPostRdo,
+    type: ShopProductRdo,
     status: HttpStatus.OK,
-    description: BlogPostResponse.PostUpdated,
+    description: ShopProductResponse.ProductUpdated,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: BlogPostResponse.Unauthorized,
+    description: ShopProductResponse.Unauthorized,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: BlogPostResponse.PostNotFound,
+    description: ShopProductResponse.ProductNotFound,
   })
   @ApiResponse({
     status: HttpStatus.CONFLICT,
-    description: BlogPostResponse.AccessDeny,
+    description: ShopProductResponse.AccessDeny,
   })
   @UseGuards(CheckAuthGuard)
   @ApiBearerAuth('accessToken')
@@ -136,15 +135,15 @@ export class BlogController {
   @UseInterceptors(InjectUserIdInterceptor)
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
-  @ApiTags(ApiSection.Post)
-  public async updatePost(
+  @ApiTags(ApiSection.Product)
+  public async updateProduct(
     @Param('id') id: string,
-    @Body() dto: UpdatePostFileDto,
+    @Body() dto: UpdateProductFileDto,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({
-            maxSize: FieldValidate.MaxFileSizeForPost,
+            maxSize: FieldValidate.MaxFileSizeForProduct,
           }),
           new FileTypeValidator({
             fileType: FieldValidate.AllowedImageFileType,
@@ -155,18 +154,18 @@ export class BlogController {
     )
     file?: Express.Multer.File
   ) {
-    const postDto = plainToInstance(
-      UpdatePostDto,
-      JSON.parse(String(dto.post))
+    const productDto = plainToInstance(
+      UpdateProductDto,
+      JSON.parse(String(dto.product))
     );
 
     if (file) {
-      // postDto.extraProperty.photo = await this.appService.uploadFile(file);
+      // productDto.extraProperty.photo = await this.appService.uploadFile(file);
     }
 
     const { data } = await this.httpService.axiosRef.patch(
       `${ApplicationServiceURL.Blog}/${id}`,
-      postDto
+      productDto
     );
 
     return data;
@@ -175,25 +174,25 @@ export class BlogController {
   @Delete('/:id')
   @ApiResponse({
     status: HttpStatus.NO_CONTENT,
-    description: BlogPostResponse.PostDeleted,
+    description: ShopProductResponse.ProductDeleted,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: BlogPostResponse.Unauthorized,
+    description: ShopProductResponse.Unauthorized,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: BlogPostResponse.PostNotFound,
+    description: ShopProductResponse.ProductNotFound,
   })
   @ApiResponse({
     status: HttpStatus.CONFLICT,
-    description: BlogPostResponse.AccessDeny,
+    description: ShopProductResponse.AccessDeny,
   })
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(CheckAuthGuard)
   @ApiBearerAuth('accessToken')
-  @ApiTags(ApiSection.Post)
-  public async deletePost(
+  @ApiTags(ApiSection.Product)
+  public async deleteProduct(
     @Param('id') id: string,
     @Req() req: RequestWithTokenPayload
   ) {
@@ -206,9 +205,9 @@ export class BlogController {
   }
 
   @ApiResponse({
-    type: BlogPostWithPaginationRdo,
+    type: ShopProductWithPaginationRdo,
     status: HttpStatus.OK,
-    description: BlogPostResponse.PostsFound,
+    description: ShopProductResponse.ProductsFound,
   })
   @ApiQuery({
     name: 'tags',
@@ -242,29 +241,29 @@ export class BlogController {
     description: 'Search term',
   })
   @ApiQuery({
-    name: 'postUserId',
+    name: 'productUserId',
     required: false,
     type: String,
     example: '677cd8d75ff92067f1de5911',
-    description: 'Author id of the post',
+    description: 'Author id of the product',
   })
   @ApiQuery({
-    name: 'postType',
+    name: 'productType',
     required: false,
-    enum: PostType,
-    description: 'Post type',
+    enum: ProductType,
+    description: 'Product type',
   })
   @Get('/')
   @ApiBearerAuth('accessToken')
   @UseGuards(CheckAuthForceGuard)
-  @ApiTags(ApiSection.Post)
-  public async getPosts(@Req() req: RequestWithTokenPayloadUrl) {
+  @ApiTags(ApiSection.Product)
+  public async getProducts(@Req() req: RequestWithTokenPayloadUrl) {
     const userId = req.user?.sub;
     const requestUrl = userId ? `${req.url}&userId=${userId}` : req.url;
     const query = url.parse(requestUrl).query;
 
     const { data } =
-      await this.httpService.axiosRef.get<BlogPostWithPaginationRdo>(
+      await this.httpService.axiosRef.get<ShopProductWithPaginationRdo>(
         `${ApplicationServiceURL.Blog}?${query}`
       );
     await this.appService.appendUserInfo(data.entities);
@@ -272,24 +271,24 @@ export class BlogController {
   }
 
   @ApiResponse({
-    type: BlogPostRdo,
+    type: ShopProductRdo,
     status: HttpStatus.OK,
-    description: BlogPostResponse.PostFound,
+    description: ShopProductResponse.ProductFound,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: BlogPostResponse.PostNotFound,
+    description: ShopProductResponse.ProductNotFound,
   })
   @ApiBearerAuth('accessToken')
   @UseGuards(CheckAuthForceGuard)
   @Get('/:id')
-  @ApiTags(ApiSection.Post)
-  public async getPost(
+  @ApiTags(ApiSection.Product)
+  public async getProduct(
     @Param('id') id: string,
     @Req() req: RequestWithTokenPayload
   ) {
     const userId = req.user?.sub;
-    const { data } = await this.httpService.axiosRef.get<BlogPostRdo>(
+    const { data } = await this.httpService.axiosRef.get<ShopProductRdo>(
       `${ApplicationServiceURL.Blog}/${id}/${userId}`
     );
     await this.appService.appendUserInfo([data]);
@@ -297,15 +296,15 @@ export class BlogController {
     return data;
   }
 
-  @Post('/sendNewPostNotify')
+  @Post('/sendNewProductNotify')
   @UseGuards(CheckAuthGuard)
   @UseInterceptors(InjectUserIdInterceptor)
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiBearerAuth('accessToken')
-  @ApiTags(ApiSection.Post)
-  public async sendNewPostNotify(@Body() dto: UserIdDto) {
+  @ApiTags(ApiSection.Product)
+  public async sendNewProductNotify(@Body() dto: UserIdDto) {
     await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Blog}/sendNewPostNotify`,
+      `${ApplicationServiceURL.Blog}/sendNewProductNotify`,
       dto
     );
   }

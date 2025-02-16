@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductType {
+  Electro
+  Acoustic
+  Ukulele
+}
+
+model Product {
+  id          String      @id @default(uuid())
+  name        String      @map("name")
+  describe    String      @map("describe")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  photoPath   String      @map("photo_path")
+  productType ProductType @map("product_type")
+  article     String      @map("article")
+  cordsCount  Int         @map("cords_count")
+  price       Float       @map("price")
+
+  @@map("products")
+}

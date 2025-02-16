@@ -1,7 +1,7 @@
 {
-  "name": "blog",
+  "name": "shop",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/blog/src",
+  "sourceRoot": "apps/shop/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -10,15 +10,15 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "blog:build",
+        "buildTarget": "shop:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "blog:build:development"
+          "buildTarget": "shop:build:development"
         },
         "production": {
-          "buildTarget": "blog:build:production"
+          "buildTarget": "shop:build:production"
         }
       }
     },
@@ -26,35 +26,35 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma validate --schema ./schema.prisma",
-        "cwd": "libs/blog/models/prisma"
+        "cwd": "libs/shop/models/prisma"
       }
     },
     "db:migrate": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma migrate dev --schema ./schema.prisma --skip-generate --skip-seed",
-        "cwd": "libs/blog/models/prisma"
+        "cwd": "libs/shop/models/prisma"
       }
     },
     "db:reset": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma migrate reset --schema ./schema.prisma --force --skip-generate --skip-seed",
-        "cwd": "libs/blog/models/prisma"
+        "cwd": "libs/shop/models/prisma"
       }
     },
     "db:generate": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma generate --schema ./schema.prisma",
-        "cwd": "libs/blog/models/prisma"
+        "cwd": "libs/shop/models/prisma"
       }
     },
     "db:seed": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx ts-node seed.ts",
-        "cwd": "libs/blog/models/prisma"
+        "cwd": "libs/shop/models/prisma"
       }
     }
   }

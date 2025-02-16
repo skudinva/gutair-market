@@ -1,6 +1,6 @@
-import { BlogPostRdo } from '@backend/blog-post';
 import { createUrlForFile } from '@backend/helpers';
 import { File } from '@backend/shared/core';
+import { ShopProductRdo } from '@backend/shop-product';
 import { UserInfoRdo } from '@backend/shop-user';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
@@ -12,12 +12,12 @@ import { ApplicationServiceURL } from './app.config';
 export class AppService {
   constructor(private readonly httpService: HttpService) {}
 
-  public async appendUserInfo(posts: BlogPostRdo[]): Promise<void> {
+  public async appendUserInfo(products: ShopProductRdo[]): Promise<void> {
     const uniqueUserIds = new Set<string>();
     const usersInfo = new Map<string, UserInfoRdo>();
 
-    posts.forEach((post) => {
-      uniqueUserIds.add(post.userId);
+    products.forEach((product) => {
+      uniqueUserIds.add(product.userId);
     });
 
     for (const userId of uniqueUserIds) {
@@ -28,21 +28,22 @@ export class AppService {
       usersInfo.set(data.id, data);
     }
 
-    posts.forEach((post) => {
-      post['userInfo'] = usersInfo.get(post.userId);
+    products.forEach((product) => {
+      product['userInfo'] = usersInfo.get(product.userId);
     });
   }
 
   public async uploadFile(file: Express.Multer.File) {
     const formData = new FormData();
     formData.append('file', file.buffer, file.originalname);
-    const { data: fileMetaData } = await this.httpService.axiosRef.post<File>(
-      `${ApplicationServiceURL.File}/api/files/upload`,
-      formData,
-      {
-        headers: formData.getHeaders(),
-      }
-    );
+    const { data: fileMetaData } =
+      await this.httpService.axiosRef.product<File>(
+        `${ApplicationServiceURL.File}/api/files/upload`,
+        formData,
+        {
+          headers: formData.getHeaders(),
+        }
+      );
     return createUrlForFile(fileMetaData, ApplicationServiceURL.File);
   }
 }

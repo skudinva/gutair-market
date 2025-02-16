@@ -1,12 +1,12 @@
 export enum ApplicationServiceURL {
   Auth = 'http://localhost:3001/api/auth',
   Users = 'http://localhost:3001/api/user',
-  Blog = 'http://localhost:3002/api/posts',
+  Blog = 'http://localhost:3002/api/products',
   File = 'http://localhost:3003',
 }
 
 export enum ApiSection {
-  Post = 'Post API',
+  Product = 'Product API',
   User = 'User API',
 }
 

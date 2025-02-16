@@ -1,4 +1,4 @@
-import { Post } from '@backend/shared/core';
+import { Product } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId } from 'class-validator';
 
@@ -10,5 +10,5 @@ export class NotifyDto {
   @IsMongoId()
   public userId: string;
 
-  public posts: Post[];
+  public products: Product[];
 }

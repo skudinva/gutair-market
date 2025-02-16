@@ -18,9 +18,9 @@
     "paths": {
       "@backend/account-notify": ["libs/account/notify/src/index.ts"],
       "@backend/authentication": ["libs/account/authentication/src/index.ts"],
-      "@backend/blog-config": ["libs/blog/blog-config/src/index.ts"],
-      "@backend/blog-models": ["libs/blog/models/src/index.ts"],
-      "@backend/blog-post": ["libs/blog/blog-post/src/index.ts"],
+      "@backend/shop-config": ["libs/shop/shop-config/src/index.ts"],
+      "@backend/shop-models": ["libs/shop/models/src/index.ts"],
+      "@backend/shop-product": ["libs/shop/shop-product/src/index.ts"],
       "@backend/config": ["libs/account/config/src/index.ts"],
       "@backend/data-access": ["libs/shared/data-access/src/index.ts"],
       "@backend/email-subscriber": [
@@ -30,7 +30,7 @@
       "@backend/file-vault-config": ["libs/file-vault/config/src/index.ts"],
       "@backend/helpers": ["libs/shared/helpers/src/index.ts"],
       "@backend/interceptors": ["libs/shared/interceptors/src/index.ts"],
-      "@backend/models": ["libs/blog/models/src/index.ts"],
+      "@backend/models": ["libs/shop/models/src/index.ts"],
       "@backend/notify-config": ["libs/notify/config/src/index.ts"],
       "@backend/pipes": ["libs/shared/pipes/src/index.ts"],
       "@backend/shared/core": ["libs/shared/core/src/index.ts"],

@@ -1,10 +1,10 @@
 export default {
-  displayName: 'shop',
-  preset: '../../jest.preset.js',
+  displayName: 'shop-product',
+  preset: '../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/shop',
+  coverageDirectory: '../../../coverage/libs/shop/shop-product',
 };

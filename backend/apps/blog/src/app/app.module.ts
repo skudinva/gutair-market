@@ -1,9 +1,9 @@
-import { BlogConfigModule } from '@backend/blog-config';
-import { BlogPostModule } from '@backend/blog-post';
+import { BlogConfigModule } from '@backend/shop-config';
+import { ShopProductModule } from '@backend/shop-product';
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [BlogPostModule, BlogConfigModule],
+  imports: [ShopProductModule, BlogConfigModule],
   controllers: [],
   providers: [],
 })
