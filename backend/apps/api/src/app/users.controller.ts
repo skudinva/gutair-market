@@ -7,40 +7,26 @@ import {
   UpdateUserDto,
   UserRdo,
 } from '@backend/authentication';
-import { FieldValidate, SERVE_ROOT } from '@backend/shared/core';
 import { HttpService } from '@nestjs/axios';
 import {
   Body,
   Controller,
-  FileTypeValidator,
   Get,
   HttpStatus,
-  MaxFileSizeValidator,
   Param,
-  ParseFilePipe,
   Patch,
   Post,
   Req,
-  UploadedFile,
   UseFilters,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import {
-  ApiBearerAuth,
-  ApiConsumes,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import 'multer';
 import { ApiSection, ApplicationServiceURL } from './app.config';
 import { AppService } from './app.service';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { CheckAuthGuard } from './guards/check-auth.guard';
-
-const DEFAULT_AVATAR_PATH = `${ApplicationServiceURL.File}/${SERVE_ROOT}/default-avatar.jpg`;
 
 @Controller('users')
 @UseFilters(AxiosExceptionFilter)
@@ -52,8 +38,6 @@ export class UsersController {
   ) {}
 
   @Post('register')
-  @UseInterceptors(FileInterceptor('avatar'))
-  @ApiConsumes('multipart/form-data')
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: AuthenticationResponseMessage.UserCreated,
@@ -62,33 +46,12 @@ export class UsersController {
     status: HttpStatus.CONFLICT,
     description: AuthenticationResponseMessage.UserExist,
   })
-  public async create(
-    @Body() dto: RegisterUserDto,
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({
-            maxSize: FieldValidate.MaxFileSizeForAvatar,
-          }),
-          new FileTypeValidator({
-            fileType: FieldValidate.AllowedImageFileType,
-          }),
-        ],
-        fileIsRequired: false,
-      })
-    )
-    avatar?: Express.Multer.File
-  ) {
+  public async create(@Body() dto: RegisterUserDto) {
     const newUserDto = plainToInstance(CreateUserDto, {
       name: dto.name,
-      avatar: DEFAULT_AVATAR_PATH,
       email: dto.email,
       password: dto.password,
     });
-
-    if (avatar) {
-      newUserDto.avatar = await this.appService.uploadFile(avatar);
-    }
 
     const { data } = await this.httpService.axiosRef.post(
       `${ApplicationServiceURL.Auth}/register`,

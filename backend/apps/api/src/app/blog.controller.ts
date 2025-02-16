@@ -202,10 +202,6 @@ export class BlogController {
       `${ApplicationServiceURL.Blog}/${id}/${userId}`
     );
 
-    await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Users}/decPostsCount`,
-      { userId }
-    );
     return data;
   }
 
