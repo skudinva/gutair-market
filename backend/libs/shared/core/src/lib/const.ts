@@ -1,7 +1,7 @@
 export const SERVE_ROOT = 'static';
 export const FieldValidate = {
-  MinUserNameLength: 3,
-  MaxUserNameLength: 50,
+  MinUserNameLength: 1,
+  MaxUserNameLength: 15,
   MinPasswordLength: 6,
   MaxPasswordLength: 12,
   MinPostTextLength: 100,
