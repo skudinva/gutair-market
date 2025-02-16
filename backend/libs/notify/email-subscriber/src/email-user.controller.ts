@@ -5,7 +5,7 @@ import { Controller } from '@nestjs/common';
 import { MailService } from './mail-module/mail.service';
 
 @Controller()
-export class EmailSubscriberController {
+export class EmailUserController {
   constructor(private readonly mailService: MailService) {}
 
   @RabbitSubscribe({

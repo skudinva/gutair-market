@@ -1,7 +1,7 @@
 import { getRabbitMQOptions } from '@backend/helpers';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
-import { EmailSubscriberController } from './email-subscriber.controller';
+import { EmailUserController } from './email-user.controller';
 
 import { MailModule } from './mail-module/mail.module';
 
@@ -13,7 +13,7 @@ import { MailModule } from './mail-module/mail.module';
     ),
     MailModule,
   ],
-  controllers: [EmailSubscriberController],
+  controllers: [EmailUserController],
   providers: [],
 })
-export class EmailSubscriberModule {}
+export class EmailUserModule {}
