@@ -1,6 +1,1 @@
-export enum CordsCount {
-  Cord4 = 4,
-  Cord6 = 6,
-  Cord7 = 7,
-  Cord12 = 12,
-}
+export const CordsCount = [4, 6, 7, 12] as const;

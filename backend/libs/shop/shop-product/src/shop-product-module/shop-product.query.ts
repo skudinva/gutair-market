@@ -1,8 +1,9 @@
 import { CordsCount, SortDirection, SortType } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductType } from '@prisma/client';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { IsIn, IsOptional } from 'class-validator';
+
 import {
   DEFAULT_PAGE_COUNT,
   DEFAULT_PRODUCT_COUNT_LIMIT,
@@ -51,11 +52,11 @@ export class ShopProductQuery {
 
   @ApiProperty({
     description: 'Cords counts',
-    example: CordsCount.Cord6,
-    enum: CordsCount,
+    example: CordsCount[0],
     required: false,
   })
   @IsIn(Object.values(CordsCount))
   @IsOptional()
-  cordsCount: CordsCount;
+  @Type(() => Number)
+  cordsCount: number;
 }
