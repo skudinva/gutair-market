@@ -14,5 +14,4 @@ export { File } from './lib/types/file.interface';
 export { Product } from './lib/types/product.interface';
 export { RabbitRouting } from './lib/types/rabbit-routing.enum';
 export { StoredFile } from './lib/types/stored-file.interface';
-export { Subscriber } from './lib/types/subscriber.interface';
 export { User } from './lib/types/user.interface';

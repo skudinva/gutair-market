@@ -1,14 +1,9 @@
 import { EmailSubscriberModule } from '@backend/email-subscriber';
-import { NotifyConfigModule, getMongooseOptions } from '@backend/notify-config';
+import { NotifyConfigModule } from '@backend/notify-config';
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [
-    MongooseModule.forRootAsync(getMongooseOptions()),
-    NotifyConfigModule,
-    EmailSubscriberModule,
-  ],
+  imports: [NotifyConfigModule, EmailSubscriberModule],
   controllers: [],
   providers: [],
 })

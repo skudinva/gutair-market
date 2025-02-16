@@ -1,7 +1,7 @@
+import { CreateUserDto } from '@backend/authentication';
 import { RabbitRouting } from '@backend/shared/core';
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Controller } from '@nestjs/common';
-import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { MailService } from './mail-module/mail.service';
 
 @Controller()
@@ -13,7 +13,7 @@ export class EmailSubscriberController {
     routingKey: RabbitRouting.AddSubscriber,
     queue: process.env.RABBIT_QUEUE,
   })
-  public async create(subscriber: CreateSubscriberDto) {
-    await this.mailService.sendNotifyNewSubscriber(subscriber);
+  public async create(newUserDto: CreateUserDto) {
+    await this.mailService.sendNotifyNewUser(newUserDto);
   }
 }
