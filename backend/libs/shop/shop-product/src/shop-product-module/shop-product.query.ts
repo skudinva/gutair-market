@@ -5,13 +5,13 @@ import { Transform } from 'class-transformer';
 import { IsIn, IsMongoId, IsOptional, IsString } from 'class-validator';
 import {
   DEFAULT_PAGE_COUNT,
-  DEFAULT_POST_COUNT_LIMIT,
+  DEFAULT_PRODUCT_COUNT_LIMIT,
   DEFAULT_SORT_DIRECTION,
   DEFAULT_SORT_TYPE,
 } from './shop-product.constant';
 
 export class ShopProductQuery {
-  public limit: number = DEFAULT_POST_COUNT_LIMIT;
+  public limit: number = DEFAULT_PRODUCT_COUNT_LIMIT;
 
   @IsIn(Object.values(SortDirection))
   @IsOptional()

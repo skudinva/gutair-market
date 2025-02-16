@@ -15,14 +15,14 @@ export class ShopProductFactory implements EntityFactory<ShopProductEntity> {
   ): ShopProductEntity {
     const newProduct = new ShopProductEntity();
     newProduct.id = undefined;
-    newProduct.name = dto
-    newProduct.describe: ''
-    newProduct.createdAt = dayjs().toDate();
-    newProduct.photoPath: ''
-    newProduct.productType: 'Electro'
-    newProduct.article: ''
-    newProduct.cordsCount: 0
-    newProduct.price: 0
-    return newProduct
+    newProduct.name = dto.name;
+    newProduct.describe = dto.describe;
+    newProduct.createdAt = dto.createdAt || dayjs().toDate();
+    newProduct.photoPath = dto.photoPath;
+    newProduct.productType = dto.productType;
+    newProduct.article = dto.article;
+    newProduct.cordsCount = dto.cordsCount;
+    newProduct.price = dto.price;
+    return newProduct;
   }
 }
