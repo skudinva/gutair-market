@@ -69,6 +69,8 @@ export class ShopProductController {
   @ApiTags('shop product')
   public async create(@Body() dto: CreateProductDto) {
     const newProduct = await this.shopProductService.createProduct(dto);
+    console.log(newProduct);
+
     return fillDto(ShopProductRdo, newProduct.toPOJO());
   }
 
