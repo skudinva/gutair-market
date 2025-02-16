@@ -7,7 +7,7 @@ import {
   HttpStatus,
   Param,
   Patch,
-  Product,
+  Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
