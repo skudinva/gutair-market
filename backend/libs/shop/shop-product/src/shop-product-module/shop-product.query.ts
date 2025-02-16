@@ -2,7 +2,7 @@ import { SortDirection, SortType } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductType } from '@prisma/client';
 import { Transform } from 'class-transformer';
-import { IsIn, IsOptional, IsString } from 'class-validator';
+import { IsIn, IsOptional } from 'class-validator';
 import {
   DEFAULT_PAGE_COUNT,
   DEFAULT_PRODUCT_COUNT_LIMIT,
@@ -39,17 +39,9 @@ export class ShopProductQuery {
   })
   public page: number = DEFAULT_PAGE_COUNT;
 
-  @IsString()
-  @IsOptional()
-  @ApiProperty({
-    description: 'search',
-    required: false,
-  })
-  public search?: string;
-
   @ApiProperty({
     description: 'Product type',
-    example: 'Video',
+    example: ProductType.Acoustic,
     enum: ProductType,
     enumName: 'ProductType',
     required: false,
