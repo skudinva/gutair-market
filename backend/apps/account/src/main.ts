@@ -20,16 +20,6 @@ async function bootstrap() {
       },
       'accessToken'
     )
-    .addBearerAuth(
-      {
-        description: `[just text field] Please enter token in following format: Bearer `,
-        name: 'Authorization',
-        bearerFormat: 'Bearer',
-        scheme: 'Bearer',
-        type: 'http',
-      },
-      'refreshToken'
-    )
     .build();
   const GLOBAL_PREFIX = 'api';
   app.setGlobalPrefix(GLOBAL_PREFIX);

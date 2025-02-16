@@ -16,7 +16,6 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
-import { JwtRefreshGuard } from '../guards/jwt-refresh.guard';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { LoggedUserRdo } from '../rdo/logged-user.rdo';
 import { UserRdo } from '../rdo/user.rdo';
@@ -103,17 +102,6 @@ export class AuthenticationController {
   public async show(@Param('id', MongoIdValidationPipe) id: string) {
     const existUser = await this.authService.getUser(id);
     return existUser.toPOJO();
-  }
-
-  @UseGuards(JwtRefreshGuard)
-  @Post('refresh')
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    description: 'Get a new access/refresh tokens',
-  })
-  @ApiBearerAuth('refreshToken')
-  public async refreshToken(@Req() { user }: RequestWithUser) {
-    return this.authService.createUserToken(user);
   }
 
   @UseGuards(JwtAuthGuard)

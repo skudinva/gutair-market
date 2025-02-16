@@ -3,7 +3,6 @@ export { FieldValidate, SERVE_ROOT } from './lib/const';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
 export { JwtToken } from './lib/interfaces/jwt-token.interface';
 export { PaginationResult } from './lib/interfaces/pagination.interface';
-export { RefreshTokenPayload } from './lib/interfaces/refresh-token-payload.interface';
 export { SortDirection } from './lib/interfaces/sort-direction.interface';
 export { SortType } from './lib/interfaces/sort-type.interface';
 export { StorableEntity } from './lib/interfaces/storable-entity.interface';

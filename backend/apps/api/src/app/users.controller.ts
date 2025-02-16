@@ -141,26 +141,6 @@ export class UsersController {
     return data;
   }
 
-  @Post('refresh')
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    description: 'Get a new access/refresh tokens',
-  })
-  @ApiBearerAuth('refreshToken')
-  public async refreshToken(@Req() req: Request) {
-    const { data } = await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Auth}/refresh`,
-      null,
-      {
-        headers: {
-          Authorization: req.headers['authorization'],
-        },
-      }
-    );
-
-    return data;
-  }
-
   @UseGuards(CheckAuthGuard)
   @ApiBearerAuth('accessToken')
   @ApiResponse({

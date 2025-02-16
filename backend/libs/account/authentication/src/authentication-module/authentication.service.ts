@@ -18,7 +18,6 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { RefreshTokenService } from '../refresh-token-module/refresh-token.service';
 import {
   AUTH_USER_EXISTS,
   AUTH_USER_NOT_FOUND,
@@ -34,7 +33,6 @@ export class AuthenticationService {
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
     private readonly jwtOptions: ConfigType<typeof jwtConfig>,
-    private readonly refreshTokenService: RefreshTokenService,
     private readonly notifyService: NotifyService
   ) {}
 
@@ -87,23 +85,10 @@ export class AuthenticationService {
 
   public async createUserToken(user: User): Promise<Token> {
     const accessTokenPayload = createJWTPayload(user);
-    const refreshTokenPayload = {
-      ...accessTokenPayload,
-      tokenId: crypto.randomUUID(),
-    };
-    await this.refreshTokenService.createRefreshSession(refreshTokenPayload);
 
     try {
       const accessToken = await this.jwtService.signAsync(accessTokenPayload);
-      const refreshToken = await this.jwtService.signAsync(
-        refreshTokenPayload,
-        {
-          secret: this.jwtOptions.refreshTokenSecret,
-          expiresIn: this.jwtOptions.refreshTokenExpiresIn,
-        }
-      );
-
-      return { accessToken, refreshToken };
+      return { accessToken };
     } catch (error) {
       this.logger.error(`[Token generation error]: ${error.message}`);
       throw new HttpException(

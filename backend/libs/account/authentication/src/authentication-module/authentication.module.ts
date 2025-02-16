@@ -4,9 +4,7 @@ import { ShopUserModule } from '@backend/shop-user';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { RefreshTokenModule } from '../refresh-token-module/refresh-token.module';
 import { JwtAccessStrategy } from '../strategies/jwt-access.strategy';
-import { JwtRefreshStrategy } from '../strategies/jwt-refresh.strategy';
 import { LocalStrategy } from '../strategies/local.strategy';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
@@ -18,14 +16,8 @@ import { AuthenticationService } from './authentication.service';
       useFactory: getJwtOptions,
     }),
     NotifyModule,
-    RefreshTokenModule,
   ],
   controllers: [AuthenticationController],
-  providers: [
-    AuthenticationService,
-    JwtAccessStrategy,
-    LocalStrategy,
-    JwtRefreshStrategy,
-  ],
+  providers: [AuthenticationService, JwtAccessStrategy, LocalStrategy],
 })
 export class AuthenticationModule {}
