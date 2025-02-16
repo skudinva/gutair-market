@@ -6,7 +6,6 @@ import {
   Get,
   HttpStatus,
   Param,
-  Patch,
   Post,
   Req,
   UseGuards,
@@ -14,7 +13,6 @@ import {
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { LoggedUserRdo } from '../rdo/logged-user.rdo';
@@ -41,29 +39,6 @@ export class AuthenticationController {
   public async create(@Body() dto: CreateUserDto) {
     const newUser = await this.authService.register(dto);
     return newUser.toPOJO();
-  }
-
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: AuthenticationResponseMessage.PasswordUpdated,
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: AuthenticationResponseMessage.UserNotFound,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: AuthenticationResponseMessage.Unauthorized,
-  })
-  @UseGuards(JwtAuthGuard)
-  @Patch('update')
-  public async changePassword(
-    @Body() dto: UpdateUserDto,
-    @Req() { user: payload }: RequestWithTokenPayload
-  ) {
-    const user = await this.authService.updatePassword(dto, payload?.sub);
-
-    return fillDto(UserRdo, user.toPOJO());
   }
 
   @ApiResponse({

@@ -25,8 +25,4 @@ export class ShopUserRepository extends BaseMongoRepository<
     }
     return this.createEntityFromDocument(document);
   }
-
-  public async updatePassword(id: string, password: string): Promise<void> {
-    await this.model.findByIdAndUpdate(id, { passwordHash: password }).exec();
-  }
 }

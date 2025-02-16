@@ -4,7 +4,6 @@ import {
   LoggedUserRdo,
   LoginUserDto,
   RegisterUserDto,
-  UpdateUserDto,
   UserRdo,
 } from '@backend/authentication';
 import { HttpService } from '@nestjs/axios';
@@ -14,7 +13,6 @@ import {
   Get,
   HttpStatus,
   Param,
-  Patch,
   Post,
   Req,
   UseFilters,
@@ -80,35 +78,6 @@ export class UsersController {
       `${ApplicationServiceURL.Auth}/login`,
       loginUserDto
     );
-    return data;
-  }
-
-  @Patch('update')
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: AuthenticationResponseMessage.PasswordUpdated,
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: AuthenticationResponseMessage.UserNotFound,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: AuthenticationResponseMessage.Unauthorized,
-  })
-  @UseGuards(CheckAuthGuard)
-  @ApiBearerAuth('accessToken')
-  public async update(@Body() dto: UpdateUserDto, @Req() req: Request) {
-    const { data } = await this.httpService.axiosRef.patch(
-      `${ApplicationServiceURL.Auth}/update`,
-      dto,
-      {
-        headers: {
-          Authorization: req.headers['authorization'],
-        },
-      }
-    );
-
     return data;
   }
 

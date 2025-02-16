@@ -90,11 +90,11 @@ export class ShopProductController {
     status: HttpStatus.CONFLICT,
     description: ShopProductResponse.AccessDeny,
   })
-  @Delete('/:productId/:userId')
+  @Delete('/:id/:userId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiTags('shop product')
-  public async destroy(@Param('productId') productId: string) {
-    await this.shopProductService.deleteProduct(productId);
+  public async destroy(@Param('id') id: string) {
+    await this.shopProductService.deleteProduct(id);
   }
 
   @ApiResponse({

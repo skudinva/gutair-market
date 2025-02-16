@@ -17,12 +17,10 @@ import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
 import {
   AUTH_USER_EXISTS,
   AUTH_USER_NOT_FOUND,
   AUTH_USER_PASSWORD_WRONG,
-  AuthenticationResponseMessage,
 } from './authentication.constant';
 
 @Injectable()
@@ -106,22 +104,5 @@ export class AuthenticationService {
     }
 
     return existUser;
-  }
-
-  public async updatePassword(dto: UpdateUserDto, id?: string) {
-    if (!id) {
-      throw new UnauthorizedException(
-        AuthenticationResponseMessage.Unauthorized
-      );
-    }
-
-    const existUser = await this.shopUserRepository.findById(id);
-    if (!existUser) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND);
-    }
-
-    const userEntity = await existUser.setPassword(dto.password);
-    await this.shopUserRepository.updatePassword(id, userEntity.passwordHash);
-    return userEntity;
   }
 }
