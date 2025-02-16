@@ -14,8 +14,8 @@ import {
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ShopProductWithPaginationRdo } from './rdo/shop-product-with-pagination.rdo';
-import { ShopProductRdo } from './rdo/shop-product.rdo';
+import { ProductWithPaginationRdo } from './rdo/product-with-pagination.rdo';
+import { ProductRdo } from './rdo/product.rdo';
 import { ShopProductResponse } from './shop-product.constant';
 import { ShopProductQuery } from './shop-product.query';
 import { ShopProductService } from './shop-product.service';
@@ -26,7 +26,7 @@ export class ShopProductController {
 
   @Get('/:id/:userId')
   @ApiResponse({
-    type: ShopProductRdo,
+    type: ProductRdo,
     status: HttpStatus.OK,
     description: ShopProductResponse.ProductFound,
   })
@@ -37,12 +37,12 @@ export class ShopProductController {
   @ApiTags('shop product')
   public async show(@Param('id') id: string) {
     const product = await this.shopProductService.getProduct(id);
-    return fillDto(ShopProductRdo, product.toPOJO());
+    return fillDto(ProductRdo, product.toPOJO());
   }
 
   @Get('/')
   @ApiResponse({
-    type: ShopProductWithPaginationRdo,
+    type: ProductWithPaginationRdo,
     status: HttpStatus.OK,
     description: ShopProductResponse.ProductsFound,
   })
@@ -57,11 +57,11 @@ export class ShopProductController {
         product.toPOJO()
       ),
     };
-    return fillDto(ShopProductWithPaginationRdo, result);
+    return fillDto(ProductWithPaginationRdo, result);
   }
 
   @ApiResponse({
-    type: ShopProductRdo,
+    type: ProductRdo,
     status: HttpStatus.CREATED,
     description: ShopProductResponse.ProductCreated,
   })
@@ -71,7 +71,7 @@ export class ShopProductController {
     const newProduct = await this.shopProductService.createProduct(dto);
     console.log(newProduct);
 
-    return fillDto(ShopProductRdo, newProduct.toPOJO());
+    return fillDto(ProductRdo, newProduct.toPOJO());
   }
 
   @ApiResponse({
@@ -98,7 +98,7 @@ export class ShopProductController {
   }
 
   @ApiResponse({
-    type: ShopProductRdo,
+    type: ProductRdo,
     status: HttpStatus.OK,
     description: ShopProductResponse.ProductUpdated,
   })
@@ -118,6 +118,6 @@ export class ShopProductController {
   @ApiTags('shop product')
   public async update(@Param('id') id: string, @Body() dto: UpdateProductDto) {
     const updatedProduct = await this.shopProductService.updateProduct(id, dto);
-    return fillDto(ShopProductRdo, updatedProduct.toPOJO());
+    return fillDto(ProductRdo, updatedProduct.toPOJO());
   }
 }

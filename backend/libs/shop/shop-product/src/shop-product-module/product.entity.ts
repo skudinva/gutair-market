@@ -1,10 +1,7 @@
 import { Entity, Product, StorableEntity } from '@backend/shared/core';
 import { ProductType } from '@prisma/client';
 
-export class ShopProductEntity
-  extends Entity
-  implements StorableEntity<Product>
-{
+export class ProductEntity extends Entity implements StorableEntity<Product> {
   public name!: string;
   public describe!: string;
   public createdAt!: Date;

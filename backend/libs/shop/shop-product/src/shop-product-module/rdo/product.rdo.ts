@@ -2,7 +2,7 @@ import { ProductType } from '@prisma/client';
 import { Expose } from 'class-transformer';
 import { ProductApi } from '../product.api';
 
-export class ShopProductRdo extends ProductApi {
+export class ProductRdo extends ProductApi {
   @Expose()
   id: string;
 

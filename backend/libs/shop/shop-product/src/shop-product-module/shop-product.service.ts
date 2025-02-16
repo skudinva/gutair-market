@@ -2,8 +2,8 @@ import { PaginationResult } from '@backend/shared/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductEntity } from './product.entity';
 import { ShopProductResponse } from './shop-product.constant';
-import { ShopProductEntity } from './shop-product.entity';
 import { ShopProductFactory } from './shop-product.factory';
 import { ShopProductQuery } from './shop-product.query';
 import { ShopProductRepository } from './shop-product.repository';
@@ -12,9 +12,7 @@ import { ShopProductRepository } from './shop-product.repository';
 export class ShopProductService {
   constructor(private readonly shopProductRepository: ShopProductRepository) {}
 
-  public async createProduct(
-    dto: CreateProductDto
-  ): Promise<ShopProductEntity> {
+  public async createProduct(dto: CreateProductDto): Promise<ProductEntity> {
     const newProduct = ShopProductFactory.createFromCreateProductDto(dto);
     await this.shopProductRepository.save(newProduct);
 
@@ -24,7 +22,7 @@ export class ShopProductService {
   public async updateProduct(
     id: string,
     dto: UpdateProductDto
-  ): Promise<ShopProductEntity> {
+  ): Promise<ProductEntity> {
     const existProduct = await this.getProduct(id);
 
     for (const [key, value] of Object.entries(dto)) {
@@ -46,7 +44,7 @@ export class ShopProductService {
     await this.shopProductRepository.deleteById(id);
   }
 
-  public async getProduct(id: string): Promise<ShopProductEntity> {
+  public async getProduct(id: string): Promise<ProductEntity> {
     const existProduct = await this.shopProductRepository.findById(id);
     if (!existProduct) {
       throw new NotFoundException(ShopProductResponse.ProductNotFound);
@@ -57,7 +55,7 @@ export class ShopProductService {
 
   public async getProducts(
     query?: ShopProductQuery
-  ): Promise<PaginationResult<ShopProductEntity | null>> {
+  ): Promise<PaginationResult<ProductEntity | null>> {
     return this.shopProductRepository.find(query);
   }
 }

@@ -2,18 +2,18 @@ import { EntityFactory, Product } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
 import dayjs from 'dayjs';
 import { CreateProductDto } from './dto/create-product.dto';
-import { ShopProductEntity } from './shop-product.entity';
+import { ProductEntity } from './product.entity';
 
 @Injectable()
-export class ShopProductFactory implements EntityFactory<ShopProductEntity> {
-  create(entityPlainData: Product): ShopProductEntity {
-    return new ShopProductEntity(entityPlainData);
+export class ShopProductFactory implements EntityFactory<ProductEntity> {
+  create(entityPlainData: Product): ProductEntity {
+    return new ProductEntity(entityPlainData);
   }
 
   public static createFromCreateProductDto(
     dto: CreateProductDto
-  ): ShopProductEntity {
-    const newProduct = new ShopProductEntity();
+  ): ProductEntity {
+    const newProduct = new ProductEntity();
     newProduct.id = undefined;
     newProduct.name = dto.name;
     newProduct.describe = dto.describe;

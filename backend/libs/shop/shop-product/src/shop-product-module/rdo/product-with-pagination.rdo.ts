@@ -1,16 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
 import { ValidateNested } from 'class-validator';
-import { ShopProductRdo } from './shop-product.rdo';
+import { ProductRdo } from './product.rdo';
 
-export class ShopProductWithPaginationRdo {
+export class ProductWithPaginationRdo {
   @Expose()
   @ApiProperty({
     description: 'List of entity',
+    type: [ProductRdo],
   })
-  @Type(() => ShopProductRdo)
+  @Type(() => ProductRdo)
   @ValidateNested({ always: true })
-  public entities!: ShopProductRdo[];
+  public entities!: ProductRdo[];
 
   @Expose()
   @ApiProperty({

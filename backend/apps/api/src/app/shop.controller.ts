@@ -13,9 +13,9 @@ import {
 import {
   CreateProductDto,
   CreateProductFileDto,
-  ShopProductRdo,
+  ProductRdo,
+  ProductWithPaginationRdo,
   ShopProductResponse,
-  ShopProductWithPaginationRdo,
   UpdateProductDto,
   UpdateProductFileDto,
 } from '@backend/shop-product';
@@ -71,7 +71,7 @@ export class ShopController {
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiResponse({
-    type: ShopProductRdo,
+    type: ProductRdo,
     status: HttpStatus.CREATED,
     description: ShopProductResponse.ProductFound,
   })
@@ -104,7 +104,7 @@ export class ShopController {
     );
 
     if (file) {
-      //productDto.extraProperty.photo = await this.appService.uploadFile(file);
+      productDto.photoPath = await this.appService.uploadFile(file);
     }
 
     const { data } = await this.httpService.axiosRef.post(
@@ -117,7 +117,7 @@ export class ShopController {
 
   @Put('/:id')
   @ApiResponse({
-    type: ShopProductRdo,
+    type: ProductRdo,
     status: HttpStatus.OK,
     description: ShopProductResponse.ProductUpdated,
   })
@@ -164,7 +164,7 @@ export class ShopController {
     );
 
     if (file) {
-      // productDto.extraProperty.photo = await this.appService.uploadFile(file);
+      productDto.photoPath = await this.appService.uploadFile(file);
     }
 
     const { data } = await this.httpService.axiosRef.patch(
@@ -209,7 +209,7 @@ export class ShopController {
   }
 
   @ApiResponse({
-    type: ShopProductWithPaginationRdo,
+    type: ProductWithPaginationRdo,
     status: HttpStatus.OK,
     description: ShopProductResponse.ProductsFound,
   })
@@ -254,14 +254,14 @@ export class ShopController {
     const query = url.parse(requestUrl).query;
 
     const { data } =
-      await this.httpService.axiosRef.get<ShopProductWithPaginationRdo>(
+      await this.httpService.axiosRef.get<ProductWithPaginationRdo>(
         `${ApplicationServiceURL.Shop}?${query}`
       );
     return data;
   }
 
   @ApiResponse({
-    type: ShopProductRdo,
+    type: ProductRdo,
     status: HttpStatus.OK,
     description: ShopProductResponse.ProductFound,
   })
@@ -278,7 +278,7 @@ export class ShopController {
     @Req() req: RequestWithTokenPayload
   ) {
     const userId = req.user?.sub;
-    const { data } = await this.httpService.axiosRef.get<ShopProductRdo>(
+    const { data } = await this.httpService.axiosRef.get<ProductRdo>(
       `${ApplicationServiceURL.Shop}/${id}/${userId}`
     );
 

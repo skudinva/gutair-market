@@ -3,13 +3,13 @@ import { PaginationResult, Product } from '@backend/shared/core';
 import { PrismaClientService } from '@backend/shop-models';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { ShopProductEntity } from './shop-product.entity';
+import { ProductEntity } from './product.entity';
 import { ShopProductFactory } from './shop-product.factory';
 import { ShopProductQuery } from './shop-product.query';
 
 @Injectable()
 export class ShopProductRepository extends BasePostgresRepository<
-  ShopProductEntity,
+  ProductEntity,
   Product
 > {
   constructor(entityFactory: ShopProductFactory, client: PrismaClientService) {
@@ -59,7 +59,7 @@ export class ShopProductRepository extends BasePostgresRepository<
     return orderBy;
   }
 
-  public override async save(product: ShopProductEntity): Promise<void> {
+  public override async save(product: ProductEntity): Promise<void> {
     const pojoProduct = product.toPOJO();
     const record = await this.client.product.create({
       data: {
@@ -70,7 +70,7 @@ export class ShopProductRepository extends BasePostgresRepository<
     product.id = record.id;
   }
 
-  override async update(product: ShopProductEntity): Promise<void> {
+  override async update(product: ProductEntity): Promise<void> {
     const pojoProduct = product.toPOJO();
     await this.client.product.update({
       where: { id: product.id },
@@ -85,15 +85,15 @@ export class ShopProductRepository extends BasePostgresRepository<
   }
 
   public override async findById(
-    id: ShopProductEntity['id']
-  ): Promise<ShopProductEntity | null> {
+    id: ProductEntity['id']
+  ): Promise<ProductEntity | null> {
     const product = await this.client.product.findUnique({ where: { id } });
     return this.createEntityFromDocument(product);
   }
 
   public async find(
     query?: ShopProductQuery
-  ): Promise<PaginationResult<ShopProductEntity | null>> {
+  ): Promise<PaginationResult<ProductEntity | null>> {
     const skip =
       query?.page && query?.limit ? (query.page - 1) * query.limit : undefined;
     const take = query?.limit;

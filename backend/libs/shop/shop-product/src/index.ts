@@ -1,12 +1,12 @@
-export { CreateProductDto } from './shop-product-module/dto/create-product.dto';
 export { CreateProductFileDto } from './shop-product-module/dto/create-product-file.dto';
-export { UpdateProductDto } from './shop-product-module/dto/update-product.dto';
+export { CreateProductDto } from './shop-product-module/dto/create-product.dto';
 export { UpdateProductFileDto } from './shop-product-module/dto/update-product-file.dto';
+export { UpdateProductDto } from './shop-product-module/dto/update-product.dto';
 export { UserIdDto } from './shop-product-module/dto/user-id.dto';
-export { ShopProductWithPaginationRdo } from './shop-product-module/rdo/shop-product-with-pagination.rdo';
-export { ShopProductRdo } from './shop-product-module/rdo/shop-product.rdo';
+export { ProductEntity } from './shop-product-module/product.entity';
+export { ProductWithPaginationRdo } from './shop-product-module/rdo/product-with-pagination.rdo';
+export { ProductRdo } from './shop-product-module/rdo/product.rdo';
 export { ShopProductResponse } from './shop-product-module/shop-product.constant';
-export { ShopProductEntity } from './shop-product-module/shop-product.entity';
 export { ShopProductModule } from './shop-product-module/shop-product.module';
 export { ShopProductRepository } from './shop-product-module/shop-product.repository';
 export { ShopProductService } from './shop-product-module/shop-product.service';
