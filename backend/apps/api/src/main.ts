@@ -8,8 +8,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const GLOBAL_PREFIX = 'api';
   const config = new DocumentBuilder()
-    .setTitle('Readme app')
-    .setDescription('Readme app API')
+    .setTitle('Guitar shop app')
+    .setDescription('Guitar shop app API')
     .setVersion('1.0')
     .addBearerAuth(
       {
