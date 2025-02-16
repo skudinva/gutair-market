@@ -4,3 +4,4 @@ readme replace
 Для чего разные объекты RegisterUserDto = CreateUserDto
 посмотреть где используется UserIdDto
 убрать все .http
+скорее всего убрать CheckAuthForceGuard

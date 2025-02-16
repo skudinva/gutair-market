@@ -54,7 +54,6 @@ import * as url from 'node:url';
 import { ApiSection, ApplicationServiceURL } from './app.config';
 import { AppService } from './app.service';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
-import { CheckAuthForceGuard } from './guards/check-auth-force.guard';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 
 @Controller('shop')
@@ -247,7 +246,7 @@ export class ShopController {
   })
   @Get('/')
   @ApiBearerAuth('accessToken')
-  @UseGuards(CheckAuthForceGuard)
+  @UseGuards(CheckAuthGuard)
   @ApiTags(ApiSection.Product)
   public async getProducts(@Req() req: RequestWithTokenPayloadUrl) {
     const userId = req.user?.sub;
@@ -271,7 +270,7 @@ export class ShopController {
     description: ShopProductResponse.ProductNotFound,
   })
   @ApiBearerAuth('accessToken')
-  @UseGuards(CheckAuthForceGuard)
+  @UseGuards(CheckAuthGuard)
   @Get('/:id')
   @ApiTags(ApiSection.Product)
   public async getProduct(
