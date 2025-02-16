@@ -1,8 +1,8 @@
 version: '3.9'
 services:
-  readme.blog.postgres:
+  shop.blog.postgres:
     image: postgres:14-alpine
-    container_name: readme.blog.postgres
+    container_name: shop.blog.postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -10,7 +10,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - readme.postgres.blog:/var/lib/postgresql/data
+      - shop.postgres.blog:/var/lib/postgresql/data
 
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d {POSTGRES_DB}']
@@ -20,11 +20,11 @@ services:
       start_period: 10s
 
     networks:
-      - readme.blog
+      - shop.blog
 
-  readme.blog.pgadmin:
+  shop.blog.pgadmin:
     image: dpage/pgadmin4
-    container_name: readme.blog.pgadmin
+    container_name: shop.blog.pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
@@ -32,13 +32,13 @@ services:
     ports:
       - 8082:80
     depends_on:
-      - readme.blog.postgres
+      - shop.blog.postgres
     networks:
-      - readme.blog
+      - shop.blog
 
 volumes:
-  readme.postgres.blog:
+  shop.postgres.blog:
 
 networks:
-  readme.blog:
+  shop.blog:
     driver: bridge

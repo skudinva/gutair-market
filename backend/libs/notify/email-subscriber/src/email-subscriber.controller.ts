@@ -24,9 +24,9 @@ export class EmailSubscriberController {
   }
 
   @RabbitSubscribe({
-    exchange: 'readme.notify',
+    exchange: 'shop.notify',
     routingKey: RabbitRouting.SendNewPostNotify,
-    queue: 'readme.notify.send',
+    queue: 'shop.notify.send',
   })
   public async sendNewPostNotify(dto: NotifyDto) {
     const { posts } = dto;
