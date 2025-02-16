@@ -20,9 +20,7 @@
       "@backend/authentication": ["libs/account/authentication/src/index.ts"],
       "@backend/blog-config": ["libs/blog/blog-config/src/index.ts"],
       "@backend/blog-models": ["libs/blog/models/src/index.ts"],
-      "@backend/blog-notify": ["libs/blog/blog-notify/src/index.ts"],
       "@backend/blog-post": ["libs/blog/blog-post/src/index.ts"],
-      "@backend/shop-user": ["libs/account/shop-user/src/index.ts"],
       "@backend/config": ["libs/account/config/src/index.ts"],
       "@backend/data-access": ["libs/shared/data-access/src/index.ts"],
       "@backend/email-subscriber": [
@@ -35,7 +33,8 @@
       "@backend/models": ["libs/blog/models/src/index.ts"],
       "@backend/notify-config": ["libs/notify/config/src/index.ts"],
       "@backend/pipes": ["libs/shared/pipes/src/index.ts"],
-      "@backend/shared/core": ["libs/shared/core/src/index.ts"]
+      "@backend/shared/core": ["libs/shared/core/src/index.ts"],
+      "@backend/shop-user": ["libs/account/shop-user/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
