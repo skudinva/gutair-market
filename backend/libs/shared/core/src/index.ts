@@ -11,7 +11,7 @@ export { TokenPayload } from './lib/interfaces/token-payload.interface';
 export { Token } from './lib/interfaces/token.interface';
 export { AuthUser } from './lib/types/auth-user.interface';
 export { File } from './lib/types/file.interface';
-export { Post } from './lib/types/post.interface';
+export { Product } from './lib/types/product.interface';
 export { RabbitRouting } from './lib/types/rabbit-routing.enum';
 export { StoredFile } from './lib/types/stored-file.interface';
 export { Subscriber } from './lib/types/subscriber.interface';
