@@ -22,11 +22,27 @@ export class ShopProductEntity
     if (!product) {
       return;
     }
-    const { id, productType, createdAt } = product;
+    const {
+      id,
+      productType,
+      createdAt,
+      article,
+      name,
+      describe,
+      photoPath,
+      cordsCount,
+      price,
+    } = product;
 
     this.id = id ?? undefined;
-    this.productType = productType;
+    this.name = name;
+    this.describe = describe;
     this.createdAt = createdAt;
+    this.photoPath = photoPath;
+    this.productType = productType;
+    this.article = article;
+    this.cordsCount = cordsCount;
+    this.price = price;
   }
 
   toPOJO(): Product {
