@@ -15,7 +15,7 @@ import {
   HttpStatus,
   Param,
   Patch,
-  Product,
+  Post,
   Req,
   UseFilters,
   UseGuards,

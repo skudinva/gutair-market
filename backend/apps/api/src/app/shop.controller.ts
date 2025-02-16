@@ -26,8 +26,8 @@ import {
   MaxFileSizeValidator,
   Param,
   ParseFilePipe,
-  Patch,
   Post,
+  Put,
   Req,
   UploadedFile,
   UseFilters,
@@ -111,7 +111,7 @@ export class ShopController {
     return data;
   }
 
-  @Patch('/:id')
+  @Put('/:id')
   @ApiResponse({
     type: ShopProductRdo,
     status: HttpStatus.OK,

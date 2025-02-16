@@ -7,8 +7,8 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -112,7 +112,7 @@ export class ShopProductController {
     status: HttpStatus.CONFLICT,
     description: ShopProductResponse.AccessDeny,
   })
-  @Patch('/:id')
+  @Put('/:id')
   @ApiTags('shop product')
   public async update(@Param('id') id: string, @Body() dto: UpdateProductDto) {
     const updatedProduct = await this.shopProductService.updateProduct(id, dto);
