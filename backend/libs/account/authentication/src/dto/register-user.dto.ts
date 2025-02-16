@@ -1,6 +1,7 @@
+import { FieldValidate } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
-import 'multer';
+import { IsString, Length } from 'class-validator';
+import { AuthenticationValidateMessage } from '../authentication-module/authentication.constant';
 import { LoginUserDto } from './login-user.dto';
 
 export class RegisterUserDto extends LoginUserDto {
@@ -9,5 +10,8 @@ export class RegisterUserDto extends LoginUserDto {
     example: 'Keks',
   })
   @IsString()
+  @Length(FieldValidate.MinUserNameLength, FieldValidate.MaxUserNameLength, {
+    message: AuthenticationValidateMessage.NameNotValid,
+  })
   public name: string;
 }

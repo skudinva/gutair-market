@@ -1,7 +1,6 @@
+import { FieldValidate } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, Length } from 'class-validator';
-
-import { FieldValidate } from '@backend/shared/core';
 import { AuthenticationValidateMessage } from '../authentication-module/authentication.constant';
 import { LoginUserDto } from './login-user.dto';
 

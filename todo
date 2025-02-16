@@ -1,3 +1,4 @@
 readme replace
 --Subscriber
 --.spec.
+Для чего разные объекты RegisterUserDto = CreateUserDto
