@@ -29,6 +29,36 @@ export class ShopProductRepository extends BasePostgresRepository<
     return Math.ceil(totalCount / limit);
   }
 
+  private async composeWhere(
+    query?: ShopProductQuery
+  ): Promise<Prisma.ProductWhereInput> {
+    const { productType, cordsCount } = query;
+    const where: Prisma.ProductWhereInput = {};
+
+    if (productType) {
+      where.productType = productType;
+    }
+
+    if (cordsCount) {
+      where.cordsCount = cordsCount;
+    }
+
+    return where;
+  }
+
+  private async composeOrderBy(
+    query?: ShopProductQuery
+  ): Promise<Prisma.ProductOrderByWithRelationInput> {
+    const { sortBy, sortDirection } = query;
+    const orderBy: Prisma.ProductOrderByWithRelationInput = {};
+
+    if (sortBy) {
+      orderBy[sortBy] = sortDirection;
+    }
+
+    return orderBy;
+  }
+
   public override async save(product: ShopProductEntity): Promise<void> {
     const pojoProduct = product.toPOJO();
     const record = await this.client.product.create({
@@ -67,16 +97,8 @@ export class ShopProductRepository extends BasePostgresRepository<
     const skip =
       query?.page && query?.limit ? (query.page - 1) * query.limit : undefined;
     const take = query?.limit;
-    const where: Prisma.ProductWhereInput = {};
-    const orderBy: Prisma.ProductOrderByWithRelationInput = {};
-
-    if (query?.productType) {
-      where.productType = query.productType;
-    }
-
-    if (query?.sortBy) {
-      orderBy[query.sortBy] = query.sortDirection;
-    }
+    const where = await this.composeWhere(query);
+    const orderBy = await this.composeOrderBy(query);
 
     const [records, productCount] = await Promise.all([
       this.client.product.findMany({

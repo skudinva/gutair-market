@@ -1,4 +1,4 @@
-import { SortDirection, SortType } from '@backend/shared/core';
+import { CordsCount, SortDirection, SortType } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductType } from '@prisma/client';
 import { Transform } from 'class-transformer';
@@ -43,10 +43,19 @@ export class ShopProductQuery {
     description: 'Product type',
     example: ProductType.Acoustic,
     enum: ProductType,
-    enumName: 'ProductType',
     required: false,
   })
   @IsIn(Object.values(ProductType))
   @IsOptional()
   productType!: ProductType;
+
+  @ApiProperty({
+    description: 'Cords counts',
+    example: CordsCount.Cord6,
+    enum: CordsCount,
+    required: false,
+  })
+  @IsIn(Object.values(CordsCount))
+  @IsOptional()
+  cordsCount: CordsCount;
 }
