@@ -35,8 +35,8 @@ export class ShopProductController {
     description: ShopProductResponse.ProductNotFound,
   })
   @ApiTags('shop product')
-  public async show(@Param('id') id: string, @Param('userId') userId: string) {
-    const product = await this.shopProductService.getProduct(id, userId);
+  public async show(@Param('id') id: string) {
+    const product = await this.shopProductService.getProduct(id);
     return fillDto(ShopProductRdo, product.toPOJO());
   }
 
@@ -91,11 +91,8 @@ export class ShopProductController {
   @Delete('/:productId/:userId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiTags('shop product')
-  public async destroy(
-    @Param('productId') productId: string,
-    @Param('userId') userId: string
-  ) {
-    await this.shopProductService.deleteProduct(productId, userId);
+  public async destroy(@Param('productId') productId: string) {
+    await this.shopProductService.deleteProduct(productId);
   }
 
   @ApiResponse({

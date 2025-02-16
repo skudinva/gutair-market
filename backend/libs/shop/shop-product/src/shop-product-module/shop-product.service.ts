@@ -1,10 +1,5 @@
 import { PaginationResult } from '@backend/shared/core';
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
-import { ProductState } from '@prisma/client';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ShopProductResponse } from './shop-product.constant';
@@ -30,7 +25,7 @@ export class ShopProductService {
     id: string,
     dto: UpdateProductDto
   ): Promise<ShopProductEntity> {
-    const existProduct = await this.getProduct(id, dto.userId);
+    const existProduct = await this.getProduct(id);
 
     for (const [key, value] of Object.entries(dto)) {
       if (value !== undefined && existProduct[key] !== value) {
@@ -42,33 +37,18 @@ export class ShopProductService {
     return existProduct;
   }
 
-  public async deleteProduct(id: string, userId: string): Promise<void> {
-    const product = await this.getProduct(id, null);
+  public async deleteProduct(id: string): Promise<void> {
+    const product = await this.getProduct(id);
     if (!product) {
       return;
-    }
-
-    if (userId !== product.userId) {
-      throw new ConflictException('You are not allowed to delete product');
     }
 
     await this.shopProductRepository.deleteById(id);
   }
 
-  public async getProduct(
-    id: string,
-    userId: string | null | undefined
-  ): Promise<ShopProductEntity> {
+  public async getProduct(id: string): Promise<ShopProductEntity> {
     const existProduct = await this.shopProductRepository.findById(id);
     if (!existProduct) {
-      throw new NotFoundException(ShopProductResponse.ProductNotFound);
-    }
-
-    if (
-      userId !== null &&
-      userId !== existProduct.userId &&
-      existProduct.state === ProductState.Draft
-    ) {
       throw new NotFoundException(ShopProductResponse.ProductNotFound);
     }
 

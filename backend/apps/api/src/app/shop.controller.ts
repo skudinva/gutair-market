@@ -13,7 +13,6 @@ import {
   ShopProductWithPaginationRdo,
   UpdateProductDto,
   UpdateProductFileDto,
-  UserIdDto,
 } from '@backend/shop-product';
 import { HttpService } from '@nestjs/axios';
 import {
@@ -28,6 +27,7 @@ import {
   Param,
   ParseFilePipe,
   Patch,
+  Post,
   Req,
   UploadedFile,
   UseFilters,
@@ -54,7 +54,7 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 
 @Controller('shop')
 @UseFilters(AxiosExceptionFilter)
-export class BlogController {
+export class ShopController {
   constructor(
     private readonly httpService: HttpService,
     private readonly appService: AppService
@@ -103,8 +103,8 @@ export class BlogController {
       //productDto.extraProperty.photo = await this.appService.uploadFile(file);
     }
 
-    const { data } = await this.httpService.axiosRef.product(
-      `${ApplicationServiceURL.Blog}/`,
+    const { data } = await this.httpService.axiosRef.post(
+      `${ApplicationServiceURL.Shop}/`,
       productDto
     );
 
@@ -164,7 +164,7 @@ export class BlogController {
     }
 
     const { data } = await this.httpService.axiosRef.patch(
-      `${ApplicationServiceURL.Blog}/${id}`,
+      `${ApplicationServiceURL.Shop}/${id}`,
       productDto
     );
 
@@ -198,7 +198,7 @@ export class BlogController {
   ) {
     const userId = req.user.sub;
     const { data } = await this.httpService.axiosRef.delete(
-      `${ApplicationServiceURL.Blog}/${id}/${userId}`
+      `${ApplicationServiceURL.Shop}/${id}/${userId}`
     );
 
     return data;
@@ -264,7 +264,7 @@ export class BlogController {
 
     const { data } =
       await this.httpService.axiosRef.get<ShopProductWithPaginationRdo>(
-        `${ApplicationServiceURL.Blog}?${query}`
+        `${ApplicationServiceURL.Shop}?${query}`
       );
     await this.appService.appendUserInfo(data.entities);
     return data;
@@ -289,23 +289,10 @@ export class BlogController {
   ) {
     const userId = req.user?.sub;
     const { data } = await this.httpService.axiosRef.get<ShopProductRdo>(
-      `${ApplicationServiceURL.Blog}/${id}/${userId}`
+      `${ApplicationServiceURL.Shop}/${id}/${userId}`
     );
     await this.appService.appendUserInfo([data]);
 
     return data;
-  }
-
-  @Post('/sendNewProductNotify')
-  @UseGuards(CheckAuthGuard)
-  @UseInterceptors(InjectUserIdInterceptor)
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiBearerAuth('accessToken')
-  @ApiTags(ApiSection.Product)
-  public async sendNewProductNotify(@Body() dto: UserIdDto) {
-    await this.httpService.axiosRef.post(
-      `${ApplicationServiceURL.Blog}/sendNewProductNotify`,
-      dto
-    );
   }
 }

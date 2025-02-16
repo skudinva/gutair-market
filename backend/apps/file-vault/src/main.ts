@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const GLOBAL_PREFIX = 'api';
   const config = new DocumentBuilder()
-    .setTitle('The «Blog» service')
-    .setDescription('Blog service API')
+    .setTitle('The «Shop» service')
+    .setDescription('Shop service API')
     .setVersion('1.0')
     .build();
   app.setGlobalPrefix(GLOBAL_PREFIX);

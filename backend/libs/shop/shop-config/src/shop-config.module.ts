@@ -12,4 +12,4 @@ import rabbitConfig from './configurations/rabbit.config';
     }),
   ],
 })
-export class BlogConfigModule {}
+export class ShopConfigModule {}
