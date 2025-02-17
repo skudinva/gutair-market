@@ -1,17 +1,10 @@
+import BreadCrumbs from '../breadcrumbs/breadcrumbs';
+
 const ProductList = (): JSX.Element => (
   <section className="product-list">
     <div className="container">
       <h1 className="product-list__title">Список товаров</h1>
-      <ul className="breadcrumbs">
-        <li className="breadcrumbs__item">
-          <a className="link" href="./main.html">
-            Вход
-          </a>
-        </li>
-        <li className="breadcrumbs__item">
-          <a className="link">Товары</a>
-        </li>
-      </ul>
+      <BreadCrumbs />
       <div className="catalog">
         <form className="catalog-filter" action="#" method="post">
           <h2 className="title title--bigger catalog-filter__title">Фильтр</h2>

@@ -3,7 +3,6 @@ const NotFound = (): JSX.Element => (
     <h1 className="error__title">404</h1>
     <span className="error__subtitle">Страница не найдена.</span>
     <p className="error__text">
-      {" "}
       Возможно, страница была удалена или
       <br />
       её вовсе не существовало.

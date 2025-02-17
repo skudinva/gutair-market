@@ -1,4 +1,4 @@
-const ProductCard = (): JSX.Element => (
+const ProductForm = (): JSX.Element => (
   <form className="add-item__form" action="#" method="get">
     <div className="add-item__form-left">
       <div className="edit-item-image add-item__form-image">
@@ -110,4 +110,4 @@ const ProductCard = (): JSX.Element => (
   </form>
 );
 
-export default ProductCard;
+export default ProductForm;
