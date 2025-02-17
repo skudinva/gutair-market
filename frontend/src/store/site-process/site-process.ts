@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { CITIES, CityLocation, Sorting, StoreSlice } from '../../const';
 import type { SiteProcess } from '../../types/state';
 import type { CityName, SortName } from '../../types/types';
-import { CITIES, CityLocation, Sorting, StoreSlice } from '../../const';
 
 const initialState: SiteProcess = {
   city: {
@@ -24,7 +24,7 @@ export const siteProcess = createSlice({
     },
     setSorting: (state, action: PayloadAction<SortName>) => {
       state.sorting = action.payload;
-    }
+    },
   },
 });
 

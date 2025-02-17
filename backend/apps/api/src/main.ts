@@ -28,6 +28,7 @@ async function bootstrap() {
   SwaggerModule.setup('spec', app, document);
   app.useGlobalInterceptors(new RequestIdInterceptor());
   const port = process.env.PORT || 3000;
+  app.enableCors();
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${GLOBAL_PREFIX}`

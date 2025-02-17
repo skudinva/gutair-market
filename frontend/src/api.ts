@@ -1,9 +1,9 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
-import { toast } from "react-toastify";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+import { toast } from 'react-toastify';
 
-import { Token } from "./utils";
+import { Token } from './utils';
 
-const BACKEND_URL = "http://localhost:3000";
+const BACKEND_URL = 'http://localhost:3000';
 const REQUEST_TIMEOUT = 5000;
 
 export const createAPI = (): AxiosInstance => {
@@ -16,7 +16,7 @@ export const createAPI = (): AxiosInstance => {
     const token = Token.get();
 
     if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
 
     return config;
