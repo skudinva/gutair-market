@@ -1,5 +1,5 @@
 export { Entity } from './lib/base/entity';
-export { FieldValidate, SERVE_ROOT } from './lib/const';
+export { CORDS_COUNT, FieldValidate, SERVE_ROOT } from './lib/const';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
 export { JwtToken } from './lib/interfaces/jwt-token.interface';
 export { PaginationResult } from './lib/interfaces/pagination.interface';
@@ -9,7 +9,7 @@ export { StorableEntity } from './lib/interfaces/storable-entity.interface';
 export { TokenPayload } from './lib/interfaces/token-payload.interface';
 export { Token } from './lib/interfaces/token.interface';
 export { AuthUser } from './lib/types/auth-user.interface';
-export { CordsCount } from './lib/types/cords-count.enum';
+export { CordsCountType } from './lib/types/cords-count.interface';
 export { File } from './lib/types/file.interface';
 export { Product } from './lib/types/product.interface';
 export { RabbitRouting } from './lib/types/rabbit-routing.enum';

@@ -16,3 +16,5 @@ export const FieldValidate = {
   MaxFileSizeForAvatar: 500000,
   AllowedImageFileType: '.(jpg|jpeg|png)',
 } as const;
+
+export const CORDS_COUNT = [4, 6, 7, 12] as const;

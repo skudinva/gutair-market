@@ -1,9 +1,14 @@
-import { CordsCount, SortDirection, SortType } from '@backend/shared/core';
+import { TransformToArray, TransformToNumberArray } from '@backend/helpers';
+import {
+  CORDS_COUNT,
+  CordsCountType,
+  SortDirection,
+  SortType,
+} from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductType } from '@prisma/client';
-import { Transform, Type } from 'class-transformer';
-import { IsIn, IsOptional } from 'class-validator';
-
+import { Transform } from 'class-transformer';
+import { IsArray, IsEnum, IsIn, IsOptional } from 'class-validator';
 import {
   DEFAULT_PAGE_COUNT,
   DEFAULT_PRODUCT_COUNT_LIMIT,
@@ -45,18 +50,26 @@ export class ProductQuery {
     example: ProductType.Acoustic,
     enum: ProductType,
     required: false,
+    isArray: true,
   })
-  @IsIn(Object.values(ProductType))
+  @IsEnum(ProductType, { each: true })
+  @IsIn(Object.values(ProductType), { each: true })
   @IsOptional()
-  productType!: ProductType;
+  @IsArray()
+  @TransformToArray()
+  productType!: ProductType[];
 
   @ApiProperty({
     description: 'Cords counts',
-    example: CordsCount[0],
+    example: CORDS_COUNT[0],
+    enum: CORDS_COUNT,
     required: false,
+    isArray: true,
   })
-  @IsIn(Object.values(CordsCount))
+  @IsEnum(CORDS_COUNT, { each: true })
+  @IsIn(Object.values(CORDS_COUNT), { each: true })
   @IsOptional()
-  @Type(() => Number)
-  cordsCount: number;
+  @IsArray()
+  @TransformToNumberArray()
+  cordsCount!: CordsCountType[];
 }

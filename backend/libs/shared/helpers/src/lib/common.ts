@@ -1,5 +1,9 @@
 import { File, SERVE_ROOT } from '@backend/shared/core';
-import { ClassTransformOptions, plainToInstance } from 'class-transformer';
+import {
+  ClassTransformOptions,
+  plainToInstance,
+  Transform,
+} from 'class-transformer';
 
 export type DateTimeUnit = 's' | 'h' | 'd' | 'm' | 'y';
 export type TimeAndUnit = { value: number; unit: DateTimeUnit };
@@ -69,4 +73,18 @@ export function parseTime(time: string): TimeAndUnit {
 export function createUrlForFile(fileMetaData: File, host: string): string {
   const subDirectory = fileMetaData.subDirectory.replace('\\', '/');
   return `${host}/${SERVE_ROOT}/${subDirectory}/${fileMetaData.hashName}`;
+}
+
+export function transformToArray<T>(value: T): Array<T> {
+  return Array.isArray(value) ? value : [value];
+}
+
+export function TransformToArray() {
+  return Transform(({ value }) => transformToArray(value));
+}
+
+export function TransformToNumberArray() {
+  return Transform(({ value }) =>
+    transformToArray(value).map((value) => parseInt(value, 10))
+  );
 }
