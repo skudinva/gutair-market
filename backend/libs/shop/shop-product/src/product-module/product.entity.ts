@@ -1,4 +1,9 @@
-import { Entity, Product, StorableEntity } from '@backend/shared/core';
+import {
+  CordsCountType,
+  Entity,
+  Product,
+  StorableEntity,
+} from '@backend/shared/core';
 import { ProductType } from '@prisma/client';
 
 export class ProductEntity extends Entity implements StorableEntity<Product> {
@@ -8,7 +13,7 @@ export class ProductEntity extends Entity implements StorableEntity<Product> {
   public photoPath!: string;
   public productType!: ProductType;
   public article!: string;
-  public cordsCount!: number;
+  public cordsCount!: CordsCountType;
   public price!: number;
 
   constructor(product?: Product) {

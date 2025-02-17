@@ -1,3 +1,4 @@
+import { CordsCountType } from '@backend/shared/core';
 import { ProductType } from '@prisma/client';
 import { Expose } from 'class-transformer';
 import { ProductApi } from '../product.api';
@@ -25,7 +26,7 @@ export class ProductRdo extends ProductApi {
   article: string;
 
   @Expose()
-  cordsCount: number;
+  cordsCount: CordsCountType;
 
   @Expose()
   price: number;

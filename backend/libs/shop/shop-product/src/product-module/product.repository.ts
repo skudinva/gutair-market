@@ -92,7 +92,9 @@ export class ProductRepository extends BasePostgresRepository<
     id: ProductEntity['id']
   ): Promise<ProductEntity | null> {
     const product = await this.client.product.findUnique({ where: { id } });
-    return this.createEntityFromDocument(product);
+    return this.createEntityFromDocument(
+      ProductFactory.createEntityFromPrisma(product)
+    );
   }
 
   public async find(
@@ -115,7 +117,11 @@ export class ProductRepository extends BasePostgresRepository<
     ]);
 
     return {
-      entities: records.map((record) => this.createEntityFromDocument(record)),
+      entities: records.map((record) =>
+        this.createEntityFromDocument(
+          ProductFactory.createEntityFromPrisma(record)
+        )
+      ),
       currentPage: query?.page,
       totalPages: this.calculateProductsPage(productCount, take),
       itemsPerPage: take,

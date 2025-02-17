@@ -1,4 +1,4 @@
-import { FieldValidate } from '@backend/shared/core';
+import { CordsCountType, FieldValidate } from '@backend/shared/core';
 import { ProductType } from '@prisma/client';
 import {
   IsIn,
@@ -47,7 +47,7 @@ export class BaseProductDto extends ProductApi {
   article: string;
 
   @IsInt()
-  cordsCount: number;
+  cordsCount: CordsCountType;
 
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(FieldValidate.MinProductPrice)

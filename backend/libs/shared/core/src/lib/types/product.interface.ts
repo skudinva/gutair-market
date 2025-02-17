@@ -1,4 +1,5 @@
 import { ProductType } from '@prisma/client';
+import { CordsCountType } from './cords-count.interface';
 
 export interface Product {
   id: string;
@@ -8,6 +9,6 @@ export interface Product {
   photoPath: string;
   productType: ProductType;
   article: string;
-  cordsCount: number;
+  cordsCount: CordsCountType;
   price: number;
 }

@@ -1,5 +1,6 @@
-import { EntityFactory, Product } from '@backend/shared/core';
+import { CordsCountType, EntityFactory, Product } from '@backend/shared/core';
 import { Injectable } from '@nestjs/common';
+import { Product as PrismaProduct } from '@prisma/client';
 import dayjs from 'dayjs';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductEntity } from './product.entity';
@@ -23,6 +24,20 @@ export class ProductFactory implements EntityFactory<ProductEntity> {
     newProduct.article = dto.article;
     newProduct.cordsCount = dto.cordsCount;
     newProduct.price = dto.price;
+    return newProduct;
+  }
+
+  public static createEntityFromPrisma(product: PrismaProduct): ProductEntity {
+    const newProduct = new ProductEntity();
+    newProduct.id = product.id;
+    newProduct.name = product.name;
+    newProduct.describe = product.describe;
+    newProduct.createdAt = product.createdAt;
+    newProduct.photoPath = product.photoPath;
+    newProduct.productType = product.productType;
+    newProduct.article = product.article;
+    newProduct.cordsCount = product.cordsCount as CordsCountType;
+    newProduct.price = product.price;
     return newProduct;
   }
 }
