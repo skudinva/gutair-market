@@ -8,7 +8,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductType } from '@prisma/client';
 import { Transform } from 'class-transformer';
-import { IsArray, IsEnum, IsIn, IsOptional } from 'class-validator';
+import { IsArray, IsIn, IsOptional } from 'class-validator';
 import {
   DEFAULT_PAGE_COUNT,
   DEFAULT_PRODUCT_COUNT_LIMIT,
@@ -52,7 +52,6 @@ export class ProductQuery {
     required: false,
     isArray: true,
   })
-  @IsEnum(ProductType, { each: true })
   @IsIn(Object.values(ProductType), { each: true })
   @IsOptional()
   @IsArray()
@@ -66,8 +65,7 @@ export class ProductQuery {
     required: false,
     isArray: true,
   })
-  @IsEnum(CORDS_COUNT, { each: true })
-  @IsIn(Object.values(CORDS_COUNT), { each: true })
+  @IsIn(CORDS_COUNT, { each: true })
   @IsOptional()
   @IsArray()
   @TransformToNumberArray()
