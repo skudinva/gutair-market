@@ -88,3 +88,51 @@ export function TransformToNumberArray() {
     transformToArray(value).map((value) => parseInt(value, 10))
   );
 }
+
+export function generateRandomValue(
+  min: number,
+  max: number,
+  numAfterDigit = 0
+) {
+  return +(Math.random() * (max - min) + min).toFixed(numAfterDigit);
+}
+
+export function getRandomItems<T>(items: T[]): T[] {
+  const startPosition = generateRandomValue(0, items.length - 1);
+  const endPosition =
+    startPosition + generateRandomValue(startPosition, items.length);
+  return items.slice(startPosition, endPosition);
+}
+
+export function getUniqueRandomItems<T>(items: T[], maxCount: number): T[] {
+  const uniqueueIndex = new Set<number>();
+  while (uniqueueIndex.size !== Math.min(maxCount, items.length)) {
+    uniqueueIndex.add(generateRandomValue(0, items.length - 1));
+  }
+
+  const uniqueElements: T[] = [];
+  uniqueueIndex.forEach((value) => uniqueElements.push(items[value]));
+  return uniqueElements;
+}
+
+export function getRandomItem<T>(items: T[]): T {
+  return items[generateRandomValue(0, items.length - 1)];
+}
+
+export function generateArticleNumber(length: number) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+  return Array.from({ length }, () => {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    return characters.charAt(randomIndex);
+  }).join();
+}
+
+export function generateRandomDate(start: Date, end: Date) {
+  const startTime = start.getTime();
+  const endTime = end.getTime();
+  const randomTime =
+    Math.floor(Math.random() * (endTime - startTime + 1)) + startTime;
+
+  return new Date(randomTime);
+}
