@@ -5,7 +5,7 @@ import {
 
 import { InjectUserIdInterceptor } from '@backend/interceptors';
 import {
-  CordsCount,
+  CORDS_COUNT,
   FieldValidate,
   SortDirection,
   SortType,
@@ -237,11 +237,13 @@ export class ShopController {
     required: false,
     enum: ProductType,
     description: 'Product type',
+    isArray: true,
   })
   @ApiQuery({
     name: 'cordsCount',
     required: false,
-    enum: Object.values(CordsCount),
+    enum: Object.values(CORDS_COUNT),
+    isArray: true,
     description: 'Cords counts',
   })
   @Get('/')
