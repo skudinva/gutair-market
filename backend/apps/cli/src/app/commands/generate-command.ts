@@ -44,7 +44,7 @@ export class GenerateCommand implements Command {
       for (const product of products) {
         await prismaClient.product.create({ data: product });
       }
-      console.info('🤘️ Database was filled');
+      console.info(`🤘️ Database was filled with ${products.length} records`);
       globalThis.process.exit(0);
     } catch (error: unknown) {
       console.error(error);
@@ -60,7 +60,12 @@ export class GenerateCommand implements Command {
 
   public async execute(...parameters: string[]): Promise<void> {
     const [count, connectionString] = parameters;
-    const mockProducts = this.getProducts(Number.parseInt(count, 10));
+    const productsCount = parseInt(count, 10);
+    if (productsCount <= 0) {
+      console.error('Количество тестовых товаров должно быть больше 0');
+      globalThis.process.exit(1);
+    }
+    const mockProducts = this.getProducts(productsCount);
     try {
       await this.uploadToDatabase(mockProducts, connectionString);
     } catch (error: unknown) {

@@ -62,4 +62,4 @@ export const MOCK_PRODUCTS = [
 ];
 
 export const MOCK_START_DATE = new Date(2024, 0, 1);
-export const MOCK_END_DATE = new Date(2025, 0, 1);
+export const MOCK_END_DATE = new Date();

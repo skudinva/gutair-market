@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "cli": "node dist/apps/cli/main.js",
+    "cli:generate": "node dist/apps/cli/main.js --generate 20 postgres://admin:123456@localhost:5432/shop"
   },
   "private": true,
   "dependencies": {
