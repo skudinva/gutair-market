@@ -23,9 +23,13 @@ npx nx run file-vault:serve
 npx nx run account:serve
 npx nx run shop:serve
 npx nx run api:serve
+cd ../frontend/
+npm run start
 ```
 
-Swagger [Readme app API](http://localhost:3000/spec#/)
+Swagger [app API](http://localhost:3000/spec#/)
+
+Guitar Shop [Frontend](http://localhost:5000)
 
 ## Список переменных окружения микросервисов
 
