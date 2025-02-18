@@ -1,10 +1,32 @@
 import { PrismaClient, Product, ProductType } from '@prisma/client';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { CORDS_COUNT } from '../../../shared/core/src';
-import {
-  generateArticleNumber,
-  generateRandomDate,
-  getRandomItem,
-} from '../../../shared/helpers/src';
+
+function generateArticleNumber(length: number) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+  return Array.from({ length }, () => {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    return characters.charAt(randomIndex);
+  }).join('');
+}
+
+function generateRandomDate(start: Date, end: Date) {
+  const startTime = start.getTime();
+  const endTime = end.getTime();
+  const randomTime =
+    Math.floor(Math.random() * (endTime - startTime + 1)) + startTime;
+
+  return new Date(randomTime);
+}
+
+function generateRandomValue(min: number, max: number, numAfterDigit = 0) {
+  return +(Math.random() * (max - min) + min).toFixed(numAfterDigit);
+}
+
+function getRandomItem<T>(items: T[]): T {
+  return items[generateRandomValue(0, items.length - 1)];
+}
 
 const guitars = [
   {
@@ -80,7 +102,7 @@ function getProduct(): Product {
     name: guitar.name,
     describe: guitar.description,
     createdAt: generateRandomDate(startDate, endDate),
-    photoPath: '/2025/02/15346829-ffd0-40d0-8d3e-de7be6ecac3a.jpeg',
+    photoPath: `/2025/02/${crypto.randomUUID()}.jpeg`,
     productType: getRandomItem(Object.values(ProductType)),
     article: generateArticleNumber(15),
     cordsCount: getRandomItem(Object.values(CORDS_COUNT)),
