@@ -1,10 +1,10 @@
 import store from '../store';
 
 import { AuthorizationStatus } from '../const';
-import type { Product, SortName, User } from './types';
+import type { Product, ProductWithPagination, SortName, User } from './types';
 
 export type SiteData = {
-  products: Product[];
+  products: ProductWithPagination;
   isProductsLoading: boolean;
   product: Product | null;
   isProductLoading: boolean;

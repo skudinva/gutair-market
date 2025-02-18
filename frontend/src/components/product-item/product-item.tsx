@@ -1,4 +1,13 @@
-const ProductItem = (): JSX.Element => (
+import { Product } from '../../types/types';
+
+type ProductItemProps = Product & {
+  onMouseEnter?: (id: string) => void;
+  onMouseLeave?: () => void;
+  isMini?: boolean;
+  classPrefix?: string;
+};
+
+const ProductItem = (props: ProductItemProps): JSX.Element => (
   <li className="catalog-item">
     <div className="catalog-item__data">
       <img

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ProductWithPaginationRdo } from './../../dto/product/product-with-pagination.rdo';
 
 import { StoreSlice } from '../../const';
 import type { SiteData } from '../../types/state';
@@ -10,7 +11,7 @@ import {
 } from '../action';
 
 const initialState: SiteData = {
-  products: [],
+  products: new ProductWithPaginationRdo(),
   isProductsLoading: false,
   product: null,
   isProductLoading: false,
@@ -43,11 +44,11 @@ export const siteData = createSlice({
         state.isProductLoading = false;
       })
       .addCase(postProduct.fulfilled, (state, action) => {
-        state.products.push(action.payload);
+        state.products.entities.push(action.payload);
       })
       .addCase(editProduct.fulfilled, (state, action) => {
         const updatedProduct = action.payload;
-        state.products = state.products.map((product) =>
+        state.products.entities = state.products.entities.map((product) =>
           product.id === updatedProduct.id ? updatedProduct : product
         );
       });

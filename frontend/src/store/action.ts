@@ -1,17 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AxiosError, AxiosInstance } from 'axios';
 import type { History } from 'history';
-import {
-  adaptProductDetailToClient,
-  adaptProductsToClient,
-} from '../adapters/adapters-to-client';
-import {
-  adaptNewOfferToServer,
-  adaptSignupToServer,
-} from '../adapters/adapters-to-server';
+import { adaptSignupToServer } from '../adapters/adapters-to-server';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
-import { OfferListRdo } from '../dto/offer/offer-list-rdo';
-import { OfferRdo } from '../dto/offer/offer-rdo';
+import { ProductWithPaginationRdo } from '../dto/product/product-with-pagination.rdo';
+import { ProductRdo } from '../dto/product/product.rdo';
 import { RegisteredUserRdo } from '../dto/user/registered-user-rdo';
 import { UserRdo } from '../dto/user/user-rdo';
 import type {
@@ -40,14 +33,13 @@ export const Action = {
 };
 
 export const fetchProducts = createAsyncThunk<
-  Product[],
+  ProductWithPaginationRdo,
   undefined,
   { extra: Extra }
 >(Action.FETCH_PRODUCTS, async (_, { extra }) => {
   const { api } = extra;
-  const { data } = await api.get<OfferListRdo[]>(ApiRoute.Shop);
-
-  return adaptProductsToClient(data);
+  const { data } = await api.get<ProductWithPaginationRdo>(ApiRoute.Shop);
+  return data;
 });
 
 export const fetchProduct = createAsyncThunk<
@@ -58,9 +50,9 @@ export const fetchProduct = createAsyncThunk<
   const { api, history } = extra;
 
   try {
-    const { data } = await api.get<OfferRdo>(`${ApiRoute.Shop}/${id}`);
+    const { data } = await api.get<ProductRdo>(`${ApiRoute.Shop}/${id}`);
 
-    return adaptProductDetailToClient(data);
+    return data;
   } catch (error) {
     const axiosError = error as AxiosError;
 
@@ -78,26 +70,22 @@ export const postProduct = createAsyncThunk<
   { extra: Extra }
 >(Action.POST_PRODUCT, async (newProduct, { extra }) => {
   const { api, history } = extra;
-  const { data } = await api.post<OfferRdo>(
-    ApiRoute.Shop,
-    adaptNewOfferToServer(newProduct)
-  );
+  const { data } = await api.post<ProductRdo>(ApiRoute.Shop, newProduct);
   history.push(`${AppRoute.Products}/${data.id}`);
 
-  return adaptProductDetailToClient(data);
+  return data;
 });
 
 export const editProduct = createAsyncThunk<Product, Product, { extra: Extra }>(
   Action.EDIT_PRODUCT,
   async (offer, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.patch<OfferRdo>(
+    const { data } = await api.patch<ProductRdo>(
       `${ApiRoute.Shop}/${offer.id}`,
       offer
     );
     history.push(`${AppRoute.Products}/${data.id}`);
-
-    return adaptProductDetailToClient(data);
+    return data;
   }
 );
 

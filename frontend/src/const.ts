@@ -1,4 +1,6 @@
-export const TYPES = ['apartment', 'room', 'house', 'hotel'] as const;
+export const PRODUCT_TYPES = ['Electro', 'Acoustic', 'Ukulele'] as const;
+export const CORDS_COUNT = [4, 6, 7, 12] as const;
+
 export const GOODS = [
   'Breakfast',
   'Air conditioning',

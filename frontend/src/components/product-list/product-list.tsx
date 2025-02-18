@@ -27,7 +27,7 @@ const ProductList = (): JSX.Element => {
           <ProductSort />
           <div className="catalog-cards">
             <ul className="catalog-cards__list">
-              {products.map((product) => (
+              {products.entities.map((product) => (
                 <ProductItem key={product.id} {...product} />
               ))}
             </ul>

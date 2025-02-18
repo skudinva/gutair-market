@@ -1,6 +1,6 @@
 import { StoreSlice } from '../../const';
 import type { State } from '../../types/state';
-import type { Product } from '../../types/types';
+import type { Product, ProductWithPagination } from '../../types/types';
 
 export const getIsProductsLoading = ({
   [StoreSlice.SiteData]: SITE_DATA,
@@ -8,7 +8,7 @@ export const getIsProductsLoading = ({
 
 export const getProducts = ({
   [StoreSlice.SiteData]: SITE_DATA,
-}: State): Product[] => SITE_DATA.products;
+}: State): ProductWithPagination => SITE_DATA.products;
 
 export const getIsProductLoading = ({
   [StoreSlice.SiteData]: SITE_DATA,
