@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import {
   getIsProductsLoading,
@@ -13,7 +13,10 @@ import Spinner from '../spinner/spinner';
 const ProductList = (): JSX.Element => {
   const isProductsLoading = useAppSelector(getIsProductsLoading);
   const products = useAppSelector(getProducts);
-  const currentPage = 1;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = parseInt(searchParams.get('page') ?? '0', 10);
+  const sortBy = searchParams.get('sortBy');
+  const sortDirection = searchParams.get('sortDirection');
 
   if (isProductsLoading) {
     return <Spinner />;
@@ -43,7 +46,7 @@ const ProductList = (): JSX.Element => {
             {Array.from({ length: products.totalPages }).map((_page, index) => {
               const iPage = index + 1;
               const activeClass =
-                currentPage === iPage ? 'pagination__page--active' : '';
+                page === iPage ? 'pagination__page--active' : '';
               return (
                 <li
                   className={`pagination__page ${activeClass}`}
@@ -58,11 +61,11 @@ const ProductList = (): JSX.Element => {
                 </li>
               );
             })}
-            {currentPage < products.totalPages ? (
+            {page < products.totalPages ? (
               <li className="pagination__page pagination__page--next" id="next">
                 <Link
                   className="link pagination__page-link"
-                  to={(currentPage + 1).toString()}
+                  to={(page + 1).toString()}
                 >
                   Далее
                 </Link>
