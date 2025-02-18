@@ -11,7 +11,7 @@ export const capitalize = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
 export class Token {
-  private static _name = 'six-cities-auth-token';
+  private static _name = 'guitar-shop-auth-token';
 
   static get() {
     const token = localStorage.getItem(this._name);

@@ -23,15 +23,14 @@ const App = (): JSX.Element => (
     <Header />
     <Routes>
       <Route element={<Main />}>
-        <Route index element={<Login />} />
         <Route
-          path={AppRoute.Register}
+          index
           element={
             <PrivateRoute
               restrictedFor={AuthorizationStatus.Auth}
-              redirectTo={AppRoute.Root}
+              redirectTo={AppRoute.Products}
             >
-              <Registration />
+              <Login />
             </PrivateRoute>
           }
         />
@@ -40,12 +39,24 @@ const App = (): JSX.Element => (
           element={
             <PrivateRoute
               restrictedFor={AuthorizationStatus.Auth}
-              redirectTo={AppRoute.Root}
+              redirectTo={AppRoute.Products}
             >
               <Login />
             </PrivateRoute>
           }
         />
+        <Route
+          path={AppRoute.Register}
+          element={
+            <PrivateRoute
+              restrictedFor={AuthorizationStatus.Auth}
+              redirectTo={AppRoute.Products}
+            >
+              <Registration />
+            </PrivateRoute>
+          }
+        />
+
         <Route
           path={AppRoute.Products}
           element={

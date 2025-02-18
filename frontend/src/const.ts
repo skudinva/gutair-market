@@ -21,6 +21,7 @@ export enum AppRoute {
 
 export enum ApiRoute {
   Shop = '/api/shop',
+  CheckLogin = '/api/users/check',
   Login = '/api/users/login',
   Logout = '/api/users/logout',
   Register = '/api/users/register',

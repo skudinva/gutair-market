@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutUser } from '../../store/action';
@@ -34,7 +34,7 @@ const Header = () => {
       <header className="header" id="header">
         <div className="container">
           <div className="header__wrapper">
-            <a className="header__logo logo" href="main.html">
+            <Link className="header__logo logo" to={AppRoute.Root}>
               <img
                 className="logo__img"
                 width="70"
@@ -42,7 +42,7 @@ const Header = () => {
                 src="./img/svg/logo.svg"
                 alt="Логотип"
               />
-            </a>
+            </Link>
             <nav className="main-nav">
               <ul className="main-nav__list">
                 <li className="main-nav__item">

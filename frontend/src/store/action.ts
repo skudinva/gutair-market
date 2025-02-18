@@ -118,7 +118,7 @@ export const fetchUserStatus = createAsyncThunk<
   const { api } = extra;
 
   try {
-    const { data } = await api.get<UserRdo>(ApiRoute.Login);
+    const { data } = await api.post<UserRdo>(ApiRoute.CheckLogin);
 
     return data.email;
   } catch (error) {
@@ -149,7 +149,7 @@ export const loginUser = createAsyncThunk<
   const { accessToken } = data;
 
   Token.save(accessToken);
-  history.push(AppRoute.Root);
+  history.push(AppRoute.Products);
 
   return email;
 });
