@@ -28,7 +28,7 @@ function getRandomItem<T>(items: T[]): T {
   return items[generateRandomValue(0, items.length - 1)];
 }
 
-const guitars = [
+const MOCK_PRODUCTS = [
   {
     name: 'ThunderStrummer',
     description:
@@ -91,22 +91,24 @@ const guitars = [
   },
 ];
 
-const startDate = new Date(2024, 0, 1);
-const endDate = new Date(2025, 0, 1);
+const MOCK_START_DATE = new Date(2024, 0, 1);
+const MOCK_END_DATE = new Date(2025, 0, 1);
 
 function getProduct(): Product {
-  const guitar = getRandomItem(guitars);
+  const product = getRandomItem(MOCK_PRODUCTS);
+  const randomDate = generateRandomDate(MOCK_START_DATE, MOCK_END_DATE);
+  const [year, month] = randomDate.toISOString().split('-');
 
   return {
     id: crypto.randomUUID(),
-    name: guitar.name,
-    describe: guitar.description,
-    createdAt: generateRandomDate(startDate, endDate),
-    photoPath: `/2025/02/${crypto.randomUUID()}.jpeg`,
+    name: product.name,
+    describe: product.description,
+    createdAt: randomDate,
+    photoPath: `/${year}/${month}/${crypto.randomUUID()}.jpeg`,
     productType: getRandomItem(Object.values(ProductType)),
     article: generateArticleNumber(15),
     cordsCount: getRandomItem(Object.values(CORDS_COUNT)),
-    price: guitar.price,
+    price: product.price,
   };
 }
 

@@ -17,7 +17,9 @@ docker compose -f "apps/file-vault/docker-compose.dev.yml" up -d
 docker compose -f "apps/notify/docker-compose.dev.yml" up -d
 npx nx run shop:db:generate
 npx nx run shop:db:migrate
-npx nx run shop:db:seed
+npx nx run cli:build
+!!!!!!!!!!!npx nx run shop:db:seed
+!!!!!!!!!!!node dist/apps/cli/main.js --generate 20 postgres://admin:123456@localhost:5432/shop
 npx nx run notify:serve
 npx nx run file-vault:serve
 npx nx run account:serve

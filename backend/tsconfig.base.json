@@ -18,9 +18,6 @@
     "paths": {
       "@backend/account-notify": ["libs/account/notify/src/index.ts"],
       "@backend/authentication": ["libs/account/authentication/src/index.ts"],
-      "@backend/shop-config": ["libs/shop/shop-config/src/index.ts"],
-      "@backend/shop-models": ["libs/shop/models/src/index.ts"],
-      "@backend/shop-product": ["libs/shop/shop-product/src/index.ts"],
       "@backend/config": ["libs/account/config/src/index.ts"],
       "@backend/data-access": ["libs/shared/data-access/src/index.ts"],
       "@backend/email-user": ["libs/notify/email-user/src/index.ts"],
@@ -32,6 +29,9 @@
       "@backend/notify-config": ["libs/notify/config/src/index.ts"],
       "@backend/pipes": ["libs/shared/pipes/src/index.ts"],
       "@backend/shared/core": ["libs/shared/core/src/index.ts"],
+      "@backend/shop-config": ["libs/shop/shop-config/src/index.ts"],
+      "@backend/shop-models": ["libs/shop/models/src/index.ts"],
+      "@backend/shop-product": ["libs/shop/shop-product/src/index.ts"],
       "@backend/shop-user": ["libs/account/shop-user/src/index.ts"]
     }
   },
