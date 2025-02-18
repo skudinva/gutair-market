@@ -29,7 +29,7 @@ npm run start
 
 Swagger [app API](http://localhost:3000/spec#/)
 
-Guitar Shop [Frontend](http://localhost:5000)
+Guitar Shop [React App](http://localhost:5000)
 
 ## Список переменных окружения микросервисов
 
