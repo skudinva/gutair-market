@@ -1,10 +1,10 @@
-import { City, Location, Type } from '../../types/types';
+import { Type } from '../../types/types';
+import { OfferRdo } from './offer-rdo'
 
 export default class CreateOfferDto {
   public title!: string;
   public description!: string;
   public createdDate!: Date;
-  public city!: City;
   public previewImage!: string;
   public images!: string[];
   public isPremium!: boolean;
@@ -17,3 +17,6 @@ export default class CreateOfferDto {
   public userId!: string;
   public location!: Location;
 }
+
+
+OfferRdo

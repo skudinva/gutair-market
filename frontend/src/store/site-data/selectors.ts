@@ -1,29 +1,19 @@
-import { createSelector } from '@reduxjs/toolkit';
-
+import { StoreSlice } from '../../const';
 import type { State } from '../../types/state';
-import type { Offer, Comment } from '../../types/types';
-import { Comparator, MAX_COMMENTS, StoreSlice, SubmitStatus } from '../../const';
-import { getCity, getSorting } from '../site-process/selectors';
+import type { Product } from '../../types/types';
 
-export const getIsOffersLoading = ({ [StoreSlice.SiteData]: SITE_DATA }: State): boolean => SITE_DATA.isOffersLoading;
-export const getOffers = ({ [StoreSlice.SiteData]: SITE_DATA}: State): Offer[] => SITE_DATA.offers;
+export const getIsProductsLoading = ({
+  [StoreSlice.SiteData]: SITE_DATA,
+}: State): boolean => SITE_DATA.isProductsLoading;
 
-export const getIsFavoriteOffersLoading = ({ [StoreSlice.SiteData]: SITE_DATA }: State): boolean => SITE_DATA.isFavoriteOffersLoading;
-export const getFavoriteOffers = ({ [StoreSlice.SiteData]: SITE_DATA}: State): Offer[] => SITE_DATA.favoriteOffers;
+export const getProducts = ({
+  [StoreSlice.SiteData]: SITE_DATA,
+}: State): Product[] => SITE_DATA.products;
 
-export const getIsOfferLoading = ({ [StoreSlice.SiteData]: SITE_DATA }: State): boolean => SITE_DATA.isOfferLoading;
-export const getOffer = ({ [StoreSlice.SiteData]: SITE_DATA }: State): Offer | null => SITE_DATA.offer;
+export const getIsProductLoading = ({
+  [StoreSlice.SiteData]: SITE_DATA,
+}: State): boolean => SITE_DATA.isProductLoading;
 
-export const getPremiumOffers = ({ [StoreSlice.SiteData]: SITE_DATA }: State): Offer[] => SITE_DATA.premiumOffers;
-export const getComments = ({ [StoreSlice.SiteData]: SITE_DATA }: State): Comment[] => SITE_DATA.comments;
-export const getCommentStatus = ({ [StoreSlice.SiteData]: SITE_DATA }: State): SubmitStatus => SITE_DATA.commentStatus;
-
-export const selectOffers = createSelector(
-  [getOffers, getCity, getSorting],
-  (offers, city, sorting) => offers.filter((offer) => offer.city.name === city.name).sort(Comparator[sorting])
-);
-
-export const selectComments = createSelector(
-  [getComments],
-  (comments) => [...comments].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_COMMENTS)
-);
+export const getProduct = ({
+  [StoreSlice.SiteData]: SITE_DATA,
+}: State): Product | null => SITE_DATA.product;

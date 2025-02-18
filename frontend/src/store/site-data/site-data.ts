@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { StoreSlice } from '../../const';
 import type { SiteData } from '../../types/state';
-import { StoreSlice, SubmitStatus } from '../../const';
-import { fetchOffers, fetchOffer, fetchPremiumOffers, fetchComments, postComment, postFavorite, deleteFavorite, fetchFavoriteOffers, postOffer, editOffer } from '../action';
+import {
+  editProduct,
+  fetchProduct,
+  fetchProducts,
+  postProduct,
+} from '../action';
 
 const initialState: SiteData = {
-  offers: [],
-  isOffersLoading: false,
-  offer: null,
-  isOfferLoading: false,
-  favoriteOffers: [],
-  isFavoriteOffersLoading: false,
-  premiumOffers: [],
-  comments: [],
-  commentStatus: SubmitStatus.Still,
+  products: [],
+  isProductsLoading: false,
+  product: null,
+  isProductLoading: false,
 };
 
 export const siteData = createSlice({
@@ -22,80 +22,34 @@ export const siteData = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchOffers.pending, (state) => {
-        state.isOffersLoading = true;
+      .addCase(fetchProducts.pending, (state) => {
+        state.isProductsLoading = true;
       })
-      .addCase(fetchOffers.fulfilled, (state, action) => {
-        state.offers = action.payload;
-        state.isOffersLoading = false;
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.isProductsLoading = false;
       })
-      .addCase(fetchOffers.rejected, (state) => {
-        state.isOffersLoading = false;
+      .addCase(fetchProducts.rejected, (state) => {
+        state.isProductsLoading = false;
       })
-      .addCase(fetchFavoriteOffers.pending, (state) => {
-        state.isFavoriteOffersLoading = true;
+      .addCase(fetchProduct.pending, (state) => {
+        state.isProductLoading = true;
       })
-      .addCase(fetchFavoriteOffers.fulfilled, (state, action) => {
-        state.favoriteOffers = action.payload;
-        state.isFavoriteOffersLoading = false;
+      .addCase(fetchProduct.fulfilled, (state, action) => {
+        state.product = action.payload;
+        state.isProductLoading = false;
       })
-      .addCase(fetchFavoriteOffers.rejected, (state) => {
-        state.isFavoriteOffersLoading = false;
+      .addCase(fetchProduct.rejected, (state) => {
+        state.isProductLoading = false;
       })
-      .addCase(fetchOffer.pending, (state) => {
-        state.isOfferLoading = true;
+      .addCase(postProduct.fulfilled, (state, action) => {
+        state.products.push(action.payload);
       })
-      .addCase(fetchOffer.fulfilled, (state, action) => {
-        state.offer = action.payload;
-        state.isOfferLoading = false;
-      })
-      .addCase(fetchOffer.rejected, (state) => {
-        state.isOfferLoading = false;
-      })
-      .addCase(postOffer.fulfilled, (state, action) => {
-        state.offers.push(action.payload);
-      })
-      .addCase(editOffer.fulfilled, (state, action) => {
-        const updatedOffer = action.payload;
-        state.offers = state.offers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
-        state.favoriteOffers = state.favoriteOffers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
-        state.premiumOffers = state.premiumOffers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
-      })
-      .addCase(fetchPremiumOffers.fulfilled, (state, action) => {
-        state.premiumOffers = action.payload;
-      })
-      .addCase(fetchComments.fulfilled, (state, action) => {
-        state.comments = action.payload;
-      })
-      .addCase(postComment.pending, (state) => {
-        state.commentStatus = SubmitStatus.Pending;
-      })
-      .addCase(postComment.fulfilled, (state, action) => {
-        state.comments.push(action.payload);
-        state.commentStatus = SubmitStatus.Fullfilled;
-      })
-      .addCase(postComment.rejected, (state) => {
-        state.commentStatus = SubmitStatus.Rejected;
-      })
-      .addCase(postFavorite.fulfilled, (state, action) => {
-        const updatedOffer = action.payload;
-        state.offers = state.offers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
-        state.premiumOffers = state.premiumOffers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
-        state.favoriteOffers = state.favoriteOffers.concat(updatedOffer);
-
-        if (state.offer && state.offer.id === updatedOffer.id) {
-          state.offer = updatedOffer;
-        }
-      })
-      .addCase(deleteFavorite.fulfilled, (state, action) => {
-        const updatedOffer = action.payload;
-        state.offers = state.offers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
-        state.premiumOffers = state.premiumOffers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
-        state.favoriteOffers = state.favoriteOffers.filter((favoriteOffer) => favoriteOffer.id !== updatedOffer.id);
-
-        if (state.offer && state.offer.id === updatedOffer.id) {
-          state.offer = updatedOffer;
-        }
+      .addCase(editProduct.fulfilled, (state, action) => {
+        const updatedProduct = action.payload;
+        state.products = state.products.map((product) =>
+          product.id === updatedProduct.id ? updatedProduct : product
+        );
       });
-  }
+  },
 });

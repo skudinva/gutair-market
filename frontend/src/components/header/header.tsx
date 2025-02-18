@@ -2,7 +2,6 @@ import { useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutUser } from '../../store/action';
-import { getFavoriteOffers } from '../../store/site-data/selectors';
 import { getIsAuthorized, getUser } from '../../store/user-process/selectors';
 const pagesWithoutNavigation = [AppRoute.Login, AppRoute.Register];
 
@@ -11,7 +10,6 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const isAuthorized = useAppSelector(getIsAuthorized);
   const user = useAppSelector(getUser);
-  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   const handleLogoutClick = () => {
     if (isAuthorized) {

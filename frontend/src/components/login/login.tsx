@@ -1,4 +1,6 @@
 import { FormEvent } from 'react';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { loginUser } from '../../store/action';
 import { UserAuth } from '../../types/types';
@@ -20,9 +22,9 @@ const Login = (): JSX.Element => {
       <h1 className="login__title">Войти</h1>
       <p className="login__text">
         Hовый пользователь?{' '}
-        <a className="login__link" href="registration.html">
+        <Link className="login__link" to={AppRoute.Register}>
           Зарегистрируйтесь
-        </a>{' '}
+        </Link>{' '}
         прямо сейчас
       </p>
       <form method="post" action="/" onSubmit={handleFormSubmit}>
