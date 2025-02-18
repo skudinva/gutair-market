@@ -35,13 +35,13 @@ export class ProductRepository extends BasePostgresRepository<
     const { productType, cordsCount } = query;
     const where: Prisma.ProductWhereInput = {};
 
-    if (productType.length) {
+    if (productType && productType.length) {
       where.productType = {
         in: productType,
       };
     }
 
-    if (cordsCount.length) {
+    if (cordsCount && cordsCount.length) {
       where.cordsCount = {
         in: cordsCount,
       };
