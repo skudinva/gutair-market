@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ProductWithPaginationRdo } from './../../dto/product/product-with-pagination.rdo';
 
 import { StoreSlice } from '../../const';
 import type { SiteData } from '../../types/state';
@@ -11,7 +10,13 @@ import {
 } from '../action';
 
 const initialState: SiteData = {
-  products: new ProductWithPaginationRdo(),
+  products: {
+    entities: [],
+    totalPages: 0,
+    totalItems: 0,
+    currentPage: 0,
+    itemsPerPage: 0,
+  },
   isProductsLoading: false,
   product: null,
   isProductLoading: false,

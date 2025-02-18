@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import {
   getIsProductsLoading,
@@ -12,6 +13,7 @@ import Spinner from '../spinner/spinner';
 const ProductList = (): JSX.Element => {
   const isProductsLoading = useAppSelector(getIsProductsLoading);
   const products = useAppSelector(getProducts);
+  const currentPage = 1;
 
   if (isProductsLoading) {
     return <Spinner />;
@@ -38,26 +40,34 @@ const ProductList = (): JSX.Element => {
         </button>
         <div className="pagination product-list__pagination">
           <ul className="pagination__list">
-            <li className="pagination__page pagination__page--active">
-              <a className="link pagination__page-link" href="1">
-                1
-              </a>
-            </li>
-            <li className="pagination__page">
-              <a className="link pagination__page-link" href="2">
-                2
-              </a>
-            </li>
-            <li className="pagination__page">
-              <a className="link pagination__page-link" href="3">
-                3
-              </a>
-            </li>
-            <li className="pagination__page pagination__page--next" id="next">
-              <a className="link pagination__page-link" href="2">
-                Далее
-              </a>
-            </li>
+            {Array.from({ length: products.totalPages }).map((_page, index) => {
+              const iPage = index + 1;
+              const activeClass =
+                currentPage === iPage ? 'pagination__page--active' : '';
+              return (
+                <li
+                  className={`pagination__page ${activeClass}`}
+                  key={`page${iPage}`}
+                >
+                  <Link
+                    className="link pagination__page-link"
+                    to={iPage.toString()}
+                  >
+                    {iPage}
+                  </Link>
+                </li>
+              );
+            })}
+            {currentPage < products.totalPages ? (
+              <li className="pagination__page pagination__page--next" id="next">
+                <Link
+                  className="link pagination__page-link"
+                  to={(currentPage + 1).toString()}
+                >
+                  Далее
+                </Link>
+              </li>
+            ) : null}
           </ul>
         </div>
       </div>
