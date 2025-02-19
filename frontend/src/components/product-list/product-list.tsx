@@ -77,7 +77,7 @@ const ProductList = (): JSX.Element => {
               <li className="pagination__page pagination__page--next" id="next">
                 <Link
                   className="link pagination__page-link"
-                  to={(page + 1).toString()}
+                  to={`?page=${page + 1}`}
                 >
                   Далее
                 </Link>
