@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import history from '../../history';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchProducts } from '../../store/action';
 import {
   getIsProductsLoading,
   getProducts,
@@ -13,6 +15,11 @@ import ProductSort from '../product-sort/product-sort';
 import Spinner from '../spinner/spinner';
 
 const ProductList = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
   const isProductsLoading = useAppSelector(getIsProductsLoading);
   const products = useAppSelector(getProducts);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,7 +66,7 @@ const ProductList = (): JSX.Element => {
                 >
                   <Link
                     className="link pagination__page-link"
-                    to={iPage.toString()}
+                    to={`?page=${iPage}`}
                   >
                     {iPage}
                   </Link>
