@@ -5,7 +5,6 @@ import { Product } from '../../types/types';
 
 type ProductItemProps = Product & {
   onDeleteClick?: (id: string) => void;
-  classPrefix?: string;
 };
 
 const ProductItem = (props: ProductItemProps): JSX.Element => (
