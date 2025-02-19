@@ -16,26 +16,14 @@ const ProductForm = (): JSX.Element => (
         <span>Выберите тип товара</span>
         <input type="radio" id="guitar" name="item-type" value="guitar" />
         <label htmlFor="guitar">Акустическая гитара</label>
-        <input
-          type="radio"
-          id="el-guitar"
-          name="item-type"
-          value="el-guitar"
-          checked
-        />
+        <input type="radio" id="el-guitar" name="item-type" value="el-guitar" />
         <label htmlFor="el-guitar">Электрогитара</label>
         <input type="radio" id="ukulele" name="item-type" value="ukulele" />
         <label htmlFor="ukulele">Укулеле</label>
       </div>
       <div className="input-radio add-item__form-radio">
         <span>Количество струн</span>
-        <input
-          type="radio"
-          id="string-qty-4"
-          name="string-qty"
-          value="4"
-          checked
-        />
+        <input type="radio" id="string-qty-4" name="string-qty" value="4" />
         <label htmlFor="string-qty-4">4</label>
         <input type="radio" id="string-qty-6" name="string-qty" value="6" />
         <label htmlFor="string-qty-6">6</label>
@@ -62,26 +50,21 @@ const ProductForm = (): JSX.Element => (
       <div className="custom-input add-item__form-input">
         <label>
           <span>Введите наименование товара</span>
-          <input type="text" name="title" value="" placeholder="Наименование" />
+          <input type="text" name="title" placeholder="Наименование" />
         </label>
         <p>Заполните поле</p>
       </div>
       <div className="custom-input add-item__form-input add-item__form-input--price is-placeholder">
         <label>
           <span>Введите цену товара</span>
-          <input
-            type="text"
-            name="price"
-            value=""
-            placeholder="Цена в формате 00 000"
-          />
+          <input type="text" name="price" placeholder="Цена в формате 00 000" />
         </label>
         <p>Заполните поле</p>
       </div>
       <div className="custom-input add-item__form-input">
         <label>
           <span>Введите артикул товара</span>
-          <input type="text" name="sku" value="" placeholder="Артикул товара" />
+          <input type="text" name="sku" placeholder="Артикул товара" />
         </label>
         <p>Заполните поле</p>
       </div>
