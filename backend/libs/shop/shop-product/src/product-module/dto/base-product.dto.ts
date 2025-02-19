@@ -1,5 +1,8 @@
-import { CordsCountType, FieldValidate } from '@backend/shared/core';
-import { ProductType } from '@prisma/client';
+import {
+  CordsCountType,
+  FieldValidate,
+  ProductType,
+} from '@backend/shared/core';
 import {
   IsIn,
   IsInt,

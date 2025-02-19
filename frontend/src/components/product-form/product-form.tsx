@@ -1,11 +1,6 @@
 import { FormEvent, Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  CORDS_COUNT,
-  PRODUCT_TYPES,
-  PRODUCT_TYPES_NAMES,
-  PRODUCT_TYPES_WEB,
-} from '../../const';
+import { CORDS_COUNT, PRODUCT_TYPES_NAMES, ProductType } from '../../const';
 import history from '../../history';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchProduct, postProduct } from '../../store/action';
@@ -46,20 +41,13 @@ const ProductForm = (props: ProductItemProps): JSX.Element | null => {
 
     const formData = new FormData(e.currentTarget);
 
-    const productType =
-      PRODUCT_TYPES[
-        PRODUCT_TYPES_WEB.findIndex(
-          (type) => type === formData.get('item-type')?.toString()
-        )
-      ];
-
     const data: NewProduct = {
       product: {
         name: formData.get('title')?.toString() || '',
-        describe: formData.get('title')?.toString() || '',
+        describe: formData.get('description')?.toString() || '',
         createdAt: new Date(),
         photoPath: '',
-        productType: productType,
+        productType: formData.get('item-type')?.toString() as ProductType,
         article: formData.get('sku')?.toString() || '',
         cordsCount: parseInt(
           formData.get('string-qty')?.toString() || '0'
@@ -109,23 +97,22 @@ const ProductForm = (props: ProductItemProps): JSX.Element | null => {
         </div>
         <div className="input-radio add-item__form-radio">
           <span>Выберите тип товара</span>
-          {PRODUCT_TYPES_WEB.map((type) => {
-            return (
-              <Fragment key={`item-type-${type}`}>
-                <input
-                  type="radio"
-                  id={type}
-                  name="item-type"
-                  value={type}
-                  defaultChecked={
-                    PRODUCT_TYPES_NAMES[type] ===
-                    PRODUCT_TYPES_NAMES[product.productType]
-                  }
-                />
-                <label htmlFor={type}>{PRODUCT_TYPES_NAMES[type]}</label>
-              </Fragment>
-            );
-          })}
+          {Object.entries(PRODUCT_TYPES_NAMES).map(
+            ([productType, productName]) => {
+              return (
+                <Fragment key={`item-type-${productType}`}>
+                  <input
+                    type="radio"
+                    id={productType}
+                    name="item-type"
+                    value={productType}
+                    defaultChecked={productType === product.productType}
+                  />
+                  <label htmlFor={productType}>{productName}</label>
+                </Fragment>
+              );
+            }
+          )}
         </div>
         <div className="input-radio add-item__form-radio">
           <span>Количество струн</span>

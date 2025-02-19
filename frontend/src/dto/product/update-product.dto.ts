@@ -1,4 +1,5 @@
-import { CordsCountType, Product, ProductType } from '../../types/types';
+import { ProductType } from '../../const';
+import { CordsCountType, Product } from '../../types/types';
 
 export class UpdateProductDto implements Omit<Product, 'id'> {
   name!: string;

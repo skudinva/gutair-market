@@ -2,9 +2,9 @@ import {
   CordsCountType,
   Entity,
   Product,
+  ProductType,
   StorableEntity,
 } from '@backend/shared/core';
-import { ProductType } from '@prisma/client';
 
 export class ProductEntity extends Entity implements StorableEntity<Product> {
   public name!: string;

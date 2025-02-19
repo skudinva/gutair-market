@@ -1,6 +1,5 @@
-import { CordsCountType, Product } from '@backend/shared/core';
+import { CordsCountType, Product, ProductType } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
-import { ProductType } from '@prisma/client';
 
 export class ProductApi implements Product {
   @ApiProperty({ description: 'ID продукта', example: '1' })

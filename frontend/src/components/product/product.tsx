@@ -64,20 +64,24 @@ const Product = (): JSX.Element | null => {
             </Link>
             <div className="tabs__content" id="characteristics">
               <table className="tabs__table">
-                <tr className="tabs__table-row">
-                  <td className="tabs__title">Артикул:</td>
-                  <td className="tabs__value">{product.article}</td>
-                </tr>
-                <tr className="tabs__table-row">
-                  <td className="tabs__title">Тип:</td>
-                  <td className="tabs__value">
-                    {PRODUCT_TYPES_NAMES[product.productType]}
-                  </td>
-                </tr>
-                <tr className="tabs__table-row">
-                  <td className="tabs__title">Количество струн:</td>
-                  <td className="tabs__value">{product.cordsCount} струнная</td>
-                </tr>
+                <tbody>
+                  <tr className="tabs__table-row">
+                    <td className="tabs__title">Артикул:</td>
+                    <td className="tabs__value">{product.article}</td>
+                  </tr>
+                  <tr className="tabs__table-row">
+                    <td className="tabs__title">Тип:</td>
+                    <td className="tabs__value">
+                      {PRODUCT_TYPES_NAMES[product.productType]}
+                    </td>
+                  </tr>
+                  <tr className="tabs__table-row">
+                    <td className="tabs__title">Количество струн:</td>
+                    <td className="tabs__value">
+                      {product.cordsCount} струнная
+                    </td>
+                  </tr>
+                </tbody>
               </table>
               <p className="tabs__product-description">{product.describe}</p>
             </div>

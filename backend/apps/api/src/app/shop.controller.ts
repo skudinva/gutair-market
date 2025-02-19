@@ -8,6 +8,7 @@ import { InjectUserIdInterceptor } from '@backend/interceptors';
 import {
   CORDS_COUNT,
   FieldValidate,
+  ProductType,
   SortDirection,
   SortType,
 } from '@backend/shared/core';
@@ -48,7 +49,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { ProductType } from '@prisma/client';
 import { plainToInstance } from 'class-transformer';
 import 'multer';
 import * as url from 'node:url';

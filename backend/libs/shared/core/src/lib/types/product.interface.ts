@@ -1,4 +1,4 @@
-import { ProductType } from '@prisma/client';
+import { ProductType } from '../interfaces/product-type.interface';
 import { CordsCountType } from './cords-count.interface';
 
 export interface Product {

@@ -3,9 +3,9 @@ import {
   generateRandomDate,
   getRandomItem,
 } from '@backend/helpers';
-import { CORDS_COUNT, Product } from '@backend/shared/core';
+import { CORDS_COUNT, Product, ProductType } from '@backend/shared/core';
 import { ShopUserEntity } from '@backend/shop-user';
-import { PrismaClient, ProductType } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import * as crypto from 'crypto';
 import mongoose, { Schema } from 'mongoose';
 import {

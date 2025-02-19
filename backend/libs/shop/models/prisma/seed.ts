@@ -1,6 +1,6 @@
-import { PrismaClient, Product, ProductType } from '@prisma/client';
+import { PrismaClient, Product } from '@prisma/client';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { CORDS_COUNT } from '../../../shared/core/src';
+import { CORDS_COUNT, ProductType } from '../../../shared/core/src';
 
 function generateArticleNumber(length: number) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

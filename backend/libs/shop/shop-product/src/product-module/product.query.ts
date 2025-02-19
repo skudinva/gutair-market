@@ -2,11 +2,11 @@ import { TransformToArray, TransformToNumberArray } from '@backend/helpers';
 import {
   CORDS_COUNT,
   CordsCountType,
+  ProductType,
   SortDirection,
   SortType,
 } from '@backend/shared/core';
 import { ApiProperty } from '@nestjs/swagger';
-import { ProductType } from '@prisma/client';
 import { Transform } from 'class-transformer';
 import { IsArray, IsIn, IsOptional } from 'class-validator';
 import {
