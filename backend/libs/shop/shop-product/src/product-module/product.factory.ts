@@ -28,7 +28,11 @@ export class ProductFactory implements EntityFactory<ProductEntity> {
   }
 
   public static createEntityFromPrisma(product: PrismaProduct): ProductEntity {
+    if (!product) {
+      return null;
+    }
     const newProduct = new ProductEntity();
+
     newProduct.id = product.id;
     newProduct.name = product.name;
     newProduct.describe = product.describe;
