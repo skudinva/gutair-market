@@ -5,7 +5,7 @@ const AddProduct = (): JSX.Element => (
   <>
     <h1 className="add-item__title">Новый товар</h1>
     <BreadCrumbs />
-    <ProductForm onFormSubmit={(data) => console.log(data)} />
+    <ProductForm />
   </>
 );
 

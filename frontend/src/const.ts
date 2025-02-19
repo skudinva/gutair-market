@@ -1,4 +1,6 @@
 export const PRODUCT_TYPES = ['Electro', 'Acoustic', 'Ukulele'] as const;
+export const PRODUCT_TYPES_WEB = ['el-guitar', 'guitar', 'ukulele'] as const;
+
 export const CORDS_COUNT = [4, 6, 7, 12] as const;
 
 export const GOODS = [

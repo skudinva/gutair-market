@@ -1,28 +1,54 @@
 import { FormEvent } from 'react';
-import { Product } from '../../types/types';
+import { PRODUCT_TYPES, PRODUCT_TYPES_WEB } from '../../const';
+import history from '../../history';
+import { useAppDispatch } from '../../hooks';
+import { postProduct } from '../../store/action';
+import { CordsCountType, NewProduct, Product } from '../../types/types';
 
 type ProductItemProps = {
   product?: Product;
-  onFormSubmit: (product: Product) => void;
 };
 
 const ProductForm = (props: ProductItemProps): JSX.Element => {
+  const dispatch = useAppDispatch();
+
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const data: Product = {
-      id: '',
-      name: '',
-      describe: '',
-      createdAt: new Date(),
-      photoPath: '',
-      productType: 'Electro',
-      article: '',
-      cordsCount: 4,
-      price: 0,
+    const formData = new FormData(e.currentTarget);
+
+    const productType =
+      PRODUCT_TYPES[
+        PRODUCT_TYPES_WEB.findIndex(
+          (type) => type === formData.get('item-type')?.toString()
+        )
+      ];
+
+    const data: NewProduct = {
+      product: {
+        name: formData.get('title')?.toString() || '',
+        describe: formData.get('title')?.toString() || '',
+        createdAt: new Date(),
+        photoPath: '',
+        productType: productType,
+        article: formData.get('sku')?.toString() || '',
+        cordsCount: parseInt(
+          formData.get('string-qty')?.toString() || '0'
+        ) as CordsCountType,
+        price: parseInt(formData.get('price')?.toString() || '0', 10),
+      },
+      file: undefined,
     };
 
-    props.onFormSubmit(data);
+    dispatch(postProduct(data));
+  };
+
+  const onImageAddButtonClick = () => {
+    console.log(111);
+  };
+
+  const onImageDeleteButtonClick = () => {
+    console.log(222);
   };
 
   return (
@@ -36,10 +62,18 @@ const ProductForm = (props: ProductItemProps): JSX.Element => {
         <div className="edit-item-image add-item__form-image">
           <div className="edit-item-image__image-wrap"></div>
           <div className="edit-item-image__btn-wrap">
-            <button className="button button--small button--black-border edit-item-image__btn">
+            <button
+              className="button button--small button--black-border edit-item-image__btn"
+              type="button"
+              onClick={onImageAddButtonClick}
+            >
               Добавить
             </button>
-            <button className="button button--small button--black-border edit-item-image__btn">
+            <button
+              className="button button--small button--black-border edit-item-image__btn"
+              type="button"
+              onClick={onImageDeleteButtonClick}
+            >
               Удалить
             </button>
           </div>
@@ -127,6 +161,7 @@ const ProductForm = (props: ProductItemProps): JSX.Element => {
         <button
           className="button button--small add-item__form-button"
           type="button"
+          onClick={() => history.back()}
         >
           Вернуться к списку товаров
         </button>

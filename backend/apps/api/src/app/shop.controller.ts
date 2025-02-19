@@ -101,7 +101,9 @@ export class ShopController {
   ) {
     const productDto = plainToInstance(
       CreateProductDto,
-      JSON.parse(String(dto.product))
+      typeof dto.product === 'object'
+        ? dto.product
+        : JSON.parse(String(dto.product))
     );
 
     if (file) {
@@ -161,7 +163,9 @@ export class ShopController {
   ) {
     const productDto = plainToInstance(
       UpdateProductDto,
-      JSON.parse(String(dto.product))
+      typeof dto.product === 'object'
+        ? dto.product
+        : JSON.parse(String(dto.product))
     );
 
     if (file) {
