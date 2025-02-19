@@ -3,6 +3,7 @@ import {
   RequestWithTokenPayloadUrl,
 } from '@backend/authentication';
 
+import { createStaticUrlForFile } from '@backend/helpers';
 import { InjectUserIdInterceptor } from '@backend/interceptors';
 import {
   CORDS_COUNT,
@@ -259,6 +260,13 @@ export class ShopController {
       await this.httpService.axiosRef.get<ProductWithPaginationRdo>(
         `${ApplicationServiceURL.Shop}?${query}`
       );
+
+    data.entities.map((product) => {
+      product.photoPath = createStaticUrlForFile(
+        product.photoPath,
+        ApplicationServiceURL.File
+      );
+    });
     return data;
   }
 
@@ -282,6 +290,11 @@ export class ShopController {
     const userId = req.user?.sub;
     const { data } = await this.httpService.axiosRef.get<ProductRdo>(
       `${ApplicationServiceURL.Shop}/${id}/${userId}`
+    );
+
+    data.photoPath = createStaticUrlForFile(
+      data.photoPath,
+      ApplicationServiceURL.File
     );
 
     return data;

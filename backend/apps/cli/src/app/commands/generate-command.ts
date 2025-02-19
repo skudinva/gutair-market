@@ -15,8 +15,6 @@ import {
 } from './command.constant';
 import { Command } from './command.interface';
 
-const uploadDir = '/upload';
-
 export class GenerateCommand implements Command {
   private getProduct(): Product {
     const product = getRandomItem(MOCK_PRODUCTS);
@@ -27,7 +25,7 @@ export class GenerateCommand implements Command {
       name: product.name,
       describe: product.description,
       createdAt: randomDate,
-      photoPath: `${uploadDir}/catalog-product-${randomImageIndex}.png`,
+      photoPath: `catalog-product-${randomImageIndex}.png`,
       productType: getRandomItem(Object.values(ProductType)),
       article: generateArticleNumber(15),
       cordsCount: getRandomItem(Object.values(CORDS_COUNT)),
