@@ -10,7 +10,7 @@ export class HelpCommand implements Command {
   public async execute(..._parameters: string[]): Promise<void> {
     const helpText = this.getCommandsFormat(`
           --help:                             # печатает этот текст
-          --generate <n> <connection string>: # генерирует произвольное количество тестовых данных`);
+          --generate <n> <postgres connection string> <mongo connection string>: # генерирует произвольное количество тестовых данных`);
 
     console.info(`
         Программа для подготовки данных для REST API сервера.

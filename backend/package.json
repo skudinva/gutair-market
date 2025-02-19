@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "cli": "node dist/apps/cli/main.js",
-    "cli:generate": "node dist/apps/cli/main.js --generate 20 postgres://admin:123456@localhost:5432/shop"
+    "cli:generate": "node dist/apps/cli/main.js --generate 20 postgres://admin:123456@localhost:5432/shop mongodb://admin:123456@localhost:27017/shop-users?authSource=admin"
   },
   "private": true,
   "dependencies": {

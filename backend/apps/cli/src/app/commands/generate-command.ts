@@ -4,9 +4,10 @@ import {
   getRandomItem,
 } from '@backend/helpers';
 import { CORDS_COUNT, Product } from '@backend/shared/core';
+import { ShopUserEntity } from '@backend/shop-user';
 import { PrismaClient, ProductType } from '@prisma/client';
 import * as crypto from 'crypto';
-
+import mongoose, { Schema } from 'mongoose';
 import {
   MOCK_END_DATE,
   MOCK_PRODUCTS,
@@ -37,7 +38,30 @@ export class GenerateCommand implements Command {
     return Array.from({ length }, this.getProduct);
   }
 
-  private async uploadToDatabase(
+  private async uploadAccountToDatabase(connectionString: string) {
+    await mongoose.connect(connectionString);
+    const adminUserEntity = new ShopUserEntity({
+      email: 'admin',
+      name: 'admin',
+      passwordHash: '',
+    });
+    await adminUserEntity.setPassword('admin');
+
+    const userModel = mongoose.model(
+      'accounts',
+      new Schema({
+        email: String,
+        name: String,
+        passwordHash: String,
+      })
+    );
+
+    await userModel.create(adminUserEntity.toPOJO());
+
+    console.info('🤘️ User database was added user admin');
+  }
+
+  private async uploadProductToDatabase(
     products: Product[],
     connectionString: string
   ) {
@@ -46,11 +70,11 @@ export class GenerateCommand implements Command {
       for (const product of products) {
         await prismaClient.product.create({ data: product });
       }
-      console.info(`🤘️ Database was filled with ${products.length} records`);
-      globalThis.process.exit(0);
+      console.info(
+        `🤘️ Product database was filled with ${products.length} records`
+      );
     } catch (error: unknown) {
       console.error(error);
-      globalThis.process.exit(1);
     } finally {
       await prismaClient.$disconnect();
     }
@@ -61,7 +85,7 @@ export class GenerateCommand implements Command {
   }
 
   public async execute(...parameters: string[]): Promise<void> {
-    const [count, connectionString] = parameters;
+    const [count, pgConnectionString, mongoConnectionString] = parameters;
     const productsCount = parseInt(count, 10);
     if (productsCount <= 0) {
       console.error('Количество тестовых товаров должно быть больше 0');
@@ -69,10 +93,12 @@ export class GenerateCommand implements Command {
     }
     const mockProducts = this.getProducts(productsCount);
     try {
-      await this.uploadToDatabase(mockProducts, connectionString);
+      await this.uploadProductToDatabase(mockProducts, pgConnectionString);
+      await this.uploadAccountToDatabase(mongoConnectionString);
+      globalThis.process.exit(0);
     } catch (error: unknown) {
-      console.error('Can not generate data');
       console.error(error);
+      globalThis.process.exit(1);
     }
   }
 }
