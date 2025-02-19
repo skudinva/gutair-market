@@ -1,11 +1,13 @@
 import {
   generateArticleNumber,
   generateRandomDate,
+  generateRandomValue,
   getRandomItem,
 } from '@backend/helpers';
 import { CORDS_COUNT, Product } from '@backend/shared/core';
 import { PrismaClient, ProductType } from '@prisma/client';
 import * as crypto from 'crypto';
+
 import {
   MOCK_END_DATE,
   MOCK_PRODUCTS,
@@ -13,17 +15,19 @@ import {
 } from './command.constant';
 import { Command } from './command.interface';
 
+const uploadDir = '/upload';
+
 export class GenerateCommand implements Command {
   private getProduct(): Product {
     const product = getRandomItem(MOCK_PRODUCTS);
     const randomDate = generateRandomDate(MOCK_START_DATE, MOCK_END_DATE);
-    const [year, month] = randomDate.toISOString().split('-');
+    const randomImageIndex = generateRandomValue(0, 8);
     return {
       id: crypto.randomUUID(),
       name: product.name,
       describe: product.description,
       createdAt: randomDate,
-      photoPath: `/${year}/${month}/${crypto.randomUUID()}.jpeg`,
+      photoPath: `${uploadDir}/catalog-product-${randomImageIndex}.png`,
       productType: getRandomItem(Object.values(ProductType)),
       article: generateArticleNumber(15),
       cordsCount: getRandomItem(Object.values(CORDS_COUNT)),
