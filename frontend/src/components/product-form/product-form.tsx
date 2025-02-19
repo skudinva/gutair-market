@@ -1,6 +1,12 @@
+import dayjs from 'dayjs';
 import { FormEvent, Fragment, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { CORDS_COUNT, PRODUCT_TYPES_NAMES, ProductType } from '../../const';
+import { useLocation, useParams } from 'react-router-dom';
+import {
+  AppRoute,
+  CORDS_COUNT,
+  PRODUCT_TYPES_NAMES,
+  ProductType,
+} from '../../const';
 import history from '../../history';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchProduct, postProduct } from '../../store/action';
@@ -11,15 +17,13 @@ import {
 import { CordsCountType, NewProduct, Product } from '../../types/types';
 import Spinner from '../spinner/spinner';
 
-type ProductItemProps = {
-  product?: Product;
-};
-
-const ProductForm = (props: ProductItemProps): JSX.Element | null => {
+const ProductForm = (): JSX.Element | null => {
   const params = useParams();
+  const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const isProductLoading = useAppSelector(getIsProductLoading);
-  const product = useAppSelector(getProduct);
+  const product =
+    pathname === AppRoute.Add ? ({} as Product) : useAppSelector(getProduct);
 
   useEffect(() => {
     const { id } = params;
@@ -139,9 +143,8 @@ const ProductForm = (props: ProductItemProps): JSX.Element | null => {
             <input
               type="text"
               name="date"
-              value=""
               placeholder="Дата в формате 00.00.0000"
-              readOnly
+              defaultValue={dayjs(product.createdAt).format('DD.MM.YYYY')}
             />
           </label>
           <p>Заполните поле</p>
