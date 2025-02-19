@@ -46,9 +46,9 @@ const Header = () => {
             <nav className="main-nav">
               <ul className="main-nav__list">
                 <li className="main-nav__item">
-                  <a className="link main-nav__link" href="#">
+                  <Link className="link main-nav__link" to={AppRoute.Products}>
                     Каталог
-                  </a>
+                  </Link>
                 </li>
                 <li className="main-nav__item">
                   <a className="link main-nav__link" href="#">

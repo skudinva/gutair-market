@@ -1,4 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import history from '../../history';
 import { useAppSelector } from '../../hooks';
 import {
   getIsProductsLoading,
@@ -38,7 +40,10 @@ const ProductList = (): JSX.Element => {
             </ul>
           </div>
         </div>
-        <button className="button product-list__button button--red button--big">
+        <button
+          className="button product-list__button button--red button--big"
+          onClick={() => history.push(AppRoute.Add)}
+        >
           Добавить новый товар
         </button>
         <div className="pagination product-list__pagination">
