@@ -1,5 +1,5 @@
 const ProductForm = (): JSX.Element => (
-  <form className="add-item__form" action="#" method="get">
+  <form className="add-item__form" action="#" method="post">
     <div className="add-item__form-left">
       <div className="edit-item-image add-item__form-image">
         <div className="edit-item-image__image-wrap"></div>

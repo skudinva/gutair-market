@@ -12,10 +12,18 @@ const BreadCrumbs = (): JSX.Element => {
         </Link>
       </li>
 
-      {pathname === AppRoute.Products && (
+      {(pathname === AppRoute.Products || pathname === AppRoute.Add) && (
+        <li className="breadcrumbs__item">
+          <Link className="link" to={AppRoute.Products}>
+            Товары
+          </Link>
+        </li>
+      )}
+
+      {pathname === AppRoute.Add && (
         <li className="breadcrumbs__item">
           <Link className="link" to="">
-            Товары
+            Новый товар
           </Link>
         </li>
       )}
@@ -41,11 +49,7 @@ const BreadCrumbs = (): JSX.Element => {
           СURT Z30 Plus
         </Link>
       </li>
-      <li className="breadcrumbs__item">
-        <Link className="link" to="">
-          Новый товар
-        </Link>
-      </li>
+
 
 */}
     </ul>
