@@ -1,10 +1,6 @@
-readme replace
---Subscriber
---.spec.
-Для чего разные объекты RegisterUserDto = CreateUserDto
+-- six-sit
+-- шеть городов
+
 посмотреть где используется UserIdDto
 скорее всего убрать CheckAuthForceGuard
-удалить лишнее из seed.ts
-скорректировать readme на предмет вставки генеренных данных
 ++yaml
-4.1.1. Приложение предоставляет CLI. Для запуска предусмотрен отдельный сценарий в package.json — cli.
