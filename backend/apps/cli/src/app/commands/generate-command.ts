@@ -1,7 +1,6 @@
 import {
   generateArticleNumber,
   generateRandomDate,
-  generateRandomValue,
   getRandomItem,
 } from '@backend/helpers';
 import { CORDS_COUNT, Product } from '@backend/shared/core';
@@ -19,14 +18,15 @@ export class GenerateCommand implements Command {
   private getProduct(): Product {
     const product = getRandomItem(MOCK_PRODUCTS);
     const randomDate = generateRandomDate(MOCK_START_DATE, MOCK_END_DATE);
-    const randomImageIndex = generateRandomValue(0, 8);
+    const randomProductType = getRandomItem(Object.values(ProductType));
+
     return {
       id: crypto.randomUUID(),
       name: product.name,
       describe: product.description,
       createdAt: randomDate,
-      photoPath: `catalog-product-${randomImageIndex}.png`,
-      productType: getRandomItem(Object.values(ProductType)),
+      photoPath: `${randomProductType}.png`,
+      productType: randomProductType,
       article: generateArticleNumber(15),
       cordsCount: getRandomItem(Object.values(CORDS_COUNT)),
       price: product.price,
