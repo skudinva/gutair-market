@@ -1,16 +1,45 @@
-import { FormEvent } from 'react';
-import { PRODUCT_TYPES, PRODUCT_TYPES_WEB } from '../../const';
+import { FormEvent, Fragment, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import {
+  CORDS_COUNT,
+  PRODUCT_TYPES,
+  PRODUCT_TYPES_NAMES,
+  PRODUCT_TYPES_WEB,
+} from '../../const';
 import history from '../../history';
-import { useAppDispatch } from '../../hooks';
-import { postProduct } from '../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchProduct, postProduct } from '../../store/action';
+import {
+  getIsProductLoading,
+  getProduct,
+} from '../../store/site-data/selectors';
 import { CordsCountType, NewProduct, Product } from '../../types/types';
+import Spinner from '../spinner/spinner';
 
 type ProductItemProps = {
   product?: Product;
 };
 
-const ProductForm = (props: ProductItemProps): JSX.Element => {
+const ProductForm = (props: ProductItemProps): JSX.Element | null => {
+  const params = useParams();
   const dispatch = useAppDispatch();
+  const isProductLoading = useAppSelector(getIsProductLoading);
+  const product = useAppSelector(getProduct);
+
+  useEffect(() => {
+    const { id } = params;
+    if (id) {
+      dispatch(fetchProduct(id));
+    }
+  }, [params, dispatch]);
+
+  if (isProductLoading) {
+    return <Spinner />;
+  }
+
+  if (!product) {
+    return null;
+  }
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,28 +109,40 @@ const ProductForm = (props: ProductItemProps): JSX.Element => {
         </div>
         <div className="input-radio add-item__form-radio">
           <span>Выберите тип товара</span>
-          <input type="radio" id="guitar" name="item-type" value="guitar" />
-          <label htmlFor="guitar">Акустическая гитара</label>
-          <input
-            type="radio"
-            id="el-guitar"
-            name="item-type"
-            value="el-guitar"
-          />
-          <label htmlFor="el-guitar">Электрогитара</label>
-          <input type="radio" id="ukulele" name="item-type" value="ukulele" />
-          <label htmlFor="ukulele">Укулеле</label>
+          {PRODUCT_TYPES_WEB.map((type) => {
+            return (
+              <Fragment key={`item-type-${type}`}>
+                <input
+                  type="radio"
+                  id={type}
+                  name="item-type"
+                  value={type}
+                  defaultChecked={
+                    PRODUCT_TYPES_NAMES[type] ===
+                    PRODUCT_TYPES_NAMES[product.productType]
+                  }
+                />
+                <label htmlFor={type}>{PRODUCT_TYPES_NAMES[type]}</label>
+              </Fragment>
+            );
+          })}
         </div>
         <div className="input-radio add-item__form-radio">
           <span>Количество струн</span>
-          <input type="radio" id="string-qty-4" name="string-qty" value="4" />
-          <label htmlFor="string-qty-4">4</label>
-          <input type="radio" id="string-qty-6" name="string-qty" value="6" />
-          <label htmlFor="string-qty-6">6</label>
-          <input type="radio" id="string-qty-7" name="string-qty" value="7" />
-          <label htmlFor="string-qty-7">7</label>
-          <input type="radio" id="string-qty-12" name="string-qty" value="12" />
-          <label htmlFor="string-qty-12">12</label>
+          {CORDS_COUNT.map((cord) => {
+            return (
+              <Fragment key={`string-qty-${cord}`}>
+                <input
+                  type="radio"
+                  id={`string-qty-${cord}`}
+                  name="string-qty"
+                  value={cord}
+                  defaultChecked={product.cordsCount === cord}
+                />
+                <label htmlFor={`string-qty-${cord}`}>{cord}</label>
+              </Fragment>
+            );
+          })}
         </div>
       </div>
       <div className="add-item__form-right">
@@ -121,7 +162,12 @@ const ProductForm = (props: ProductItemProps): JSX.Element => {
         <div className="custom-input add-item__form-input">
           <label>
             <span>Введите наименование товара</span>
-            <input type="text" name="title" placeholder="Наименование" />
+            <input
+              type="text"
+              name="title"
+              placeholder="Наименование"
+              defaultValue={product.name}
+            />
           </label>
           <p>Заполните поле</p>
         </div>
@@ -132,6 +178,7 @@ const ProductForm = (props: ProductItemProps): JSX.Element => {
               type="text"
               name="price"
               placeholder="Цена в формате 00 000"
+              defaultValue={product.price}
             />
           </label>
           <p>Заполните поле</p>
@@ -139,14 +186,23 @@ const ProductForm = (props: ProductItemProps): JSX.Element => {
         <div className="custom-input add-item__form-input">
           <label>
             <span>Введите артикул товара</span>
-            <input type="text" name="sku" placeholder="Артикул товара" />
+            <input
+              type="text"
+              name="sku"
+              placeholder="Артикул товара"
+              defaultValue={product.article}
+            />
           </label>
           <p>Заполните поле</p>
         </div>
         <div className="custom-textarea add-item__form-textarea">
           <label>
             <span>Введите описание товара</span>
-            <textarea name="description" placeholder=""></textarea>
+            <textarea
+              name="description"
+              placeholder=""
+              defaultValue={product.describe}
+            ></textarea>
           </label>
           <p>Заполните поле</p>
         </div>

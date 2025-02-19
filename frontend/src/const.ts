@@ -1,10 +1,14 @@
 export const PRODUCT_TYPES = ['Electro', 'Acoustic', 'Ukulele'] as const;
+export const PRODUCT_TYPES_WEB = ['el-guitar', 'guitar', 'ukulele'] as const;
+
 export const PRODUCT_TYPES_NAMES = {
+  [PRODUCT_TYPES_WEB[0]]: 'Электрогитара',
   [PRODUCT_TYPES[0]]: 'Электрогитара',
+  [PRODUCT_TYPES_WEB[1]]: 'Акустическая гитара',
   [PRODUCT_TYPES[1]]: 'Акустическая гитара',
+  [PRODUCT_TYPES_WEB[2]]: 'Укулеле',
   [PRODUCT_TYPES[2]]: 'Укулеле',
 };
-export const PRODUCT_TYPES_WEB = ['el-guitar', 'guitar', 'ukulele'] as const;
 
 export const CORDS_COUNT = [4, 6, 7, 12] as const;
 
