@@ -79,9 +79,7 @@ const Product = (): JSX.Element | null => {
                   <td className="tabs__value">{product.cordsCount} струнная</td>
                 </tr>
               </table>
-              <p className="tabs__product-description hidden">
-                {product.describe}
-              </p>
+              <p className="tabs__product-description">{product.describe}</p>
             </div>
           </div>
         </div>
