@@ -1,17 +1,12 @@
 export const PRODUCT_TYPES = ['Electro', 'Acoustic', 'Ukulele'] as const;
+export const PRODUCT_TYPES_NAMES = {
+  [PRODUCT_TYPES[0]]: 'Электрогитара',
+  [PRODUCT_TYPES[1]]: 'Акустическая гитара',
+  [PRODUCT_TYPES[2]]: 'Укулеле',
+};
 export const PRODUCT_TYPES_WEB = ['el-guitar', 'guitar', 'ukulele'] as const;
 
 export const CORDS_COUNT = [4, 6, 7, 12] as const;
-
-export const GOODS = [
-  'Breakfast',
-  'Air conditioning',
-  'Laptop friendly workspace',
-  'Baby seat',
-  'Washer',
-  'Towels',
-  'Fridge',
-];
 
 export enum AppRoute {
   Root = '/',
