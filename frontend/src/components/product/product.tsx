@@ -42,7 +42,7 @@ const Product = (): JSX.Element | null => {
   return (
     <>
       <h1 className="page-content__title title title--bigger">Товар</h1>
-      <BreadCrumbs isProductDetail={true} productName={'Товар'} />
+      <BreadCrumbs isProductDetail productName={'Товар'} />
       <div className="product-container">
         <img
           className="product-container__img"

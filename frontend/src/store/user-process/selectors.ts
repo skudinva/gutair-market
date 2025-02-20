@@ -11,9 +11,7 @@ export const getIsAuthorized = ({
   USER_PROCESS.authorizationStatus === AuthorizationStatus.Auth;
 export const getUser = ({
   [StoreSlice.UserProcess]: USER_PROCESS,
-}: State): User => {
-  return {
-    email: USER_PROCESS.email,
-    name: USER_PROCESS.name,
-  };
-};
+}: State): User => ({
+  email: USER_PROCESS.email,
+  name: USER_PROCESS.name,
+});

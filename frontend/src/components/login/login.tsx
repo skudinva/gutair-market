@@ -12,11 +12,11 @@ const Login = (): JSX.Element => {
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget;
-
-    const formData = new FormData(form) as Iterable<[UserAuth]>;
-    const data = Object.fromEntries(formData);
-
+    const formData = new FormData(e.currentTarget);
+    const data: UserAuth = {
+      email: formData.get('email')?.toString() || '',
+      password: formData.get('password')?.toString() || '',
+    };
     dispatch(loginUser(data));
   };
 

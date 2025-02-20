@@ -12,15 +12,15 @@ const ProductSort = (): JSX.Element => {
   const sortDirection =
     searchParams.get('sortDirection') || DEFAULT_SORT_DIRECTION;
 
-  const handlerSetSortBy = (sortBy: SortBy) => {
+  const handlerSetSortBy = (sortByValue: SortBy) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set('sortBy', sortBy);
+    newSearchParams.set('sortBy', sortByValue);
     setSearchParams(newSearchParams);
   };
 
-  const handlerSetSortDirection = (sortDirection: SortDirection) => {
+  const handlerSetSortDirection = (sortDirectionValue: SortDirection) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set('sortDirection', sortDirection);
+    newSearchParams.set('sortDirection', sortDirectionValue);
     setSearchParams(newSearchParams);
   };
 
@@ -69,7 +69,7 @@ const ProductSort = (): JSX.Element => {
             e.preventDefault();
             handlerSetSortDirection(SortDirection.Asc);
           }}
-        ></button>
+        />
         <button
           className={[
             'catalog-sort__order-button',
@@ -83,7 +83,7 @@ const ProductSort = (): JSX.Element => {
             e.preventDefault();
             handlerSetSortDirection(SortDirection.Desc);
           }}
-        ></button>
+        />
       </div>
     </div>
   );

@@ -11,10 +11,12 @@ const Registration = (): JSX.Element => {
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget;
-
-    const formData = new FormData(form) as Iterable<[UserRegister]>;
-    const data = Object.fromEntries(formData);
+    const formData = new FormData(e.currentTarget);
+    const data: UserRegister = {
+      email: formData.get('email')?.toString() || '',
+      name: formData.get('name')?.toString() || '',
+      password: formData.get('password')?.toString() || '',
+    };
 
     dispatch(registerUser(data));
   };

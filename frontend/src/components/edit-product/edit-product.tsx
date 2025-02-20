@@ -8,7 +8,7 @@ const EditProduct = (): JSX.Element => {
   return (
     <>
       <h1 className="edit-item__title">{product?.name}</h1>
-      <BreadCrumbs isEditPage={true} productName={product?.name} />
+      <BreadCrumbs isEditPage productName={product?.name} />
       <ProductForm />
     </>
   );

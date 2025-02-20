@@ -14,7 +14,7 @@ import {
   getIsProductLoading,
   getProduct,
 } from '../../store/site-data/selectors';
-import { CordsCountType, NewProduct, Product } from '../../types/types';
+import { CordsCountType, NewProduct } from '../../types/types';
 import Spinner from '../spinner/spinner';
 
 const ProductForm = (): JSX.Element | null => {
@@ -22,9 +22,10 @@ const ProductForm = (): JSX.Element | null => {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const isProductLoading = useAppSelector(getIsProductLoading);
-  const product =
-    pathname === AppRoute.Add ? ({} as Product) : useAppSelector(getProduct);
+  const product = useAppSelector(getProduct);
   const isNewForm = pathname === AppRoute.Add;
+  const uploadRef = useRef<HTMLInputElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const [oldPhotoPath, setOldPhotoPath] = useState<string>();
   useEffect(() => {
@@ -46,9 +47,6 @@ const ProductForm = (): JSX.Element | null => {
   }, [product, dispatch]);
 
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
-
-  const uploadRef = useRef<HTMLInputElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -78,7 +76,8 @@ const ProductForm = (): JSX.Element | null => {
       productType: formData.get('item-type')?.toString() as ProductType,
       article: formData.get('sku')?.toString() || '',
       cordsCount: parseInt(
-        formData.get('string-qty')?.toString() || '0'
+        formData.get('string-qty')?.toString() || '0',
+        10
       ) as CordsCountType,
       price: parseInt(formData.get('price')?.toString() || '0', 10),
     };
@@ -146,38 +145,34 @@ const ProductForm = (): JSX.Element | null => {
         <div className="input-radio add-item__form-radio">
           <span>Выберите тип товара</span>
           {Object.entries(PRODUCT_TYPES_NAMES).map(
-            ([productType, productName]) => {
-              return (
-                <Fragment key={`item-type-${productType}`}>
-                  <input
-                    type="radio"
-                    id={productType}
-                    name="item-type"
-                    value={productType}
-                    defaultChecked={productType === product.productType}
-                  />
-                  <label htmlFor={productType}>{productName}</label>
-                </Fragment>
-              );
-            }
+            ([productType, productName]) => (
+              <Fragment key={`item-type-${productType}`}>
+                <input
+                  type="radio"
+                  id={productType}
+                  name="item-type"
+                  value={productType}
+                  defaultChecked={productType === product.productType}
+                />
+                <label htmlFor={productType}>{productName}</label>
+              </Fragment>
+            )
           )}
         </div>
         <div className="input-radio add-item__form-radio">
           <span>Количество струн</span>
-          {CORDS_COUNT.map((cord) => {
-            return (
-              <Fragment key={`string-qty-${cord}`}>
-                <input
-                  type="radio"
-                  id={`string-qty-${cord}`}
-                  name="string-qty"
-                  value={cord}
-                  defaultChecked={product.cordsCount === cord}
-                />
-                <label htmlFor={`string-qty-${cord}`}>{cord}</label>
-              </Fragment>
-            );
-          })}
+          {CORDS_COUNT.map((cord) => (
+            <Fragment key={`string-qty-${cord}`}>
+              <input
+                type="radio"
+                id={`string-qty-${cord}`}
+                name="string-qty"
+                value={cord}
+                defaultChecked={product.cordsCount === cord}
+              />
+              <label htmlFor={`string-qty-${cord}`}>{cord}</label>
+            </Fragment>
+          ))}
         </div>
       </div>
       <div className="add-item__form-right">
@@ -236,7 +231,7 @@ const ProductForm = (): JSX.Element | null => {
               name="description"
               placeholder=""
               defaultValue={product.describe}
-            ></textarea>
+            />
           </label>
           <p>Заполните поле</p>
         </div>

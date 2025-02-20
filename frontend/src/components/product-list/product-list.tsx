@@ -26,9 +26,9 @@ const ProductList = (): JSX.Element => {
   const products = useAppSelector(getProducts);
   const page = parseInt(searchParams.get('page') ?? '0', 10);
 
-  const handlerGotoPage = (page: number) => {
+  const handlerGotoPage = (pageValue: number) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set('page', page.toString());
+    newSearchParams.set('page', pageValue.toString());
     setSearchParams(newSearchParams);
   };
 

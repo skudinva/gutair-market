@@ -5,8 +5,6 @@
 скорее всего убрать CheckAuthForceGuard
 ++yaml
 http://localhost:3000/spec-yaml
-package.json doca
+package.json документировать
 linter
-comments
-неиспользуемый код
-
+проверить регистрацию

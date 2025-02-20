@@ -5,9 +5,7 @@ import { useAppDispatch } from '../../hooks';
 import { deleteProduct } from '../../store/action';
 import { Product } from '../../types/types';
 
-type ProductItemProps = Product & {
-  onDeleteClick?: (id: string) => void;
-};
+type ProductItemProps = Product;
 
 const ProductItem = (props: ProductItemProps): JSX.Element => {
   const dispatch = useAppDispatch();
