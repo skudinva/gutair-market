@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Sorting, StoreSlice } from '../../const';
+import { StoreSlice } from '../../const';
 import type { SiteProcess } from '../../types/state';
-import type { SortName } from '../../types/types';
+import { SortByType } from '../../types/types';
 
 const initialState: SiteProcess = {
-  sorting: Sorting.Popular,
+  sorting: 'Date',
 };
 
 export const siteProcess = createSlice({
   name: StoreSlice.SiteProcess,
   initialState,
   reducers: {
-    setSorting: (state, action: PayloadAction<SortName>) => {
+    setSorting: (state, action: PayloadAction<SortByType>) => {
       state.sorting = action.payload;
     },
   },

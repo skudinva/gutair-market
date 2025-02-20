@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AxiosError, AxiosInstance } from 'axios';
 import type { History } from 'history';
-import { adaptSignupToServer } from '../adapters/adapters-to-server';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
 import { ProductWithPaginationRdo } from '../dto/product/product-with-pagination.rdo';
 import { ProductRdo } from '../dto/product/product.rdo';
@@ -154,11 +153,11 @@ export const registerUser = createAsyncThunk<
   { extra: Extra }
 >(Action.REGISTER_USER, async ({ email, password, name }, { extra }) => {
   const { api, history } = extra;
-  const body = adaptSignupToServer({
+
+  await api.post<RegisteredUserRdo>(ApiRoute.Register, {
     email,
     password,
     name,
   });
-  await api.post<RegisteredUserRdo>(ApiRoute.Register, body);
   history.push(AppRoute.Login);
 });

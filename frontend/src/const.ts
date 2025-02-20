@@ -43,13 +43,6 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum Sorting {
-  Popular = 'Popular',
-  PriceIncrease = 'Price: low to high',
-  PriceDecrease = 'Price: high to low',
-  TopRated = 'Top rated first',
-}
-
 export enum SortDirection {
   Asc = 'asc',
   Desc = 'desc',
@@ -77,11 +70,4 @@ export enum HttpCode {
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
   CONFLICT = 409,
-}
-
-export enum SubmitStatus {
-  Still = 'STILL',
-  Pending = 'PENDING',
-  Fullfilled = 'FULLFILLED',
-  Rejected = 'REJECTED',
 }

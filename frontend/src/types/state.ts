@@ -1,7 +1,7 @@
 import store from '../store';
 
 import { AuthorizationStatus } from '../const';
-import type { Product, ProductWithPagination, SortName, User } from './types';
+import type { Product, ProductWithPagination, SortByType, User } from './types';
 
 export type SiteData = {
   products: ProductWithPagination;
@@ -11,7 +11,7 @@ export type SiteData = {
 };
 
 export type SiteProcess = {
-  sorting: SortName;
+  sorting: SortByType;
 };
 
 export type UserProcess = {
