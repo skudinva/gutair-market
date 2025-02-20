@@ -1,3 +1,6 @@
+import { AppRoute } from '../../const';
+import history from '../../history';
+
 const NotFound = (): JSX.Element => (
   <section className="error">
     <h1 className="error__title">404</h1>
@@ -7,7 +10,10 @@ const NotFound = (): JSX.Element => (
       <br />
       её вовсе не существовало.
     </p>
-    <button className="button button__error button--small button--black-border">
+    <button
+      className="button button__error button--small button--black-border"
+      onClick={() => history.push(AppRoute.Root)}
+    >
       Продолжить покупки
     </button>
   </section>
