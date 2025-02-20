@@ -67,6 +67,21 @@ const Header = () => {
                 </svg>
                 <span className="header__link-text">Вход</span>
               </Link>
+              <Link
+                className="header__cart-link"
+                to="#"
+                aria-label="Перейти в корзину"
+              >
+                <svg
+                  className="header__cart-icon"
+                  width="14"
+                  height="14"
+                  aria-hidden="true"
+                >
+                  <use xlinkHref="#icon-basket"></use>
+                </svg>
+                <span className="header__cart-count">2</span>
+              </Link>
             </div>
           </div>
         </div>
