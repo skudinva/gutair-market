@@ -1,10 +1,13 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { registerUser } from '../../store/action';
 import { UserRegister } from '../../types/types';
+import EmailField from '../email-field/email-field';
+import PasswordField from '../password-field/password-field';
 
 const Registration = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const [isNameValid, setIsNameValid] = useState<boolean>(false);
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,7 +23,12 @@ const Registration = (): JSX.Element => {
     <section className="login">
       <h1 className="login__title">Регистрация</h1>
       <form method="post" action="#" onSubmit={handleFormSubmit}>
-        <div className="input-login">
+        <div
+          className={[
+            'input-login',
+            isNameValid && 'input-login--no-error',
+          ].join(' ')}
+        >
           <label htmlFor="name">Введите имя</label>
           <input
             type="text"
@@ -28,39 +36,15 @@ const Registration = (): JSX.Element => {
             name="name"
             autoComplete="off"
             required
+            onInput={(e) => {
+              e.preventDefault();
+              setIsNameValid(e.currentTarget.value.length > 0);
+            }}
           />
           <p className="input-login__error">Заполните поле</p>
         </div>
-        <div className="input-login">
-          <label htmlFor="email">Введите e-mail</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            autoComplete="off"
-            required
-          />
-          <p className="input-login__error">Заполните поле</p>
-        </div>
-        <div className="input-login">
-          <label htmlFor="password">Придумайте пароль</label>
-          <span>
-            <input
-              type="password"
-              placeholder="• • • • • • • • • • • •"
-              id="password"
-              name="password"
-              autoComplete="off"
-              required
-            />
-            <button className="input-login__button-eye" type="button">
-              <svg width="14" height="8" aria-hidden="true">
-                <use xlinkHref="#icon-eye"></use>
-              </svg>
-            </button>
-          </span>
-          <p className="input-login__error">Заполните поле</p>
-        </div>
+        <EmailField />
+        <PasswordField />
         <button className="button login__button button--medium" type="submit">
           Зарегистрироваться
         </button>
