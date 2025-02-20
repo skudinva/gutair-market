@@ -1,7 +1,5 @@
 import { CORDS_COUNT, ProductType, Sorting } from '../const';
 
-//export type ProductType = (typeof PRODUCT_TYPES)[number];
-//export type ProductTypeWeb = (typeof PRODUCT_TYPES_WEB)[number];
 export type CordsCountType = (typeof CORDS_COUNT)[number];
 export type SortName = keyof typeof Sorting;
 
@@ -32,7 +30,7 @@ export type ProductWithPagination = {
 
 export type NewProduct = {
   product: Omit<Product, 'id'>;
-  file?: File;
+  file: File;
 };
 
 export type UserAuth = Pick<User, 'email'> & { password: string };

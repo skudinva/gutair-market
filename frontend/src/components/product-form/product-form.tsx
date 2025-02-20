@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { FormEvent, Fragment, useEffect } from 'react';
+import { FormEvent, Fragment, useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import {
   AppRoute,
@@ -25,12 +25,76 @@ const ProductForm = (): JSX.Element | null => {
   const product =
     pathname === AppRoute.Add ? ({} as Product) : useAppSelector(getProduct);
 
+  const [oldPhotoPath, setOldPhotoPath] = useState<string>();
   useEffect(() => {
     const { id } = params;
     if (id) {
       dispatch(fetchProduct(id));
     }
   }, [params, dispatch]);
+
+  useEffect(() => {
+    if (product?.photoPath) {
+      if (imgRef.current) {
+        imgRef.current.srcset = product.photoPath;
+      }
+
+      const url = new URL(product?.photoPath);
+      setOldPhotoPath(url.pathname.replace('/static/', ''));
+    }
+  }, [product, dispatch]);
+
+  const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
+
+  const uploadRef = useRef<HTMLInputElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    if (files && files.length > 0) {
+      setSelectedPhoto(files[0]);
+      if (imgRef.current) {
+        imgRef.current.srcset = URL.createObjectURL(files[0]);
+      }
+    }
+  };
+
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    console.log('selectedPhoto', selectedPhoto);
+
+    if (selectedPhoto) {
+      formData.append('file', selectedPhoto);
+    }
+
+    const newProduct: NewProduct['product'] = {
+      name: formData.get('title')?.toString() || '',
+      describe: formData.get('description')?.toString() || '',
+      createdAt: new Date(),
+      photoPath: oldPhotoPath || '',
+      productType: formData.get('item-type')?.toString() as ProductType,
+      article: formData.get('sku')?.toString() || '',
+      cordsCount: parseInt(
+        formData.get('string-qty')?.toString() || '0'
+      ) as CordsCountType,
+      price: parseInt(formData.get('price')?.toString() || '0', 10),
+    };
+
+    formData.append('product', JSON.stringify(newProduct));
+
+    dispatch(postProduct(formData));
+  };
+
+  const onImageAddButtonClick = () => {
+    uploadRef.current?.click();
+  };
+
+  const onImageDeleteButtonClick = () => {
+    console.log(222);
+  };
 
   if (isProductLoading) {
     return <Spinner />;
@@ -39,38 +103,6 @@ const ProductForm = (): JSX.Element | null => {
   if (!product) {
     return null;
   }
-
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-
-    const data: NewProduct = {
-      product: {
-        name: formData.get('title')?.toString() || '',
-        describe: formData.get('description')?.toString() || '',
-        createdAt: new Date(),
-        photoPath: '',
-        productType: formData.get('item-type')?.toString() as ProductType,
-        article: formData.get('sku')?.toString() || '',
-        cordsCount: parseInt(
-          formData.get('string-qty')?.toString() || '0'
-        ) as CordsCountType,
-        price: parseInt(formData.get('price')?.toString() || '0', 10),
-      },
-      file: undefined,
-    };
-
-    dispatch(postProduct(data));
-  };
-
-  const onImageAddButtonClick = () => {
-    console.log(111);
-  };
-
-  const onImageDeleteButtonClick = () => {
-    console.log(222);
-  };
 
   return (
     <form
@@ -81,7 +113,16 @@ const ProductForm = (): JSX.Element | null => {
     >
       <div className="add-item__form-left">
         <div className="edit-item-image add-item__form-image">
-          <div className="edit-item-image__image-wrap"></div>
+          <div className="edit-item-image__image-wrap">
+            <input
+              type="file"
+              accept="image/*"
+              ref={uploadRef}
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+            <img srcSet={product.photoPath} ref={imgRef} alt="Photo" />
+          </div>
           <div className="edit-item-image__btn-wrap">
             <button
               className="button button--small button--black-border edit-item-image__btn"

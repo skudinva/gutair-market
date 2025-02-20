@@ -7,12 +7,7 @@ import { ProductWithPaginationRdo } from '../dto/product/product-with-pagination
 import { ProductRdo } from '../dto/product/product.rdo';
 import { RegisteredUserRdo } from '../dto/user/registered-user-rdo';
 import { UserRdo } from '../dto/user/user-rdo';
-import type {
-  NewProduct,
-  Product,
-  UserAuth,
-  UserRegister,
-} from '../types/types';
+import type { Product, UserAuth, UserRegister } from '../types/types';
 import { Token } from '../utils';
 
 type Extra = {
@@ -68,7 +63,7 @@ export const fetchProduct = createAsyncThunk<
 
 export const postProduct = createAsyncThunk<
   Product,
-  NewProduct,
+  FormData,
   { extra: Extra }
 >(Action.POST_PRODUCT, async (newProduct, { extra }) => {
   const { api, history } = extra;
