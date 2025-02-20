@@ -5,3 +5,8 @@
 скорее всего убрать CheckAuthForceGuard
 ++yaml
 http://localhost:3000/spec-yaml
+package.json doca
+linter
+comments
+неиспользуемый код
+

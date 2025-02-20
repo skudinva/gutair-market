@@ -25,6 +25,7 @@ npx nx run account:serve
 npx nx run shop:serve
 npx nx run api:serve
 cd ../frontend/
+npm install
 npm run start
 ```
 
