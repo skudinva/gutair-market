@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import history from '../../history';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -16,17 +16,21 @@ import Spinner from '../spinner/spinner';
 
 const ProductList = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const [searchParams, _setSearchParams] = useSearchParams();
+
+  const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     dispatch(fetchProducts(searchParams.toString()));
   }, [dispatch, searchParams]);
 
   const isProductsLoading = useAppSelector(getIsProductsLoading);
   const products = useAppSelector(getProducts);
-
   const page = parseInt(searchParams.get('page') ?? '0', 10);
-  const sortBy = searchParams.get('sortBy');
-  const sortDirection = searchParams.get('sortDirection');
+
+  const handlerGotoPage = (page: number) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set('page', page.toString());
+    setSearchParams(newSearchParams);
+  };
 
   if (isProductsLoading) {
     return <Spinner />;
@@ -56,6 +60,20 @@ const ProductList = (): JSX.Element => {
         </button>
         <div className="pagination product-list__pagination">
           <ul className="pagination__list">
+            {page > 1 ? (
+              <li className="pagination__page pagination__page--prev" id="prev">
+                <a
+                  className="link pagination__page-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlerGotoPage(page - 1);
+                  }}
+                >
+                  Назад
+                </a>
+              </li>
+            ) : null}
+
             {Array.from({ length: products.totalPages }).map((_page, index) => {
               const iPage = index + 1;
               const activeClass =
@@ -65,23 +83,29 @@ const ProductList = (): JSX.Element => {
                   className={`pagination__page ${activeClass}`}
                   key={`page${iPage}`}
                 >
-                  <Link
+                  <a
                     className="link pagination__page-link"
-                    to={`?page=${iPage}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handlerGotoPage(iPage);
+                    }}
                   >
                     {iPage}
-                  </Link>
+                  </a>
                 </li>
               );
             })}
             {page < products.totalPages ? (
               <li className="pagination__page pagination__page--next" id="next">
-                <Link
+                <a
                   className="link pagination__page-link"
-                  to={`?page=${page + 1}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlerGotoPage(page + 1);
+                  }}
                 >
                   Далее
-                </Link>
+                </a>
               </li>
             ) : null}
           </ul>
