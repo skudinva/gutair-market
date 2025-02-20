@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
@@ -7,6 +7,9 @@ import { UserAuth } from '../../types/types';
 
 const Login = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
+
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -28,7 +31,12 @@ const Login = (): JSX.Element => {
         прямо сейчас
       </p>
       <form method="post" action="/" onSubmit={handleFormSubmit}>
-        <div className="input-login">
+        <div
+          className={[
+            'input-login',
+            isEmailValid && 'input-login--no-error',
+          ].join(' ')}
+        >
           <label htmlFor="email">Введите e-mail</label>
           <input
             type="email"
@@ -36,10 +44,19 @@ const Login = (): JSX.Element => {
             name="email"
             autoComplete="off"
             required
+            onInput={(e) => {
+              e.preventDefault();
+              setIsEmailValid(e.currentTarget.value.length > 0);
+            }}
           />
           <p className="input-login__error">Заполните поле</p>
         </div>
-        <div className="input-login">
+        <div
+          className={[
+            'input-login',
+            isPasswordValid && 'input-login--no-error',
+          ].join(' ')}
+        >
           <label htmlFor="passwordLogin">Введите пароль</label>
           <span>
             <input
@@ -49,6 +66,10 @@ const Login = (): JSX.Element => {
               name="password"
               autoComplete="off"
               required
+              onInput={(e) => {
+                e.preventDefault();
+                setIsPasswordValid(e.currentTarget.value.length > 0);
+              }}
             />
             <button className="input-login__button-eye" type="button">
               <svg width="14" height="8" aria-hidden="true">
