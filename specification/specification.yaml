@@ -1,0 +1,536 @@
+openapi: 3.0.0
+paths:
+  /api/users/register:
+    post:
+      operationId: UsersController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterUserDto"
+      responses:
+        "201":
+          description: The new user has been successfully created.
+        "409":
+          description: User with the email already exists
+      tags:
+        - User API
+  /api/users/login:
+    post:
+      operationId: UsersController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUserDto"
+      responses:
+        "200":
+          description: User has been successfully logged.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoggedUserRdo"
+        "401":
+          description: Password or Login is wrong.
+        "404":
+          description: Password or Login is wrong.
+      tags:
+        - User API
+  /api/users/{id}:
+    get:
+      operationId: UsersController_show
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRdo"
+        "401":
+          description: Need authorization
+        "404":
+          description: User not found
+      tags:
+        - User API
+      security:
+        - accessToken: []
+  /api/users/check:
+    post:
+      operationId: UsersController_checkToken
+      parameters: []
+      responses:
+        "201":
+          description: User found
+      tags:
+        - User API
+      security:
+        - accessToken: []
+  /api/shop:
+    post:
+      operationId: ShopController_createProduct
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/CreateProductFileDto"
+      responses:
+        "201":
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductRdo"
+        "404":
+          description: Product not found
+      security:
+        - accessToken: []
+      tags:
+        - Product API
+    get:
+      operationId: ShopController_getProducts
+      parameters:
+        - name: cordsCount
+          required: false
+          in: query
+          description: Cords counts
+          schema:
+            type: array
+            items:
+              type: number
+              enum:
+                - 4
+                - 6
+                - 7
+                - 12
+        - name: productType
+          required: false
+          in: query
+          description: Product type
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - electric
+                - acoustic
+                - ukulele
+        - name: page
+          required: true
+          in: query
+          example: 1
+          description: Page number
+          schema:
+            type: number
+        - name: sortBy
+          required: true
+          in: query
+          description: Sort by
+          schema:
+            enum:
+              - createdAt
+              - price
+            type: string
+        - name: sortDirection
+          required: true
+          in: query
+          description: Sort direction
+          schema:
+            enum:
+              - asc
+              - desc
+            type: string
+      responses:
+        "200":
+          description: Products found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductWithPaginationRdo"
+      security:
+        - accessToken: []
+      tags:
+        - Product API
+  /api/shop/{id}:
+    put:
+      operationId: ShopController_updateProduct
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdateProductFileDto"
+      responses:
+        "200":
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductRdo"
+        "401":
+          description: Need authorization
+        "404":
+          description: Product not found
+        "409":
+          description: AccessDeny
+      security:
+        - accessToken: []
+      tags:
+        - Product API
+    delete:
+      operationId: ShopController_deleteProduct
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Product deleted
+        "401":
+          description: Need authorization
+        "404":
+          description: Product not found
+        "409":
+          description: AccessDeny
+      security:
+        - accessToken: []
+      tags:
+        - Product API
+    get:
+      operationId: ShopController_getProduct
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductRdo"
+        "404":
+          description: Product not found
+      security:
+        - accessToken: []
+      tags:
+        - Product API
+info:
+  title: Guitar shop app
+  description: Guitar shop app API
+  version: "1.0"
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    accessToken:
+      scheme: Bearer
+      bearerFormat: Bearer
+      description: "[just text field] Please enter token in following format: Bearer "
+      name: Authorization
+      type: http
+  schemas:
+    RegisterUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User unique address
+          example: user2@notfound.local
+        password:
+          type: string
+          description: User password
+          example: "123456"
+        name:
+          type: string
+          description: User name
+          example: Keks
+      required:
+        - email
+        - password
+        - name
+    LoginUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User unique address
+          example: user2@notfound.local
+        password:
+          type: string
+          description: User password
+          example: "123456"
+      required:
+        - email
+        - password
+    LoggedUserRdo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The uniq user ID
+          example: 134ce8babd-cc30-4805-9b12-d9420398e7c5
+        email:
+          type: string
+          description: User email
+          example: user@user.local
+        name:
+          type: string
+          description: User name
+          example: Keks
+        accessToken:
+          type: string
+          description: Access token
+          example: user@user.local
+      required:
+        - id
+        - email
+        - name
+        - accessToken
+    UserRdo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The uniq user ID
+          example: 134ce8babd-cc30-4805-9b12-d9420398e7c5
+        email:
+          type: string
+          description: User email
+          example: user@user.local
+        name:
+          type: string
+          description: User name
+          example: Keks
+      required:
+        - id
+        - email
+        - name
+    CreateProductDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Название продукта
+          example: Product Name
+        describe:
+          type: string
+          description: Описание продукта
+          example: Product description
+        createdAt:
+          format: date-time
+          type: string
+          description: Дата создания
+          example: 2025-02-20T13:27:34.895Z
+        photoPath:
+          type: string
+          description: Путь к фото продукта
+          example: /path/to/photo
+        productType:
+          type: string
+          description: Тип продукта
+          enum:
+            - electric
+            - acoustic
+            - ukulele
+        article:
+          type: string
+          description: Артикул продукта
+          example: "123456"
+        cordsCount:
+          type: object
+          description: Количество кордов
+          example: 6
+        price:
+          type: number
+          description: Цена продукта
+          example: 19.99
+      required:
+        - name
+        - describe
+        - createdAt
+        - photoPath
+        - productType
+        - article
+        - cordsCount
+        - price
+    CreateProductFileDto:
+      type: object
+      properties:
+        file:
+          type: string
+          description: photo file
+          format: binary
+        product:
+          $ref: "#/components/schemas/CreateProductDto"
+      required:
+        - product
+    ProductRdo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID продукта
+          example: "1"
+        name:
+          type: string
+          description: Название продукта
+          example: Product Name
+        describe:
+          type: string
+          description: Описание продукта
+          example: Product description
+        createdAt:
+          format: date-time
+          type: string
+          description: Дата создания
+          example: 2025-02-20T13:27:34.895Z
+        photoPath:
+          type: string
+          description: Путь к фото продукта
+          example: /path/to/photo
+        productType:
+          type: string
+          description: Тип продукта
+          enum:
+            - electric
+            - acoustic
+            - ukulele
+        article:
+          type: string
+          description: Артикул продукта
+          example: "123456"
+        cordsCount:
+          type: object
+          description: Количество кордов
+          example: 6
+        price:
+          type: number
+          description: Цена продукта
+          example: 19.99
+      required:
+        - id
+        - name
+        - describe
+        - createdAt
+        - photoPath
+        - productType
+        - article
+        - cordsCount
+        - price
+    UpdateProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID продукта
+          example: "1"
+        name:
+          type: string
+          description: Название продукта
+          example: Product Name
+        describe:
+          type: string
+          description: Описание продукта
+          example: Product description
+        createdAt:
+          format: date-time
+          type: string
+          description: Дата создания
+          example: 2025-02-20T13:27:34.895Z
+        photoPath:
+          type: string
+          description: Путь к фото продукта
+          example: /path/to/photo
+        productType:
+          type: string
+          description: Тип продукта
+          enum:
+            - electric
+            - acoustic
+            - ukulele
+        article:
+          type: string
+          description: Артикул продукта
+          example: "123456"
+        cordsCount:
+          type: object
+          description: Количество кордов
+          example: 6
+        price:
+          type: number
+          description: Цена продукта
+          example: 19.99
+      required:
+        - id
+        - name
+        - describe
+        - createdAt
+        - photoPath
+        - productType
+        - article
+        - cordsCount
+        - price
+    UpdateProductFileDto:
+      type: object
+      properties:
+        file:
+          type: string
+          description: photo file
+          format: binary
+        product:
+          $ref: "#/components/schemas/UpdateProductDto"
+      required:
+        - product
+    ProductWithPaginationRdo:
+      type: object
+      properties:
+        entities:
+          description: List of entity
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductRdo"
+        totalPages:
+          type: number
+          description: totalPages
+          example: 10
+        totalItems:
+          type: number
+          description: totalItems
+          example: 100
+        currentPage:
+          type: number
+          description: currentPage
+          example: 1
+        itemsPerPage:
+          type: number
+          description: itemsPerPage
+          example: 5
+      required:
+        - entities
+        - totalPages
+        - totalItems
+        - currentPage
+        - itemsPerPage

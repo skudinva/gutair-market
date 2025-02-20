@@ -4,3 +4,4 @@
 посмотреть где используется UserIdDto
 скорее всего убрать CheckAuthForceGuard
 ++yaml
+http://localhost:3000/spec-yaml
