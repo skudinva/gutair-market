@@ -88,29 +88,29 @@ const Footer = () => {
             </h2>
             <ul className="footer__nav-list">
               <li className="footer__nav-list-item">
-                <a className="link footer__nav-link" href="#top">
+                <Link className="link footer__nav-link" to="#top">
                   Где купить?
-                </a>
+                </Link>
               </li>
               <li className="footer__nav-list-item">
-                <a className="link footer__nav-link" href="#top">
+                <Link className="link footer__nav-link" to="#top">
                   Блог
-                </a>
+                </Link>
               </li>
               <li className="footer__nav-list-item">
-                <a className="link footer__nav-link" href="#top">
+                <Link className="link footer__nav-link" to="#top">
                   Вопрос - ответ
-                </a>
+                </Link>
               </li>
               <li className="footer__nav-list-item">
-                <a className="link footer__nav-link" href="#top">
+                <Link className="link footer__nav-link" to="#top">
                   Возврат
-                </a>
+                </Link>
               </li>
               <li className="footer__nav-list-item">
-                <a className="link footer__nav-link" href="#top">
+                <Link className="link footer__nav-link" to="#top">
                   Сервис-центры
-                </a>
+                </Link>
               </li>
             </ul>
           </section>

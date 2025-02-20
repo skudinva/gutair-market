@@ -17,18 +17,6 @@ const Header = () => {
     }
   };
 
-  /*const RootClassName: Record<AppRoute, string> = {
-     [AppRoute.Root]: "page--gray page--main",
-    [AppRoute.Login]: "page--gray page--login",
-    [AppRoute.Register]: "page--gray page--login",
-    [AppRoute.Favorites]:
-      favoriteOffers.length === 0 ? "page--favorites-empty" : "",
-    [AppRoute.Property]: "",
-    [AppRoute.Add]: "",
-    [AppRoute.Edit]: "",
-    [AppRoute.NotFound]: "",
-  };
-*/
   return (
     <>
       <header className="header" id="header">
@@ -51,22 +39,22 @@ const Header = () => {
                   </Link>
                 </li>
                 <li className="main-nav__item">
-                  <a className="link main-nav__link" href="#">
+                  <Link className="link main-nav__link" to="#">
                     Где купить?
-                  </a>
+                  </Link>
                 </li>
                 <li className="main-nav__item">
-                  <a className="link main-nav__link" href="#">
+                  <Link className="link main-nav__link" to="#">
                     О компании
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
             <div className="header__container">
               <span className="header__user-name">Имя</span>
-              <a
+              <Link
                 className="header__link"
-                href="login.html"
+                to={AppRoute.Login}
                 aria-label="Перейти в личный кабинет"
               >
                 <svg
@@ -78,7 +66,7 @@ const Header = () => {
                   <use xlinkHref="#icon-account"></use>
                 </svg>
                 <span className="header__link-text">Вход</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
