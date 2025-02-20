@@ -24,6 +24,7 @@ const ProductForm = (): JSX.Element | null => {
   const isProductLoading = useAppSelector(getIsProductLoading);
   const product =
     pathname === AppRoute.Add ? ({} as Product) : useAppSelector(getProduct);
+  const isNewForm = pathname === AppRoute.Add;
 
   const [oldPhotoPath, setOldPhotoPath] = useState<string>();
   useEffect(() => {
@@ -129,7 +130,7 @@ const ProductForm = (): JSX.Element | null => {
               type="button"
               onClick={onImageAddButtonClick}
             >
-              Добавить
+              {isNewForm ? 'Добавить' : 'Заменить'}
             </button>
             <button
               className="button button--small button--black-border edit-item-image__btn"
