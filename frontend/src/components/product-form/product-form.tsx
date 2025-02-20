@@ -93,7 +93,10 @@ const ProductForm = (): JSX.Element | null => {
   };
 
   const onImageDeleteButtonClick = () => {
-    console.log(222);
+    setSelectedPhoto(null);
+    if (imgRef.current) {
+      imgRef.current.srcset = '';
+    }
   };
 
   if (isProductLoading) {
