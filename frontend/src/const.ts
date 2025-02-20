@@ -1,3 +1,10 @@
+export enum ProductTab {
+  Characteristics = 'characteristics',
+  Description = 'description',
+}
+
+export const DEFAULT_ACTIVE_PRODUCT_TAB = ProductTab.Characteristics;
+
 export enum ProductType {
   Electric = 'electric',
   Acoustic = 'acoustic',

@@ -1,6 +1,10 @@
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { PRODUCT_TYPES_NAMES } from '../../const';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import {
+  DEFAULT_ACTIVE_PRODUCT_TAB,
+  PRODUCT_TYPES_NAMES,
+  ProductTab,
+} from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchProduct } from '../../store/action';
 import {
@@ -13,8 +17,9 @@ import Spinner from '../spinner/spinner';
 const Product = (): JSX.Element | null => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const isProductLoading = useAppSelector(getIsProductLoading);
-  const product = useAppSelector(getProduct);
+  const [activeTab, setActiveTab] = useState<ProductTab>(
+    DEFAULT_ACTIVE_PRODUCT_TAB
+  );
 
   useEffect(() => {
     const { id } = params;
@@ -22,6 +27,9 @@ const Product = (): JSX.Element | null => {
       dispatch(fetchProduct(id));
     }
   }, [params, dispatch]);
+
+  const isProductLoading = useAppSelector(getIsProductLoading);
+  const product = useAppSelector(getProduct);
 
   if (isProductLoading) {
     return <Spinner />;
@@ -50,20 +58,38 @@ const Product = (): JSX.Element | null => {
           <br />
           <br />
           <div className="tabs">
-            <Link
-              className="button button--medium tabs__button"
-              to="#characteristics"
+            <a
+              className={[
+                'button button--medium tabs__button',
+                activeTab === ProductTab.Description && 'button--black-border',
+              ].join(' ')}
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab(ProductTab.Characteristics);
+              }}
             >
               Характеристики
-            </Link>
-            <Link
-              className="button button--black-border button--medium tabs__button"
-              to="#description"
+            </a>
+            <a
+              className={[
+                'button button--medium tabs__button',
+                activeTab === ProductTab.Characteristics &&
+                  'button--black-border',
+              ].join(' ')}
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab(ProductTab.Description);
+              }}
             >
               Описание
-            </Link>
+            </a>
             <div className="tabs__content" id="characteristics">
-              <table className="tabs__table">
+              <table
+                className={[
+                  'tabs__table',
+                  activeTab === ProductTab.Description ? 'hidden' : '',
+                ].join(' ')}
+              >
                 <tbody>
                   <tr className="tabs__table-row">
                     <td className="tabs__title">Артикул:</td>
@@ -83,7 +109,14 @@ const Product = (): JSX.Element | null => {
                   </tr>
                 </tbody>
               </table>
-              <p className="tabs__product-description">{product.describe}</p>
+              <p
+                className={[
+                  'tabs__product-description',
+                  activeTab === ProductTab.Characteristics ? 'hidden' : '',
+                ].join(' ')}
+              >
+                {product.describe}
+              </p>
             </div>
           </div>
         </div>
