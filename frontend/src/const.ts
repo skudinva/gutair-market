@@ -43,6 +43,20 @@ export enum Sorting {
   TopRated = 'Top rated first',
 }
 
+export enum SortDirection {
+  Asc = 'asc',
+  Desc = 'desc',
+}
+
+export const DEFAULT_SORT_DIRECTION = SortDirection.Asc;
+
+export enum SortBy {
+  Date = 'createdAt',
+  Price = 'price',
+}
+
+export const DEFAULT_SORT_BY = SortBy.Date;
+
 export enum StoreSlice {
   SiteData = 'SITE_DATA',
   SiteProcess = 'SITE_PROCESS',
