@@ -65,7 +65,6 @@ const ProductForm = (): JSX.Element | null => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    console.log('selectedPhoto', selectedPhoto);
 
     if (selectedPhoto) {
       formData.append('file', selectedPhoto);

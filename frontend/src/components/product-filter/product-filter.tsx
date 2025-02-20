@@ -56,8 +56,6 @@ const ProductFilter = (): JSX.Element => {
         <legend className="catalog-filter__block-title">Тип гитар</legend>
         {Object.entries(PRODUCT_TYPES_NAMES).map(
           ([productType, productName]) => {
-            //console.log(selectedTypes);
-
             return (
               <div
                 className="form-checkbox catalog-filter__block-item"

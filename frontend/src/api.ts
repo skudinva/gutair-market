@@ -6,6 +6,16 @@ import { Token } from './utils';
 const BACKEND_URL = 'http://localhost:3000';
 const REQUEST_TIMEOUT = 5000;
 
+const getNormalError = (error: any) => {
+  if (!error) return null;
+
+  if (typeof error === 'string') return error;
+
+  if (Array.isArray(error)) return error.join('\n');
+
+  return null;
+};
+
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
     baseURL: BACKEND_URL,
@@ -26,7 +36,12 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError) => {
       toast.dismiss();
-      toast.warn(error.response ? error.response.data.error : error.message);
+      const errorText = error.response
+        ? error.response.data.error ||
+          getNormalError(error.response?.data.detailMessage)
+        : error.message;
+
+      toast.warn(errorText);
 
       return Promise.reject(error);
     }
