@@ -1,12 +1,17 @@
+import { useAppSelector } from '../../hooks';
+import { getProduct } from '../../store/site-data/selectors';
 import BreadCrumbs from '../breadcrumbs/breadcrumbs';
 import ProductForm from '../product-form/product-form';
 
-const EditProduct = (): JSX.Element => (
-  <>
-    <h1 className="edit-item__title">СURT Z30 Plus</h1>
-    <BreadCrumbs />
-    <ProductForm />
-  </>
-);
+const EditProduct = (): JSX.Element => {
+  const product = useAppSelector(getProduct);
+  return (
+    <>
+      <h1 className="edit-item__title">{product?.name}</h1>
+      <BreadCrumbs isEditPage={true} productName={product?.name} />
+      <ProductForm />
+    </>
+  );
+};
 
 export default EditProduct;
