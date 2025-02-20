@@ -19,7 +19,10 @@ const Header = () => {
 
   return (
     <>
-      <header className="header" id="header">
+      <header
+        className={['header', isAuthorized ? 'header--admin' : ''].join(' ')}
+        id="header"
+      >
         <div className="container">
           <div className="header__wrapper">
             <Link className="header__logo logo" to={AppRoute.Root}>
@@ -51,7 +54,7 @@ const Header = () => {
               </ul>
             </nav>
             <div className="header__container">
-              <span className="header__user-name">Имя</span>
+              <span className="header__user-name">{user.name}</span>
               <Link
                 className="header__link"
                 to={AppRoute.Login}
@@ -66,21 +69,6 @@ const Header = () => {
                   <use xlinkHref="#icon-account"></use>
                 </svg>
                 <span className="header__link-text">Вход</span>
-              </Link>
-              <Link
-                className="header__cart-link"
-                to="#"
-                aria-label="Перейти в корзину"
-              >
-                <svg
-                  className="header__cart-icon"
-                  width="14"
-                  height="14"
-                  aria-hidden="true"
-                >
-                  <use xlinkHref="#icon-basket"></use>
-                </svg>
-                <span className="header__cart-count">2</span>
               </Link>
             </div>
           </div>

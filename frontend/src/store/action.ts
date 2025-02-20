@@ -96,7 +96,7 @@ export const deleteProduct = createAsyncThunk<void, string, { extra: Extra }>(
 );
 
 export const fetchUserStatus = createAsyncThunk<
-  UserAuth['email'],
+  UserRdo,
   undefined,
   { extra: Extra }
 >(Action.FETCH_USER_STATUS, async (_, { extra }) => {
@@ -104,8 +104,8 @@ export const fetchUserStatus = createAsyncThunk<
 
   try {
     const { data } = await api.post<UserRdo>(ApiRoute.CheckLogin);
-
-    return data.email;
+    const { email, name } = data;
+    return { email, name };
   } catch (error) {
     const axiosError = error as AxiosError;
 
@@ -117,27 +117,26 @@ export const fetchUserStatus = createAsyncThunk<
   }
 });
 
-export const loginUser = createAsyncThunk<
-  UserAuth['email'],
-  UserAuth,
-  { extra: Extra }
->(Action.LOGIN_USER, async ({ email, password }, { extra }) => {
-  const { api, history } = extra;
+export const loginUser = createAsyncThunk<UserRdo, UserAuth, { extra: Extra }>(
+  Action.LOGIN_USER,
+  async ({ email, password }, { extra }) => {
+    const { api, history } = extra;
 
-  const { data } = await api.post<UserRdo & { accessToken: string }>(
-    ApiRoute.Login,
-    {
-      email,
-      password,
-    }
-  );
-  const { accessToken } = data;
+    const { data } = await api.post<UserRdo & { accessToken: string }>(
+      ApiRoute.Login,
+      {
+        email,
+        password,
+      }
+    );
+    const { accessToken, name } = data;
 
-  Token.save(accessToken);
-  history.push(AppRoute.Products);
+    Token.save(accessToken);
+    history.push(AppRoute.Products);
 
-  return email;
-});
+    return { email, name };
+  }
+);
 
 export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
   Action.LOGOUT_USER,
