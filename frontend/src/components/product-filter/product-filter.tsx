@@ -2,22 +2,22 @@ import { useSearchParams } from 'react-router-dom';
 import { CORDS_COUNT, PRODUCT_TYPES_NAMES } from '../../const';
 
 const ProductFilter = (): JSX.Element => {
-  const [params, setParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const updateQueryString = () => {
-    setParams(params);
+    setSearchParams(searchParams);
   };
 
   const handleProductTypeChange = (type: string, isChecked: boolean) => {
     if (isChecked) {
-      params.append('productType', type);
+      searchParams.append('productType', type);
     } else {
-      const newTypes = params
+      const newTypes = searchParams
         .getAll('productType')
         .filter((filterType) => filterType !== type);
-      params.delete('productType');
+      searchParams.delete('productType');
       newTypes.forEach((newType) => {
-        params.append('productType', newType);
+        searchParams.append('productType', newType);
       });
     }
 
@@ -26,14 +26,14 @@ const ProductFilter = (): JSX.Element => {
 
   const handleCordsChange = (cord: string, isChecked: boolean) => {
     if (isChecked) {
-      params.append('cordsCount', cord);
+      searchParams.append('cordsCount', cord);
     } else {
-      const newCords = params
+      const newCords = searchParams
         .getAll('cordsCount')
         .filter((filterCord) => filterCord !== cord);
-      params.delete('cordsCount');
+      searchParams.delete('cordsCount');
       newCords.forEach((newCord) => {
-        params.append('cordsCount', newCord);
+        searchParams.append('cordsCount', newCord);
       });
     }
 
@@ -59,7 +59,9 @@ const ProductFilter = (): JSX.Element => {
                   type="checkbox"
                   id={productType}
                   name={productType}
-                  checked={params.getAll('productType').includes(productType)}
+                  checked={searchParams
+                    .getAll('productType')
+                    .includes(productType)}
                   onChange={(e) => {
                     handleProductTypeChange(productType, e.target.checked);
                   }}
@@ -85,7 +87,9 @@ const ProductFilter = (): JSX.Element => {
                 type="checkbox"
                 id={`${cord}-strings`}
                 name={`${cord}-strings`}
-                checked={params.getAll('cordsCount').includes(cord.toString())}
+                checked={searchParams
+                  .getAll('cordsCount')
+                  .includes(cord.toString())}
                 onChange={(e) =>
                   handleCordsChange(cord.toString(), e.target.checked)
                 }
@@ -99,7 +103,7 @@ const ProductFilter = (): JSX.Element => {
         className="catalog-filter__reset-btn button button--black-border button--medium"
         type="reset"
         onClick={() => {
-          setParams([]);
+          setSearchParams([]);
         }}
       >
         Очистить
