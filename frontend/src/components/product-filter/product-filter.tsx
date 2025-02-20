@@ -4,24 +4,20 @@ import { CORDS_COUNT, PRODUCT_TYPES_NAMES } from '../../const';
 const ProductFilter = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const updateQueryString = () => {
-    setSearchParams(searchParams);
-  };
-
   const handleProductTypeChange = (type: string, isChecked: boolean) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
     if (isChecked) {
-      searchParams.append('productType', type);
+      newSearchParams.append('productType', type);
     } else {
-      const newTypes = searchParams
+      const newTypes = newSearchParams
         .getAll('productType')
         .filter((filterType) => filterType !== type);
-      searchParams.delete('productType');
+      newSearchParams.delete('productType');
       newTypes.forEach((newType) => {
-        searchParams.append('productType', newType);
+        newSearchParams.append('productType', newType);
       });
     }
-
-    updateQueryString();
+    setSearchParams(newSearchParams);
   };
 
   const handleCordsChange = (cord: string, isChecked: boolean) => {
@@ -37,7 +33,20 @@ const ProductFilter = (): JSX.Element => {
       });
     }
 
-    updateQueryString();
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    if (isChecked) {
+      newSearchParams.append('cordsCount', cord);
+    } else {
+      const newCords = newSearchParams
+        .getAll('cordsCount')
+        .filter((filterType) => filterType !== cord);
+      newSearchParams.delete('cordsCount');
+      newCords.forEach((newCord) => {
+        newSearchParams.append('cordsCount', newCord);
+      });
+    }
+
+    setSearchParams(newSearchParams);
   };
 
   return (
