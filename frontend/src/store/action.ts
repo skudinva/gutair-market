@@ -34,11 +34,13 @@ export const Action = {
 
 export const fetchProducts = createAsyncThunk<
   ProductWithPaginationRdo,
-  undefined,
+  string,
   { extra: Extra }
->(Action.FETCH_PRODUCTS, async (_, { extra }) => {
+>(Action.FETCH_PRODUCTS, async (searchParams: string, { extra }) => {
   const { api } = extra;
-  const { data } = await api.get<ProductWithPaginationRdo>(ApiRoute.Shop);
+  const { data } = await api.get<ProductWithPaginationRdo>(
+    `${ApiRoute.Shop}?${searchParams}`
+  );
   return data;
 });
 

@@ -16,13 +16,14 @@ import Spinner from '../spinner/spinner';
 
 const ProductList = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const [searchParams, _setSearchParams] = useSearchParams();
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProducts(searchParams.toString()));
+  }, [dispatch, searchParams]);
 
   const isProductsLoading = useAppSelector(getIsProductsLoading);
   const products = useAppSelector(getProducts);
-  const [searchParams, setSearchParams] = useSearchParams();
+
   const page = parseInt(searchParams.get('page') ?? '0', 10);
   const sortBy = searchParams.get('sortBy');
   const sortDirection = searchParams.get('sortDirection');
