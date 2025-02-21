@@ -343,7 +343,7 @@ components:
           format: date-time
           type: string
           description: Дата создания
-          example: 2025-02-20T13:27:34.895Z
+          example: 2025-02-21T03:32:07.134Z
         photoPath:
           type: string
           description: Путь к фото продукта
@@ -406,7 +406,7 @@ components:
           format: date-time
           type: string
           description: Дата создания
-          example: 2025-02-20T13:27:34.895Z
+          example: 2025-02-21T03:32:07.134Z
         photoPath:
           type: string
           description: Путь к фото продукта
@@ -459,7 +459,7 @@ components:
           format: date-time
           type: string
           description: Дата создания
-          example: 2025-02-20T13:27:34.895Z
+          example: 2025-02-21T03:32:07.134Z
         photoPath:
           type: string
           description: Путь к фото продукта

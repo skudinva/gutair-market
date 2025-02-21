@@ -116,3 +116,65 @@ RABBIT_EXCHANGE=shop.notify - имя exchange
 RABBITMQ_DEFAULT_USER=admin - имя пользователя по умолчанию для Rabbit
 RABBITMQ_DEFAULT_PASS=test - пароль пользователя по умолчанию для Rabbit
 ```
+
+## Сценарии backend package.json
+
+### Проверка линтером
+
+```bash
+npm run lint
+```
+
+### CLI
+
+```bash
+npm run cli
+```
+
+### Генератор моковых данных
+
+```bash
+npm run cli:generate
+```
+
+### Запуск микросервисов
+
+```bash
+npx nx run notify:serve
+npx nx run file-vault:serve
+npx nx run account:serve
+npx nx run shop:serve
+npx nx run api:serve
+```
+
+## Сценарии frontend package.json
+
+### Запуск проекта
+
+```bash
+npm start
+```
+
+### Запуск тестов
+
+```bash
+npm test
+```
+
+### Проверка линтером
+
+```bash
+npm run lint
+```
+
+### Сборка проекта
+
+```bash
+npm run build
+```
+
+### Извлечение конфигурации проекта
+
+```bash
+npm run eject
+```
