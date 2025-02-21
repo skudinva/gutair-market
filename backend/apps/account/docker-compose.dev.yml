@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   shop.account.mongo:
     image: mongo:4.4

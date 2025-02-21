@@ -3,18 +3,15 @@
 ## Последовательность запуска проекта
 
 ```
+cp backend/apps/account/.env-example backend/apps/account/.env
+cp backend/apps/api/.env.example backend/apps/api/.env
+cp backend/libs/shop/models/prisma/.env-example backend/libs/shop/models/prisma/.env
+cp backend/apps/shop/shop.env.example backend/apps/shop/.env
+cp backend/apps/file-vault/file-vault.env.example backend/apps/file-vault/.env
+cp backend/apps/notify/notify.env-example backend/apps/notify/.env
+docker compose -f docker-compose.dev.yml up -d
 cd backend
 npm install
-cp apps/account/.env-example apps/account/.env
-cp apps/api/.env.example apps/api/.env
-cp libs/shop/models/prisma/.env-example libs/shop/models/prisma/.env
-cp apps/shop/shop.env.example apps/shop/.env
-cp apps/file-vault/file-vault.env.example apps/file-vault/.env
-cp apps/notify/notify.env-example apps/notify/.env
-docker compose -f "apps/account/docker-compose.dev.yml" up -d
-docker compose -f "apps/shop/docker-compose.dev.yml" up -d
-docker compose -f "apps/file-vault/docker-compose.dev.yml" up -d
-docker compose -f "apps/notify/docker-compose.dev.yml" up -d
 npx nx run shop:db:generate
 npx nx run shop:db:migrate
 npx nx run cli:build

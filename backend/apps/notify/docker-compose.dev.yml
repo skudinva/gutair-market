@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   shop.notify.fakesmtp:
     image: gessnerfl/fake-smtp-server:2.2.0
