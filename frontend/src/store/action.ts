@@ -74,11 +74,11 @@ export const postProduct = createAsyncThunk<
 
 export const editProduct = createAsyncThunk<Product, Product, { extra: Extra }>(
   Action.EDIT_PRODUCT,
-  async (offer, { extra }) => {
+  async (product, { extra }) => {
     const { api, history } = extra;
     const { data } = await api.patch<ProductRdo>(
-      `${ApiRoute.Shop}/${offer.id}`,
-      offer
+      `${ApiRoute.Shop}/${product.id}`,
+      product
     );
     history.push(`${AppRoute.Products}/${data.id}`);
     return data;

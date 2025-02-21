@@ -1,6 +1,3 @@
--- six-sit
--- шеть городов
-
 посмотреть где используется UserIdDto
 скорее всего убрать CheckAuthForceGuard
 ++yaml
