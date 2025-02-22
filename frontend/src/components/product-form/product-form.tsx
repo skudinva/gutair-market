@@ -102,7 +102,7 @@ const ProductForm = (): JSX.Element | null => {
     return <Spinner />;
   }
 
-  if (!product) {
+  if (!product && !isNewForm) {
     return null;
   }
 
@@ -123,7 +123,7 @@ const ProductForm = (): JSX.Element | null => {
               onChange={handleFileChange}
               style={{ display: 'none' }}
             />
-            <img srcSet={product.photoPath} ref={imgRef} alt="Photo" />
+            <img srcSet={product?.photoPath} ref={imgRef} alt="Photo" />
           </div>
           <div className="edit-item-image__btn-wrap">
             <button
@@ -152,7 +152,7 @@ const ProductForm = (): JSX.Element | null => {
                   id={productType}
                   name="item-type"
                   value={productType}
-                  defaultChecked={productType === product.productType}
+                  defaultChecked={productType === product?.productType}
                 />
                 <label htmlFor={productType}>{productName}</label>
               </Fragment>
@@ -168,7 +168,7 @@ const ProductForm = (): JSX.Element | null => {
                 id={`string-qty-${cord}`}
                 name="string-qty"
                 value={cord}
-                defaultChecked={product.cordsCount === cord}
+                defaultChecked={product?.cordsCount === cord}
               />
               <label htmlFor={`string-qty-${cord}`}>{cord}</label>
             </Fragment>
@@ -183,7 +183,7 @@ const ProductForm = (): JSX.Element | null => {
               type="text"
               name="date"
               placeholder="Дата в формате 00.00.0000"
-              defaultValue={dayjs(product.createdAt).format('DD.MM.YYYY')}
+              defaultValue={dayjs(product?.createdAt).format('DD.MM.YYYY')}
             />
           </label>
           <p>Заполните поле</p>
@@ -195,7 +195,7 @@ const ProductForm = (): JSX.Element | null => {
               type="text"
               name="title"
               placeholder="Наименование"
-              defaultValue={product.name}
+              defaultValue={product?.name}
             />
           </label>
           <p>Заполните поле</p>
@@ -207,7 +207,7 @@ const ProductForm = (): JSX.Element | null => {
               type="text"
               name="price"
               placeholder="Цена в формате 00 000"
-              defaultValue={product.price}
+              defaultValue={product?.price}
             />
           </label>
           <p>Заполните поле</p>
@@ -219,7 +219,7 @@ const ProductForm = (): JSX.Element | null => {
               type="text"
               name="sku"
               placeholder="Артикул товара"
-              defaultValue={product.article}
+              defaultValue={product?.article}
             />
           </label>
           <p>Заполните поле</p>
@@ -230,7 +230,7 @@ const ProductForm = (): JSX.Element | null => {
             <textarea
               name="description"
               placeholder=""
-              defaultValue={product.describe}
+              defaultValue={product?.describe}
             />
           </label>
           <p>Заполните поле</p>
