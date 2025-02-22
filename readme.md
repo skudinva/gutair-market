@@ -2,13 +2,16 @@
 
 ## Последовательность запуска проекта
 
-```
-cp backend/apps/account/.env-example backend/apps/account/.env
+Перейти в папку "gutair-shop"
+
+```bash
+cp backend/apps/account/.env.example backend/apps/account/.env
 cp backend/apps/api/.env.example backend/apps/api/.env
-cp backend/libs/shop/models/prisma/.env-example backend/libs/shop/models/prisma/.env
-cp backend/apps/shop/shop.env.example backend/apps/shop/.env
-cp backend/apps/file-vault/file-vault.env.example backend/apps/file-vault/.env
-cp backend/apps/notify/notify.env-example backend/apps/notify/.env
+cp backend/apps/file-vault/.env.example backend/apps/file-vault/.env
+cp backend/apps/notify/.env.example backend/apps/notify/.env
+cp backend/apps/shop/.env.example backend/apps/shop/.env
+cp backend/libs/shop/models/prisma/.env.example backend/libs/shop/models/prisma/.env
+cp frontend/.env.example frontend/.env
 docker compose -f docker-compose.dev.yml up -d
 cd backend
 npm install
